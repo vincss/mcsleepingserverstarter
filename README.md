@@ -10,6 +10,7 @@ Require :
 NodeJs & NPM
   * https://nodejs.org/en/download/
   * https://doc.ubuntu-fr.org/nodejs
+  * EmptyServerStopper to stop your server : http://dev.bukkit.org/bukkit-plugins/emptyserverstopper/
 
 Install :
  * Download this repository as zip.
