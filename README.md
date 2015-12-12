@@ -20,6 +20,5 @@ Install :
 
 Use WebServer for dynmap :
  * You need to change your configuration from class: org.dynmap.InternalClientUpdateComponent to class: org.dynmap.JsonFileClientUpdateComponent (comment all the section InternalClientUpdateComponent and uncomment JsonFileClientUpdateComponent).
-  You can host dynmap on a separate server that supports PHP, and keep web chat on.
 
 https://github.com/webbukkit/dynmap/wiki/Setting-up-without-the-Internal-Web-Server
