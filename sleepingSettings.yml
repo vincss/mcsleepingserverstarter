@@ -7,6 +7,6 @@ serverOnlineMode : true
 
 webPort: 8123 					# 0 to disable web hosting 
 webDir : plugins/dynmap/web 	# dir of dynmap web
-	
+
 startMinecraft : 1 				# 0 to disable	
 minecraftCommand : java -Xmx1024M -Xms1024M -XX:MaxPermSize=128M -jar spigot.jar nogui
