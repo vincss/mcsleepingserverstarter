@@ -8,9 +8,9 @@ With an original idea from https://github.com/tustin2121/MCSignOnDoor
 
 Require :
 NodeJs (^v5.*) & NPM
-  * https://nodejs.org/en/download/
-  * https://doc.ubuntu-fr.org/nodejs
-  * EmptyServerStopper to stop your server : http://dev.bukkit.org/bukkit-plugins/emptyserverstopper/
+  * Windows : https://nodejs.org/en/download/
+  * Linux : https://github.com/nodesource/distributions#debinstall
+  * EmptyServerStopper to stop your server when nobody is there : http://dev.bukkit.org/bukkit-plugins/emptyserverstopper/
 
 Install :
  * Download this repository as zip.
