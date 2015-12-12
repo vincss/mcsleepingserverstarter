@@ -7,7 +7,7 @@ https://github.com/PrismarineJS/node-minecraft-protocol
 With an original idea from https://github.com/tustin2121/MCSignOnDoor
 
 Require :
-NodeJs & NPM
+NodeJs (^v5.*) & NPM
   * https://nodejs.org/en/download/
   * https://doc.ubuntu-fr.org/nodejs
   * EmptyServerStopper to stop your server : http://dev.bukkit.org/bukkit-plugins/emptyserverstopper/
