@@ -2,8 +2,8 @@
 // var packageSleep = JSON.parse(require('fs').readFileSync('package.json',
 // 'utf8'));
 
-var settings = require("js-yaml").load(
-		require("fs").readFileSync("sleepingSettings.yml"));
+var settings = require('js-yaml').load(
+		require('fs').readFileSync('sleepingSettings.yml'));
 
 var mc = require('minecraft-protocol');
 var connect = require('connect');
@@ -12,6 +12,17 @@ var childProcess = require('child_process');
 
 var webServer;
 var mcServer;
+
+var startMinecraft = function() {
+	console.log('----------- Starting Minecraft : ' + settings.minecraftCommand
+			+ ' ----------- ');
+
+	//settings.minecraftCommand = 'notepad';
+	var mcProcess = childProcess.execSync(settings.minecraftCommand, {
+		stdio : "inherit"
+	});
+	console.log('----------- Minecraft stopped -----------');
+};
 
 var init = function() {
 	if (settings.webPort > 0) {
@@ -30,25 +41,25 @@ var init = function() {
 	});
 	console.log('Waiting for a Prince to come. [' + settings.serverPort + ']');
 
-};
-init();
+	mcServer.on('login', function(client) {
+		client.write('login', {
+			entityId : client.id,
+			levelType : 'default',
+			gameMode : 0,
+			dimension : 0,
+			difficulty : 2,
+			maxPlayers : mcServer.maxPlayers,
+			reducedDebugInfo : false
+		});
 
-mcServer.on('login', function(client) {
-	client.write('login', {
-		entityId : client.id,
-		levelType : 'default',
-		gameMode : 0,
-		dimension : 0,
-		difficulty : 2,
-		maxPlayers : mcServer.maxPlayers,
-		reducedDebugInfo : false
+		console.log('Prince as come, time to wake up.')
+
+		client.end(settings.loginMessage);
+		closeServer();
 	});
 
-	console.log('Prince as come, time to wake up.')
-
-	client.end(settings.loginMessage);
-	closeServer();
-});
+};
+init();
 
 var closeServer = function() {
 	console.log('Cleaning up the place.')
@@ -56,10 +67,12 @@ var closeServer = function() {
 	webServer.close();
 
 	if (settings.startMinecraft > 0) {
-		console.log('Starting Minecraft : ' + settings.minecraftCommand)
-		childProcess.execSync(settings.minecraftCommand);
-		
-		console.log('Minecraft stopped')
-		init();
+		startMinecraft();
+
+		console.log('...Time to kill me if you want...')
+		setTimeout(function() {
+			console.log('...Too late !...');
+			init();
+		}, 5000); // restart server
 	}
 };
