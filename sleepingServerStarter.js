@@ -33,7 +33,7 @@ var init = function() {
 	}
 
 	mcServer = mc.createServer({
-		'online-mode' : true, // optional
+		'online-mode' : settings.serverOnlineMode, // optional
 		encryption : true, // optional
 		host : '0.0.0.0', // optional
 		motd : settings.serverName,
