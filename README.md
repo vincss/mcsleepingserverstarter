@@ -7,10 +7,10 @@ https://github.com/PrismarineJS/node-minecraft-protocol
 With an original idea from https://github.com/tustin2121/MCSignOnDoor
 
 Require :
-NodeJs & NPM
-  * https://nodejs.org/en/download/
-  * https://doc.ubuntu-fr.org/nodejs
-  * EmptyServerStopper to stop your server : http://dev.bukkit.org/bukkit-plugins/emptyserverstopper/
+NodeJs (^v5.*) & NPM
+  * Windows : https://nodejs.org/en/download/
+  * Linux : https://github.com/nodesource/distributions#debinstall
+  * EmptyServerStopper to stop your server when nobody is there : http://dev.bukkit.org/bukkit-plugins/emptyserverstopper/
 
 Install :
  * Download this repository as zip.
@@ -20,7 +20,6 @@ Install :
 
 Use WebServer for dynmap :
  * You need to change your configuration from class: org.dynmap.InternalClientUpdateComponent to class: org.dynmap.JsonFileClientUpdateComponent (comment all the section InternalClientUpdateComponent and uncomment JsonFileClientUpdateComponent).
- * Set WebChat to false : allowwebchat: false .
-  You can host dynmap on a separate server that supports PHP, and keep web chat on.
+ * Chat will not work when hosted by mcsleepingserverstarter.
 
 https://github.com/webbukkit/dynmap/wiki/Setting-up-without-the-Internal-Web-Server
