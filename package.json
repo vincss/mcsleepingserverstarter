@@ -4,15 +4,30 @@
   "description": "Sleeps until someone connects",
   "main": "sleepingServerStarter.js",
   "dependencies": {
-	  "connect" : "3.4.0",
-	  "serve-static": "1.10.0",
-	  "minecraft-protocol" : "0.16.3",
-	  "js-yaml" : "3.4.6",
+    "connect": "3.4.0",
+    "serve-static": "1.10.0",
+    "minecraft-protocol": "0.16.3",
+    "js-yaml": "3.4.6"
   },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Vincss",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vincss/mcsleepingserverstarter.git"
+  },
+  "keywords": [
+    "maintenance",
+    "minecraft",
+    "nodejs",
+    "emptyserverstopper",
+    "sleepingserver"
+  ],
+  "bugs": {
+    "url": "https://github.com/vincss/mcsleepingserverstarter/issues"
+  },
+  "homepage": "https://github.com/vincss/mcsleepingserverstarter#readme"
 }

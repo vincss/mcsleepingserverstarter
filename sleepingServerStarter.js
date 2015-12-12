@@ -1,4 +1,6 @@
 'use strict';
+// var packageSleep = JSON.parse(require('fs').readFileSync('package.json',
+// 'utf8'));
 
 var settings = require("js-yaml").load(
 		require("fs").readFileSync("sleepingSettings.yml"));
@@ -12,9 +14,12 @@ var webServer;
 var mcServer;
 
 var init = function() {
-	if (settings.webPort > 0)
+	if (settings.webPort > 0) {
 		webServer = connect().use(serveStatic(settings.webDir)).listen(
 				settings.webPort);
+		console.log("Starting web server on *:" + settings.webPort
+				+ " webDir: " + settings.webDir);
+	}
 
 	mcServer = mc.createServer({
 		'online-mode' : true, // optional
@@ -23,7 +28,7 @@ var init = function() {
 		motd : settings.serverName,
 		port : settings.serverPort, // optional
 	});
-	console.log('Waiting for a Prince to come.')
+	console.log('Waiting for a Prince to come. [' + settings.serverPort + ']');
 
 };
 init();
@@ -53,5 +58,8 @@ var closeServer = function() {
 	if (settings.startMinecraft > 0) {
 		console.log('Starting Minecraft : ' + settings.minecraftCommand)
 		childProcess.execSync(settings.minecraftCommand);
+		
+		console.log('Minecraft stopped')
+		init();
 	}
 };
