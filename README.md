@@ -15,6 +15,6 @@ Install :
  * Download this repository as zip.
  * Unzip it at your minecraft's root.
  * Launch "npm install", to restore the needed package.
- * Start using "node sleepingServerStarter.js"
+ * Start using "node sleepingServerStarter.js" or "nodejs sleepingServerStarter.js".
 
   
