@@ -1,0 +1,18 @@
+{
+  "name": "mcsleepingserverstarter",
+  "version": "1.0.0",
+  "description": "Sleeps until someone connects",
+  "main": "sleepingServerStarter.js",
+  "dependencies": {
+	  "connect" : "3.4.0",
+	  "serve-static": "1.10.0",
+	  "minecraft-protocol" : "0.16.3",
+	  "js-yaml" : "3.4.6",
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vincs",
+  "license": "ISC"
+}
