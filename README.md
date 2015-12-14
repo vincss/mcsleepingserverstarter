@@ -25,6 +25,5 @@ Install :
 
 Use WebServer for dynmap :
  * You need to change your configuration from class: org.dynmap.InternalClientUpdateComponent to class: org.dynmap.JsonFileClientUpdateComponent (comment all the section InternalClientUpdateComponent and uncomment JsonFileClientUpdateComponent).
- * Chat will not work when hosted by mcsleepingserverstarter.
- * For a full compatibilty, you can use apache.
+ * Chat will not work when hosted by mcsleepingserverstarter. For a full compatibilty, you can use apache.
  * https://github.com/webbukkit/dynmap/wiki/Setting-up-without-the-Internal-Web-Server
