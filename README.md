@@ -1,6 +1,11 @@
 # mcsleepingserverstarter
 Put your minecraft server to rest, while SleepingServerStarter is watching ! Save power, save the world !
 
+What it does :
+* Listen on the same port as your minecraft server.
+* When someone connects, exit and launch your minecraft server.
+* When server is stopping (by EmptyServerStopper by example), watch until someone reconnects.
+
 Based on : 
 https://github.com/PrismarineJS/node-minecraft-protocol
 
