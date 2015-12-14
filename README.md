@@ -1,5 +1,5 @@
 # mcsleepingserverstarter
-Put your minecraft server to rest, while SleepingServerStarter is watching !
+Put your minecraft server to rest, while SleepingServerStarter is watching ! Save power, save the world !
 
 Based on : 
 https://github.com/PrismarineJS/node-minecraft-protocol
