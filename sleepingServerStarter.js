@@ -64,7 +64,8 @@ init();
 var closeServer = function() {
 	console.log('Cleaning up the place.')
 	mcServer.close();
-	webServer.close();
+	if(webServer !== undefined)
+		webServer.close();	
 
 	if (settings.startMinecraft > 0) {
 		startMinecraft();
