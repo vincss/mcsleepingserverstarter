@@ -52,7 +52,7 @@ var init = function() {
 			reducedDebugInfo : false
 		});
 
-		console.log('Prince as come, time to wake up.')
+		console.log('Prince has come, time to wake up.')
 
 		client.end(settings.loginMessage);
 		closeServer();
