@@ -1,6 +1,6 @@
 {
   "name": "mcsleepingserverstarter",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Sleeps until someone connects",
   "main": "sleepingServerStarter.js",
   "dependencies": {

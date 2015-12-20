@@ -39,7 +39,13 @@ var init = function() {
 		motd : settings.serverName,
 		port : settings.serverPort, // optional
 	});
-	console.log('Waiting for a Prince to come. [' + settings.serverPort + ']');
+	console.log('Waiting for a Prince to come. [' + settings.serverPort
+			+ '] Or someone to hit a key.');
+
+	process.stdin.resume();
+	process.stdin.on('data', function() {
+		closeServer();
+	});
 
 	mcServer.on('login', function(client) {
 		client.write('login', {
@@ -64,8 +70,8 @@ init();
 var closeServer = function() {
 	console.log('Cleaning up the place.')
 	mcServer.close();
-	if(webServer !== undefined)
-		webServer.close();	
+	if (webServer !== undefined)
+		webServer.close();
 
 	if (settings.startMinecraft > 0) {
 		startMinecraft();
