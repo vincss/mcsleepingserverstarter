@@ -12,7 +12,7 @@ var serveStatic = require('serve-static');
 var childProcess = require('child_process');
 
 var winston = require('winston');
-var logFolder = 'log/'
+var logFolder = 'logs/'
 var dateFormat = require('dateformat');
 var logger;
 
