@@ -22,6 +22,9 @@ Install :
  * Unzip it at your minecraft's root.
  * Launch "npm install", to restore the needed package.
  * Start using "node sleepingServerStarter.js".
+ 
+Update :
+ * Run "npm update" to update packages (minecraft protocol could need some updates).
 
 Use WebServer for dynmap :
  * You need to change your configuration from class: org.dynmap.InternalClientUpdateComponent to class: org.dynmap.JsonFileClientUpdateComponent (comment all the section InternalClientUpdateComponent and uncomment JsonFileClientUpdateComponent).
