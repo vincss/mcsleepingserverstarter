@@ -25,7 +25,7 @@ var startMinecraft = function() {
 	logger.info('----------- Starting Minecraft : ' + settings.minecraftCommand
 			+ ' ----------- ');
 
-	//settings.minecraftCommand = 'notepad';
+	settings.minecraftCommand = 'notepad';
 	var mcProcess = childProcess.execSync(settings.minecraftCommand, {
 		stdio : "inherit"
 	});
@@ -42,7 +42,7 @@ process.on('uncaughtException', function(err) {
 	process.exit(1);
 });
 
-var initLog = function() {
+var initMain = function() {
 	if (!fileSystem.existsSync(logFolder)) {
 		fileSystem.mkdirSync(logFolder);
 	}
@@ -60,11 +60,20 @@ var initLog = function() {
 			json : false
 		}) ]
 	});
+	
+	process.stdin.resume();
+	process.stdin.setEncoding('utf8');
+
+	process.stdin.on('data', function(text) {	
+		logger.info('Input ' + JSON.stringify(text));
+		if (text.indexOf('quit') > -1){
+			closeServer();
+		}		
+	});	
 };
+initMain();
 
-var init = function() {
-
-	initLog();
+var initServer = function() {
 
 	if (settings.webPort > 0) {
 		webServer = connect().use(serveStatic(settings.webDir)).listen(
@@ -74,25 +83,20 @@ var init = function() {
 	}
 
 	mcServer = mc.createServer({
-		'online-mode' : settings.serverOnlineMode, 
-		encryption : true, 
-		host : '0.0.0.0', 
+		'online-mode' : settings.serverOnlineMode,
+		encryption : true,
+		host : '0.0.0.0',
 		motd : settings.serverName,
-		port : settings.serverPort, 
-		favicon : faviconString
-	});
-	logger.info('Waiting for a Prince to come. [' + settings.serverPort
-			+ '] Or someone to hit a key.');
-
-	process.stdin.resume();
-	process.stdin.on('data', function() {
-		closeServer();
-	});
-
-	mcServer.on('connection', function(client) {
-		logger.info('A Prince has taken a quick peek. ' )
+		port : settings.serverPort,		
 	});
 	
+	logger.info('Waiting for a Prince to come. [' + settings.serverPort
+			+ '] Or someone to type quit.');
+
+	mcServer.on('connection', function(client) {
+		logger.info('A Prince has taken a quick peek. ')
+	});
+
 	mcServer.on('login', function(client) {
 		client.write('login', {
 			entityId : client.id,
@@ -104,17 +108,20 @@ var init = function() {
 			reducedDebugInfo : false
 		});
 
-		logger.info('Prince [' + client.username +'.' + client.state + '] has come, time to wake up.')
+		logger.info('Prince [' + client.username + '.' + client.state
+				+ '] has come, time to wake up.')
 
 		client.end(settings.loginMessage);
 		closeServer();
-	});	
+	});
 };
-init();
+initServer();
 
 var closeServer = function() {
 	logger.info('Cleaning up the place.')
-	mcServer.close();
+	
+	if (mcServer !== undefined)
+		mcServer.close();
 	if (webServer !== undefined)
 		webServer.close();
 
@@ -124,7 +131,7 @@ var closeServer = function() {
 		logger.info('...Time to kill me if you want...')
 		setTimeout(function() {
 			logger.info('...Too late !...');
-			init();
+			initServer();
 		}, 5000); // restart server
 	}
 };
