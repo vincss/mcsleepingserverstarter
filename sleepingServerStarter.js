@@ -63,7 +63,6 @@ var initMain = function() {
 	process.stdin.setEncoding('utf8');
 
 	process.stdin.on('data', function(text) {
-		logger.info('Input ' + JSON.stringify(text));
 		if (text.indexOf('quit') > -1) {
 			closeServer();
 		}
