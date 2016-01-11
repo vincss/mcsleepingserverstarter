@@ -31,7 +31,7 @@ var startMinecraft = function() {
 };
 
 var getDate = function() {
-	return dateFormat(new Date(), 'yyyy-mm-dd hh:MM:ss.l');
+	return dateFormat(new Date(), 'yyyy-mm-dd HH:MM:ss.l');
 };
 
 process.on('uncaughtException', function(err) {
@@ -81,7 +81,7 @@ var initServer = function() {
 
 	mcServer = mc.createServer({
 		'online-mode' : settings.serverOnlineMode,
-		encryption : true,
+		encryption : false,
 		host : '0.0.0.0',
 		motd : settings.serverName,
 		port : settings.serverPort,
