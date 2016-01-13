@@ -1,12 +1,12 @@
 {
   "name": "mcsleepingserverstarter",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Sleeps until someone connects",
   "main": "sleepingServerStarter.js",
   "dependencies": {
     "connect": "^3.4.0",
     "dateformat": "^1.0.12",
-    "js-yaml": "^3.4.6",
+    "js-yaml": "^3.5.2",
     "minecraft-protocol": "^0.16.6",
     "serve-static": "^1.10.0",
     "winston": "^2.1.1"

@@ -35,8 +35,17 @@ var getDate = function() {
 };
 
 process.on('uncaughtException', function(err) {
-	logger.info('Caught exception: ' + err);
-	logger.info('...Exiting..');
+	logger.info('Caught uncaughtException: ' + JSON.stringify(err));
+
+	if (err.code == 'ECONNRESET') {
+		logger.info('Connection reset client side... Keep on going.')
+		return;
+	}
+	if (err.code == 'EADDRINUSE') {
+		logger.info('A server is already using the port ' + settings.serverPort + '. Kill it and restart the app.')
+	}
+
+	logger.info('...Exiting...');
 	process.exit(1);
 });
 
@@ -66,7 +75,7 @@ var initMain = function() {
 		if (text.indexOf('quit') > -1) {
 			closeServer();
 		}
-	});
+	});	
 };
 initMain();
 
