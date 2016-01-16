@@ -1,6 +1,6 @@
 {
   "name": "mcsleepingserverstarter",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Sleeps until someone connects",
   "main": "sleepingServerStarter.js",
   "dependencies": {
@@ -11,7 +11,9 @@
     "serve-static": "^1.10.0",
     "winston": "^2.1.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "node-inspector": "^0.12.5"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

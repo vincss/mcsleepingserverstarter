@@ -44,6 +44,10 @@ process.on('uncaughtException', function(err) {
 	if (err.code == 'EADDRINUSE') {
 		logger.info('A server is already using the port ' + settings.serverPort + '. Kill it and restart the app.')
 	}
+	if(err.message != 'undefined' && err.message.indexOf('handshaking.toServer')){
+    logger.info('Client is not compatible.');
+    return;
+	}
 
 	logger.info('...Exiting...');
 	process.exit(1);
@@ -94,7 +98,7 @@ var initServer = function() {
 		host : '0.0.0.0',
 		motd : settings.serverName,
 		port : settings.serverPort,
-		beforePing : function(reponse, client) {
+		beforePing : function(reponse, client) {			
 			reponse.favicon = faviconString;
 		}
 	});
@@ -103,7 +107,7 @@ var initServer = function() {
 			+ '] Or someone to type quit.');
 
 	mcServer.on('connection', function(client) {
-		logger.info('A Prince has taken a quick peek. ')
+		logger.info('A Prince has taken a quick peek. [' + client.protocolState + '_' + client.version + ']');				
 	});
 
 	mcServer.on('login', function(client) {
