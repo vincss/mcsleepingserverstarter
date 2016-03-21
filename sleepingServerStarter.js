@@ -68,7 +68,7 @@ var initMain = function() {
 		}), new (winston.transports.File)({
 			filename : logFolder + 'sleepinServer.log',
 			timestamp : getDate,
-			maxsize : 2048,
+			maxsize : 2 * 1024 * 1024,
 			maxFiles : 3,
 			json : false
 		}) ]
