@@ -7,7 +7,7 @@
     "connect": "^3.4.1",
     "dateformat": "^1.0.12",
     "js-yaml": "^3.6.1",
-    "minecraft-protocol": "^0.19.6",
+    "minecraft-protocol": "^1.0.0",
     "serve-static": "^1.10.2",
     "winston": "^2.2.0"
   },
