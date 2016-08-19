@@ -4,7 +4,7 @@ serverName: SleepingServer, waiting for his prince...
 serverPort: 25565
 loginMessage: ...Waking server up, come back in a minute...
 serverOnlineMode: true
-serverVersion: "1.9.4"
+serverVersion: "1.10"
 
 webPort: 0	 					# 0 to disable web hosting, 8123default dynmap
 webDir: plugins/dynmap/web 	# dir of dynmap web

@@ -7,8 +7,8 @@
     "connect": "^3.4.1",
     "dateformat": "^1.0.12",
     "js-yaml": "^3.6.1",
-    "minecraft-protocol": "^1.0.0",
-    "serve-static": "^1.10.2",
+    "minecraft-protocol": "^1.0.1",
+    "serve-static": "^1.11.1",
     "winston": "^2.2.0"
   },
   "devDependencies": {
