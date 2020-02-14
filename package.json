@@ -4,15 +4,12 @@
   "description": "Sleeps until someone connects",
   "main": "sleepingServerStarter.js",
   "dependencies": {
-    "connect": "^3.4.1",
-    "dateformat": "^1.0.12",
-    "js-yaml": "^3.6.1",
-    "minecraft-protocol": "^1.0.1",
-    "serve-static": "^1.11.1",
-    "winston": "^2.2.0"
-  },
-  "devDependencies": {
-    "node-inspector": "^0.12.5"
+    "connect": "^3.7.0",
+    "dateformat": "^3.0.3",
+    "js-yaml": "^3.13.1",
+    "minecraft-protocol": "^1.11.0",
+    "serve-static": "^1.14.1",
+    "winston": "^3.2.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
