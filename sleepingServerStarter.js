@@ -15,7 +15,7 @@ const winston = require('winston');
 const logFolder = 'logs/';
 const dateFormat = require('dateformat');
 let logger = {
-	info : (...params) => console.log(params)
+	info: (...params) => console.log(params)
 };
 
 let webServer;
@@ -35,7 +35,7 @@ const getDate = function () {
 	return dateFormat(new Date(), 'yyyy-mm-dd HH:MM:ss.l');
 };
 
-process.on('uncaughtException', function(err) {
+process.on('uncaughtException', function (err) {
 	logger.info(`Caught uncaughtException: ${JSON.stringify(err)}`);
 
 	if (err.code === 'ECONNRESET') {
@@ -46,9 +46,9 @@ process.on('uncaughtException', function(err) {
 		logger.info(`A server is already using the port ${settings.serverPort}. Kill it and restart the app.`)
 	}
 	if (err.message !== 'undefined'
-			&& err.message.indexOf('handshaking.toServer')) {
-		logger.info('Client is not compatible.', err.message);
-		return;
+		// && err.message.indexOf('handshaking.toServer')
+	) {
+		logger.info('Something bad happened', err.message);
 	}
 
 	logger.info('...Exiting...');
@@ -113,29 +113,27 @@ const initServer = function () {
 
 	mcServer.on('connection', function (client) {
 		logger.info(`A Prince has taken a quick peek. [${client.protocolState}_${client.version}]`);
-		client.end();
+	});
+
+	mcServer.on('listening', function (client) {
+		logger.info('Ready for battle', client);
 	});
 
 	mcServer.on('login', function (client) {
 
 		logger.info(`Prince [${client.username}.${client.state}] has come, time to wake up.`);
 
-		client.write('login', {
-			entityId: client.id,
-			levelType: 'default',
-			gameMode: 0,
-			dimension: 0,
-			difficulty: 2,
-			maxPlayers: mcServer.maxPlayers,
-			reducedDebugInfo: false
+		client.on('end', function (client) {
+			logger.info('Client Ended', client);
+			closeServer();
 		});
-
+		logger.info('Sending best regards', settings.loginMessage);
 		client.end(settings.loginMessage);
-		closeServer();
+
 	});
 };
 
-const closeServer = function() {
+const closeServer = function () {
 	logger.info('Cleaning up the place.');
 
 	if (mcServer !== undefined)
@@ -147,7 +145,7 @@ const closeServer = function() {
 		startMinecraft();
 
 		logger.info('...Time to kill me if you want...');
-		setTimeout(function() {
+		setTimeout(function () {
 			logger.info('...Too late !...');
 			initServer();
 		}, 5000); // restart server
