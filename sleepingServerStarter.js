@@ -142,6 +142,11 @@ const initServer = function () {
         client.end(settings.loginMessage);
 
     });
+
+    mcServer.on('error', function (error) {
+        logger.info('Something went wrong in wonderland', error);
+    });
+
 };
 
 const closeServer = function () {
