@@ -11,17 +11,24 @@ https://github.com/PrismarineJS/node-minecraft-protocol
 
 With an original idea from https://github.com/tustin2121/MCSignOnDoor
 
-Require :
-NodeJs (^v5.*) & NPM
+Require (if install from source) :
+NodeJs (^10.*) & NPM
   * Windows : https://nodejs.org/en/download/
   * Linux : https://github.com/nodesource/distributions#debinstall
   * EmptyServerStopper to stop your server when nobody is there : http://dev.bukkit.org/bukkit-plugins/emptyserverstopper/
 
-Install :
- * Download this repository as zip.
- * Unzip it at your minecraft's root.
- * Launch "npm install", to restore the needed package.
- * Start using "node sleepingServerStarter.js".
+* Install :
+    * From Source
+        * Download this repository as zip.
+        * Unzip it at your minecraft's root.
+        * Launch "npm install", to restore the needed package.
+        * Start using "npm start".
+    * From Binaries
+        * Download binaries depending on your system.
+        * Place the executable next to your server file (rename it to spigot.jar ).
+        * (For linux, maybe a "chmod +x sleepingServerStarter.run", will be required, play tell me if it's work :-) ).
+        * Make sure your server is stopped.
+        * Run the executable.
  
 Update :
  * Run "npm update" to update packages (minecraft protocol could need some updates).

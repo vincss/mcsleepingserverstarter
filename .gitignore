@@ -2,6 +2,10 @@
 logs
 *.log
 
+# IDE
+.idea/*
+*.iml
+
 # Runtime data
 pids
 *.pid
@@ -21,7 +25,33 @@ coverage
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
+bin/
 
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 node_modules
+
+# Game files
+*.exe
+*.jar
+game/
+runtime/
+
+# Server files
+world*/*
+plugins/*
+banned*.json
+ops.json
+usercache.json
+whitelist.json
+bukkit.yml
+commands.yml
+permissions.yml
+help.yml
+spigot.yml
+server.properties
+eula.txt
+
+# Spigot Build
+Spigot/*
+
