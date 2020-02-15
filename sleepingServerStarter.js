@@ -28,6 +28,7 @@ const startMinecraft = function () {
 	const mcProcess = childProcess.execSync(settings.minecraftCommand, {
 		stdio: "inherit"
 	});
+
 	logger.info('----------- Minecraft stopped -----------');
 };
 
@@ -124,7 +125,7 @@ const initServer = function () {
 		logger.info(`Prince [${client.username}.${client.state}] has come, time to wake up.`);
 
 		client.on('end', function (client) {
-			logger.info('Client Ended', client);
+			logger.info('The prince is gone, for now', client);
 			closeServer();
 		});
 		logger.info('Sending best regards', settings.loginMessage);

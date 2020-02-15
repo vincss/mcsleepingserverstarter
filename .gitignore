@@ -35,9 +35,22 @@ node_modules
 *.jar
 game/
 runtime/
-_game/ 
 
 # Server files
 world*/*
-_server/
-_server/
+plugins/*
+banned*.json
+ops.json
+usercache.json
+whitelist.json
+bukkit.yml
+commands.yml
+permissions.yml
+help.yml
+spigot.yml
+server.properties
+eula.txt
+
+# Spigot Build
+Spigot/*
+
