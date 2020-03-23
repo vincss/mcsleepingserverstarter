@@ -2,24 +2,32 @@ const dateFormat = require('dateformat');
 const winston = require('winston');
 const fileSystem = require('fs');
 
-let logger = {
-    info: (...params) => console.log(params),
+const DefaultLogger = {
+    info: (...params) => console.info(params),
     error: (...params) => console.error(params)
 };
 
+let logger = DefaultLogger;
+let initialized = false;
+
 const logFolder = 'logs/';
 
-const getDate = function () {
+function getDate() {
     return dateFormat(new Date(), 'yyyy-mm-dd HH:MM:ss.l');
 };
 
 function getLogger() {
     try {
+
+        if(initialized) {
+            return logger;
+        }
+
         if (!fileSystem.existsSync(logFolder)) {
             fileSystem.mkdirSync(logFolder);
         }
 
-        return new winston.Logger({
+        logger = new winston.Logger({
             level: 'info',
             transports: [new (winston.transports.Console)({
                 timestamp: getDate,
@@ -34,7 +42,11 @@ function getLogger() {
         });
     } catch (error) {
         logger.error('Failed to initialize logger', error);
+        logger = DefaultLogger;
     }
+    initialized = true;
+    logger.info('.........................');
+    logger.info('... A new story begin ...');
     return logger;
 }
 

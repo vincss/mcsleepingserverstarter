@@ -1,4 +1,5 @@
 const fileSystem = require('fs');
+const logger = require('./sleepingLogger').getLogger();
 
 const SettingFilePath = 'sleepingSettings.yml';
 
@@ -20,7 +21,7 @@ function saveDefault() {
         const yamlToWrite = require('js-yaml').safeDump(DefaultSettings);
         fileSystem.writeFileSync(SettingFilePath, yamlToWrite)
     } catch (error) {
-        console.error('Failed to write setting.', error.message);
+        logger.error('Failed to write setting.', error.message);
     }
 }
 
@@ -31,10 +32,11 @@ function getSettings() {
             fileSystem.readFileSync(SettingFilePath));
         settings = { ...DefaultSettings, ...settingsFromFiles }
     } catch (error) {
-        console.error('Failed to load setting, using default.', error.message);
+        logger.error('Failed to load setting, using default.', error.message);
         saveDefault();
     }
-    console.log('Retrieved settings', settings);
+    logger.info('.........................');
+    logger.info('Retrieved settings:', settings);
     return settings;
 }
 

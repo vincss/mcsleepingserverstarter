@@ -7,8 +7,8 @@ const connect = require('connect');
 const serveStatic = require('serve-static');
 const childProcess = require('child_process');
 
-const settings = require('./sleepingSettings').getSettings();
 const logger = require('./sleepingLogger').getLogger();
+const settings = require('./sleepingSettings').getSettings();
 
 let webServer;
 let mcServer;
@@ -45,8 +45,6 @@ process.on('uncaughtException', function (err) {
 });
 
 const initMain = function () {
-
-    logger.info('... A new story begin ...');
 
     process.stdin.resume();
     process.stdin.setEncoding('utf8');
