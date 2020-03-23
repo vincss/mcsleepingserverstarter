@@ -124,6 +124,7 @@ const initServer = function () {
 
     mcServer.on('connection', function (client) {
         logger.info(`A Prince has taken a quick peek. [${client.protocolState}_${client.version}]`);
+        closeServer();
     });
 
     mcServer.on('listening', function (client) {
