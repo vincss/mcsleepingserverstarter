@@ -1,6 +1,8 @@
 const fileSystem = require('fs');
 
-let settings = {
+const SettingFilePath = 'sleepingSettings.yml';
+
+const DefaultSettings = {
     serverName: 'SleepingServer, waiting for his prince...',
     serverPort: 25565,
     loginMessage: '...Waking server up, come back in a minute...',
@@ -13,14 +15,27 @@ let settings = {
     minecraftCommand: 'java -jar spigot.jar nogui'
 };
 
-try {
-    const settingsFromFiles = require('js-yaml').load(
-        fileSystem.readFileSync('sleepingSettings.yml'));
-    settings = {...settings, ...settingsFromFiles}
-} catch (error) {
-    console.log('Failed to load setting, using default.', error.message)
+function saveDefault() {
+    try {
+        const yamlToWrite = require('js-yaml').safeDump(DefaultSettings);
+        fileSystem.writeFileSync(SettingFilePath, yamlToWrite)
+    } catch (error) {
+        console.error('Failed to write setting.', error.message);
+    }
 }
 
-console.log('Retrieved settings', settings);
+function getSettings() {
+    let settings = {...DefaultSettings};
+    try {
+        const settingsFromFiles = require('js-yaml').safeLoad(
+            fileSystem.readFileSync(SettingFilePath));
+        settings = { ...DefaultSettings, ...settingsFromFiles }
+    } catch (error) {
+        console.error('Failed to load setting, using default.', error.message);
+        saveDefault();
+    }
+    console.log('Retrieved settings', settings);
+    return settings;
+}
 
-module.exports = settings;
+module.exports = { getSettings };
