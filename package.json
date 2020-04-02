@@ -1,13 +1,13 @@
 {
   "name": "mcsleepingserverstarter",
-  "version": "1.15.1",
+  "version": "1.15.2",
   "description": "Sleeps until someone connects",
   "main": "sleepingServerStarter.js",
   "dependencies": {
     "connect": "^3.7.0",
     "dateformat": "^3.0.3",
     "js-yaml": "^3.13.1",
-    "minecraft-protocol": "^1.11.0",
+    "minecraft-protocol": "git+https://github.com/PrismarineJS/node-minecraft-protocol",
     "nexe": "^3.3.2",
     "npm-run-all": "^4.1.5",
     "serve-static": "^1.14.1",
