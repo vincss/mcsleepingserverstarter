@@ -12,17 +12,30 @@ const settings = require('./sleepingSettings').getSettings();
 
 let webServer;
 let mcServer;
+let mcProcess;
 
 const startMinecraft = function () {
     logger.info(`----------- Starting Minecraft : ${settings.minecraftCommand} ----------- `);
 
     // settings.minecraftCommand = 'notepad';
-    const mcProcess = childProcess.execSync(settings.minecraftCommand, {
+    mcProcess = childProcess.execSync(settings.minecraftCommand, {
         stdio: "inherit"
     });
 
     logger.info('----------- Minecraft stopped -----------');
 };
+
+process.on('SIGINT', () => {
+    logger.info('SIGINT signal received.');
+    closeSleeping();
+    process.exit(0);
+});
+
+process.on('SIGTERM', () => {
+    logger.info('SIGTERM  signal received.');
+    closeSleeping();
+    process.exit(0);
+});
 
 process.on('uncaughtException', function (err) {
     logger.info(`Caught uncaughtException: ${JSON.stringify(err)}`);
@@ -107,13 +120,21 @@ const initServer = function () {
 
 };
 
-const closeServer = function () {
+const closeSleeping = function () {
     logger.info('Cleaning up the place.');
 
-    if (mcServer !== undefined)
+    if (mcServer !== undefined) {
         mcServer.close();
-    if (webServer !== undefined)
+    }
+
+    if (webServer !== undefined) {
         webServer.close();
+    }
+};
+
+const closeServer = function () {
+
+    closeSleeping();
 
     if (settings.startMinecraft > 0) {
         startMinecraft();

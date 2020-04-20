@@ -16,8 +16,9 @@
   "scripts": {
     "start": "node sleepingServerStarter.js",
     "build": "npm-run-all build:*",
-    "build:win": "nexe -t windows-x64-12.15.0 -o bin/sleepingServerStarter.exe --icon sss.ico sleepingServerStarter.js",
+    "build:win": "nexe -t windows-x64-12.15.0 -o bin/sleepingServerStarter.exe sleepingServerStarter.js",
     "build:linux": "nexe -t static-x64-12.9.1 -o bin/sleepingServerStarter.run sleepingServerStarter.js",
+    "build:native": "nexe --build -o bin/sleepingServerStarter.exe --icon sss.ico sleepingServerStarter.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Vincss",
