@@ -3,23 +3,24 @@
   "version": "1.15.2",
   "description": "Sleeps until someone connects",
   "main": "sleepingServerStarter.js",
+  "scripts": {
+    "start": "node sleepingServerStarter.js",
+    "build": "npm-run-all build:*",
+    "build:win": "pkg sleepingServerStarter.js --target win --output bin/sleepingServerStarter.exe",
+    "build:linux": "pkg sleepingServerStarter.js --target linux --output bin/sleepingServerStarter.run",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
     "connect": "^3.7.0",
     "dateformat": "^3.0.3",
     "js-yaml": "^3.13.1",
-    "minecraft-protocol": "git+https://github.com/PrismarineJS/node-minecraft-protocol",
-    "nexe": "^3.3.2",
+    "minecraft-protocol": "^1.12.0",
     "npm-run-all": "^4.1.5",
     "serve-static": "^1.14.1",
     "winston": "^2.2.0"
   },
-  "scripts": {
-    "start": "node sleepingServerStarter.js",
-    "build": "npm-run-all build:*",
-    "build:win": "nexe -t windows-x64-12.15.0 -o bin/sleepingServerStarter.exe sleepingServerStarter.js",
-    "build:linux": "nexe -t static-x64-12.9.1 -o bin/sleepingServerStarter.run sleepingServerStarter.js",
-    "build:native": "nexe --build -o bin/sleepingServerStarter.exe --icon sss.ico sleepingServerStarter.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "devDependencies": {
+    "pkg": "^4.4.8"
   },
   "author": "Vincss",
   "license": "ISC",
