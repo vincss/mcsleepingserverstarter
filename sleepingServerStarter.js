@@ -85,7 +85,7 @@ const initServer = function () {
         // host: '0.0.0.0',
         motd: settings.serverName,
         port: settings.serverPort,
-        // version: settings.serverVersion,
+        version: settings.serverVersion,
         beforePing: function (reponse, client) {
             reponse.favicon = faviconString;
         }

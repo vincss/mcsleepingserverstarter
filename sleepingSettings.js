@@ -13,7 +13,8 @@ const DefaultSettings = {
     webDir: 'plugins/dynmap/web', 	// dir of dynmap web
 
     startMinecraft: 1,				// 0 to disable
-    minecraftCommand: 'java -jar spigot.jar nogui'
+    minecraftCommand: 'java -jar spigot.jar nogui',
+    version: "1.16"
 };
 
 function saveDefault() {
