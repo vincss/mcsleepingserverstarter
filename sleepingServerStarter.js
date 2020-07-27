@@ -38,7 +38,7 @@ process.on('SIGTERM', () => {
 });
 
 process.on('uncaughtException', function (err) {
-    logger.info(`Caught uncaughtException: ${JSON.stringify(err)}`);
+    logger.warn(`Caught uncaughtException: ${JSON.stringify(err)}`);
 
     if (err.code === 'ECONNRESET') {
         logger.info('Connection reset client side... Keep on going.');
