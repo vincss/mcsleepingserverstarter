@@ -12,7 +12,7 @@ https://github.com/PrismarineJS/node-minecraft-protocol
 With an original idea from https://github.com/tustin2121/MCSignOnDoor
 
 Require (if install from source) :
-NodeJs (^10.*) & NPM
+NodeJs (^14.*) & NPM
   * Windows : https://nodejs.org/en/download/
   * Linux : https://github.com/nodesource/distributions#debinstall
   * EmptyServerStopper to stop your server when nobody is there : http://dev.bukkit.org/bukkit-plugins/emptyserverstopper/
