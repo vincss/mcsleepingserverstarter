@@ -1,10 +1,10 @@
-const dateFormat = require('dateformat');
-const winston = require('winston');
-const fileSystem = require('fs');
+import { Logger, transports } from 'winston';
+import { existsSync, mkdirSync } from 'fs';
 
 const DefaultLogger = {
     info: (...params) => console.info(params),
-    error: (...params) => console.error(params)
+    error: (...params) => console.error(params),
+    warn: (...params) => console.warn(params)
 };
 
 let logger = DefaultLogger;
@@ -13,26 +13,26 @@ let initialized = false;
 const logFolder = 'logs/';
 
 function getDate() {
-    return dateFormat(new Date(), 'yyyy-mm-dd HH:MM:ss.l');
+    return new Date().toISOString();
 };
 
-function getLogger() {
+export function getLogger() {
     try {
 
-        if(initialized) {
+        if (initialized) {
             return logger;
         }
 
-        if (!fileSystem.existsSync(logFolder)) {
-            fileSystem.mkdirSync(logFolder);
+        if (!existsSync(logFolder)) {
+            mkdirSync(logFolder);
         }
 
-        logger = new winston.Logger({
+        logger = new Logger({
             level: 'info',
-            transports: [new (winston.transports.Console)({
+            transports: [new (transports.Console)({
                 timestamp: getDate,
                 colorize: true
-            }), new (winston.transports.File)({
+            }), new (transports.File)({
                 filename: `${logFolder}sleepingServer.log`,
                 timestamp: getDate,
                 maxsize: 2 * 1024 * 1024,
@@ -49,5 +49,3 @@ function getLogger() {
     logger.info('... A new story begin ...');
     return logger;
 }
-
-module.exports = { getLogger };

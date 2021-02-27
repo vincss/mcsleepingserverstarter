@@ -1,9 +1,24 @@
-const fileSystem = require('fs');
-const logger = require('./sleepingLogger').getLogger();
+import { writeFileSync, readFileSync } from 'fs';
+import { safeDump, safeLoad } from 'js-yaml';
+import { getLogger } from './sleepingLogger';
+
+const logger = getLogger();
 
 const SettingFilePath = 'sleepingSettings.yml';
 
-const DefaultSettings = {
+export type Settings = {
+    serverName: string,
+    serverPort: number,
+    loginMessage: string,
+    serverOnlineMode: boolean,
+    webPort: number,
+    webDir: string,
+    startMinecraft: number,
+    minecraftCommand: string,
+    version: string
+};
+
+const DefaultSettings: Settings = {
     serverName: 'SleepingServer, waiting for his prince...',
     serverPort: 25565,
     loginMessage: '...Waking server up, come back in a minute...',
@@ -19,18 +34,18 @@ const DefaultSettings = {
 
 function saveDefault() {
     try {
-        const yamlToWrite = require('js-yaml').safeDump(DefaultSettings);
-        fileSystem.writeFileSync(SettingFilePath, yamlToWrite)
+        const yamlToWrite = safeDump(DefaultSettings);
+        writeFileSync(SettingFilePath, yamlToWrite)
     } catch (error) {
         logger.error('Failed to write setting.', error.message);
     }
 }
 
-function getSettings() {
-    let settings = {...DefaultSettings};
+export function getSettings(): Settings {
+    let settings = { ...DefaultSettings };
     try {
-        const settingsFromFiles = require('js-yaml').safeLoad(
-            fileSystem.readFileSync(SettingFilePath));
+        const settingsFromFiles = safeLoad(
+            readFileSync(SettingFilePath));
         settings = { ...DefaultSettings, ...settingsFromFiles }
     } catch (error) {
         logger.error('Failed to load setting, using default.', error.message);
@@ -40,5 +55,3 @@ function getSettings() {
     logger.info('Retrieved settings:', settings);
     return settings;
 }
-
-module.exports = { getSettings };
