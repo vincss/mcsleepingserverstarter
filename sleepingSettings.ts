@@ -1,5 +1,5 @@
 import { writeFileSync, readFileSync } from 'fs';
-import { safeDump, safeLoad } from 'js-yaml';
+import { dump, load } from 'js-yaml';
 import { getLogger } from './sleepingLogger';
 
 const logger = getLogger();
@@ -34,7 +34,7 @@ const DefaultSettings: Settings = {
 
 function saveDefault() {
     try {
-        const yamlToWrite = safeDump(DefaultSettings);
+        const yamlToWrite = dump(DefaultSettings);
         writeFileSync(SettingFilePath, yamlToWrite)
     } catch (error) {
         logger.error('Failed to write setting.', error.message);
@@ -44,9 +44,9 @@ function saveDefault() {
 export function getSettings(): Settings {
     let settings = { ...DefaultSettings };
     try {
-        const settingsFromFiles = safeLoad(
-            readFileSync(SettingFilePath));
-        settings = { ...DefaultSettings, ...settingsFromFiles }
+        const read = readFileSync(SettingFilePath).toString();
+        const settingsFromFiles = load(read) as Settings;
+        settings = { ...DefaultSettings, ...settingsFromFiles };
     } catch (error) {
         logger.error('Failed to load setting, using default.', error.message);
         saveDefault();

@@ -2,9 +2,9 @@ import { Logger, transports } from 'winston';
 import { existsSync, mkdirSync } from 'fs';
 
 const DefaultLogger = {
-    info: (...params) => console.info(params),
-    error: (...params) => console.error(params),
-    warn: (...params) => console.warn(params)
+    info: (...params: any) => console.info(params),
+    error: (...params: any) => console.error(params),
+    warn: (...params: any) => console.warn(params)
 };
 
 let logger = DefaultLogger;
