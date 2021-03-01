@@ -15,7 +15,7 @@ export type Settings = {
     webDir: string,
     startMinecraft: number,
     minecraftCommand: string,
-    version: string
+    // version: string
 };
 
 const DefaultSettings: Settings = {
@@ -29,7 +29,7 @@ const DefaultSettings: Settings = {
 
     startMinecraft: 1,				// 0 to disable
     minecraftCommand: 'java -jar spigot.jar nogui',
-    version: '1.16.4'
+    // version: '1.16.4'
 };
 
 function saveDefault() {
