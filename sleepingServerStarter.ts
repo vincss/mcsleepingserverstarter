@@ -72,14 +72,7 @@ const initMain = function () {
     initServer();
 };
 
-const initServer = function () {
-
-    if (settings.webPort > 0) {
-        webServer = connect().use(serveStatic(settings.webDir)).listen(
-            settings.webPort);
-        logger.info(`Starting web server on *:${settings.webPort} webDir: ${settings.webDir}`);
-    }
-
+const initMc = function () {
     mcServer = createServer({
         'online-mode': settings.serverOnlineMode,
         // encryption: false,
@@ -95,15 +88,16 @@ const initServer = function () {
     logger.info(`Waiting for a Prince to come. [${settings.serverPort}] Or someone to type quit.`);
 
     mcServer.on('connection', function (client: Client) {
-        // logger.info(`A Prince has taken a quick peek. [${client.protocolState}_${client.version}]`);
-        logger.info(`A Prince has taken a quick peek. [${client.state}_${client.protocolVersion}]`);
+        // @ts-ignore FixMe ToDo not exported in TS
+        logger.info(`A Prince has taken a quick peek. [${client.protocolState}_${client.version}]`);
+        // logger.info(`A Prince has taken a quick peek. [${client.state}_${client.protocolVersion}]`);
     });
 
-    /*     
-    mcServer.on('listening', function (client:Client) {
-            logger.info('Ready for battle', client);
-        });
-     */
+    // @ts-ignore FixMe ToDo not exported in TS
+    mcServer.on('listening', function (client: Client) {
+        logger.info('Ready for battle', client);
+    });
+
     mcServer.on('login', function (client) {
 
         logger.info(`Prince [${client.username}.${client.state}] has come, time to wake up.`);
@@ -120,11 +114,26 @@ const initServer = function () {
     mcServer.on('error', function (error) {
         logger.info('Something went wrong in wonderland', error);
     });
+}
+
+const initServer = function () {
+
+    if (settings.webPort > 0) {
+        webServer = connect().use(serveStatic(settings.webDir)).listen(
+            settings.webPort);
+        logger.info(`Starting web server on *:${settings.webPort} webDir: ${settings.webDir}`);
+    }
+
+    if (settings.serverPort > 0) {
+        initMc();
+    }
 
 };
 
 const closeSleeping = function () {
     logger.info('Cleaning up the place.');
+    // logger.info('mcServer', mcServer);
+    // logger.info('webServer', webServer);
 
     if (mcServer !== undefined) {
         mcServer.close();
