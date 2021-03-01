@@ -24,7 +24,7 @@ coverage
 .lock-wscript
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
-build/Release
+build/
 bin/
 
 # Dependency directory
@@ -57,5 +57,6 @@ Spigot/*
 
 # my land 
 ViPiLand*/*
+AFreshStart*/*
 backups*/*
 start.sh

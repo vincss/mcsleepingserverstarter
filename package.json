@@ -4,23 +4,31 @@
   "description": "Sleeps until someone connects",
   "main": "sleepingServerStarter.js",
   "scripts": {
-    "start": "node sleepingServerStarter.js",
+    "start": "ts-node sleepingServerStarter.ts",
+    "prebuild": "rimraf build/ bin/",
     "build": "npm-run-all build:*",
-    "build:win": "pkg sleepingServerStarter.js --target win --output bin/sleepingServerStarter.exe",
-    "build:linux": "pkg sleepingServerStarter.js --target linux --output bin/sleepingServerStarter.run",
+    "build:typescript": "tsc",
+    "build:win": "pkg build/sleepingServerStarter.js --target win --output bin/sleepingServerStarter.exe",
+    "build:linux": "pkg build/sleepingServerStarter.js --target linux --output bin/sleepingServerStarter.run",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "connect": "^3.7.0",
-    "dateformat": "^3.0.3",
-    "js-yaml": "^3.13.1",
-    "minecraft-protocol": "^1.23.1",
-    "npm-run-all": "^4.1.5",
     "serve-static": "^1.14.1",
+    "js-yaml": "^4.0.0",
+    "minecraft-protocol": "^1.23.1",
     "winston": "^2.2.0"
   },
   "devDependencies": {
-    "pkg": "^4.4.9"
+    "@types/connect": "^3.4.34",
+    "@types/js-yaml": "^4.0.0",
+    "@types/node": "^14.14.31",
+    "@types/serve-static": "^1.13.9",
+    "npm-run-all": "^4.1.5",
+    "pkg": "^4.4.9",
+    "rimraf": "^3.0.2",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.2"
   },
   "author": "Vincss",
   "license": "ISC",

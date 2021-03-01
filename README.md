@@ -6,6 +6,9 @@ What it does :
 * When someone connects, exit and launch your minecraft server.
 * When server is stopping (by EmptyServerStopper by example), watch until someone reconnects.
 
+Tutorial Video :
+https://youtu.be/WqvQISpr6-s
+
 Based on : 
 https://github.com/PrismarineJS/node-minecraft-protocol
 
