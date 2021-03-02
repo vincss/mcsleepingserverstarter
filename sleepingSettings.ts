@@ -9,6 +9,7 @@ const SettingFilePath = 'sleepingSettings.yml';
 export type Settings = {
     serverName: string,
     serverPort: number,
+    bedrockPort : number,
     loginMessage: string,
     serverOnlineMode: boolean,
     webPort: number,
@@ -21,6 +22,7 @@ export type Settings = {
 const DefaultSettings: Settings = {
     serverName: 'SleepingServer, waiting for his prince...',
     serverPort: 25565,
+    bedrockPort: 19132,
     loginMessage: '...Waking server up, come back in a minute...',
     serverOnlineMode: true,
 
@@ -52,6 +54,6 @@ export function getSettings(): Settings {
         saveDefault();
     }
     logger.info('.........................');
-    logger.info('Retrieved settings:', settings);
+    logger.info(`Retrieved settings:${JSON.stringify(settings)}`);
     return settings;
 }

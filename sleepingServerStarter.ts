@@ -6,6 +6,7 @@ import * as http from 'http';
 
 import { getLogger } from './sleepingLogger';
 import { getSettings } from './sleepingSettings';
+import { SleepingBedrock } from './sleepingBedrock';
 
 const logger = getLogger();
 const settings = getSettings();
@@ -14,6 +15,7 @@ const faviconString = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAY
 
 let webServer: http.Server;
 let mcServer: Server;
+let brServer : SleepingBedrock;
 
 const startMinecraft = function () {
     logger.info(`----------- Starting Minecraft : ${settings.minecraftCommand} ----------- `);
@@ -38,6 +40,7 @@ process.on('SIGTERM', () => {
     process.exit(0);
 });
 
+/*
 process.on('uncaughtException', function (err: any) {
     logger.warn(`Caught uncaughtException: ${JSON.stringify(err)}`);
 
@@ -57,7 +60,7 @@ process.on('uncaughtException', function (err: any) {
     logger.info('...Exiting...');
     process.exit(1);
 });
-
+ */
 const initMain = function () {
 
     process.stdin.resume();
@@ -116,6 +119,11 @@ const initMc = function () {
     });
 }
 
+const initBedrock = function () {
+    brServer = new SleepingBedrock(settings.bedrockPort);
+    brServer.init();
+}
+
 const initServer = function () {
 
     if (settings.webPort > 0) {
@@ -125,7 +133,11 @@ const initServer = function () {
     }
 
     if (settings.serverPort > 0) {
-        initMc();
+        // initMc();
+    }
+
+    if(settings.bedrockPort > 0) {
+        initBedrock();
     }
 
 };
@@ -135,12 +147,16 @@ const closeSleeping = function () {
     // logger.info('mcServer', mcServer);
     // logger.info('webServer', webServer);
 
-    if (mcServer !== undefined) {
+    if (mcServer) {
         mcServer.close();
     }
 
-    if (webServer !== undefined) {
+    if (webServer) {
         webServer.close();
+    }
+
+    if(brServer) {
+        brServer.close();
     }
 };
 

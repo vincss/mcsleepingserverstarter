@@ -52,6 +52,9 @@ spigot.yml
 server.properties
 eula.txt
 
+# BedRock
+config.yaml
+
 # Spigot Build
 Spigot/*
 
