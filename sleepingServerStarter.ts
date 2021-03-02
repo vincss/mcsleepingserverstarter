@@ -15,7 +15,7 @@ const faviconString = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAY
 
 let webServer: http.Server;
 let mcServer: Server;
-let brServer : SleepingBedrock;
+let brServer: SleepingBedrock;
 
 const startMinecraft = function () {
     logger.info(`----------- Starting Minecraft : ${settings.minecraftCommand} ----------- `);
@@ -40,7 +40,6 @@ process.on('SIGTERM', () => {
     process.exit(0);
 });
 
-/*
 process.on('uncaughtException', function (err: any) {
     logger.warn(`Caught uncaughtException: ${JSON.stringify(err)}`);
 
@@ -60,7 +59,7 @@ process.on('uncaughtException', function (err: any) {
     logger.info('...Exiting...');
     process.exit(1);
 });
- */
+
 const initMain = function () {
 
     process.stdin.resume();
@@ -68,7 +67,7 @@ const initMain = function () {
 
     process.stdin.on('data', function (text) {
         if (text.indexOf('quit') > -1) {
-            closeServer();
+            playerConnectionCallBack();
         }
     });
 
@@ -107,7 +106,7 @@ const initMc = function () {
 
         client.on('end', function (client) {
             logger.info('The prince is gone, for now', client);
-            closeServer();
+            playerConnectionCallBack();
         });
         logger.info('Sending best regards', settings.loginMessage);
         client.end(settings.loginMessage);
@@ -120,7 +119,7 @@ const initMc = function () {
 }
 
 const initBedrock = function () {
-    brServer = new SleepingBedrock(settings.bedrockPort);
+    brServer = new SleepingBedrock(settings, playerConnectionCallBack);
     brServer.init();
 }
 
@@ -133,10 +132,10 @@ const initServer = function () {
     }
 
     if (settings.serverPort > 0) {
-        // initMc();
+        initMc();
     }
 
-    if(settings.bedrockPort > 0) {
+    if (settings.bedrockPort > 0) {
         initBedrock();
     }
 
@@ -155,12 +154,12 @@ const closeSleeping = function () {
         webServer.close();
     }
 
-    if(brServer) {
+    if (brServer) {
         brServer.close();
     }
 };
 
-const closeServer = function () {
+const playerConnectionCallBack = () => {
 
     closeSleeping();
 

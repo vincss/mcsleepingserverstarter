@@ -5,12 +5,11 @@ import PlayerManager from '@jsprismarine/prismarine/dist/player/PlayerManager';
 import LoggerBuilder from '@jsprismarine/prismarine/dist/utils/Logger';
 import { Listener, Connection, InetAddress, Protocol } from '@jsprismarine/raknet';
 import Identifiers from '@jsprismarine/raknet/dist/protocol/Identifiers';
+import { Settings } from './sleepingSettings';
 
 
 const Address = '0.0.0.0';
 const Version = '1.16.201';
-const DEF_MTU_SIZE = 1455;
-
 
 export class SleepingBedrock {
 
@@ -20,10 +19,12 @@ export class SleepingBedrock {
     listenerBuilder: Listener;
     playerManager: PlayerManager;
     private readonly eventManager = new EventManager();
+    playerConnectionCallBack: () => void;
 
+    constructor(settings: Settings, playerConnectionCallBack: () => void) {
+        this.port = settings.bedrockPort;
+        this.playerConnectionCallBack = playerConnectionCallBack;
 
-    constructor(port: number) {
-        this.port = port;
         this.logger = new LoggerBuilder();
         const config = new Config(Version);
         const server = {
@@ -41,7 +42,7 @@ export class SleepingBedrock {
 
         this.listener = await this.listenerBuilder.listen(Address, this.port);
         this.listener.on('openConnection', this.handleOpenConnection);
-        this.listener.on('closeConnection', async (inetAddr: InetAddress, reason: string) => { this.logger.info(`closeConnection ${inetAddr} ${JSON.stringify(reason)}`) });
+        this.listener.on('closeConnection', async (inetAddr: InetAddress, reason: string) => { this.logger.info(`closeConnection ${JSON.stringify(inetAddr)} ${reason}`) });
         this.listener.on('encapsulated', this.handleEncapsulated);
         // this.listener.on('raw', async (buffer: Buffer, inetAddr: InetAddress) => { this.logger.info(`raw ${JSON.stringify(inetAddr)} ${JSON.stringify(buffer)}`) });
 
@@ -60,7 +61,8 @@ export class SleepingBedrock {
     handleRaknetConnect = async (raknetConnectEvent: RaknetConnectEvent) => {
         this.logger.info(`raknetConnect ${raknetConnectEvent}`);
         const connection = raknetConnectEvent.getConnection();
-        connection.disconnect('The End Has Come');
+        connection.disconnect('Starting MC Server');
+        this.playerConnectionCallBack();
         connection.close();
     }
 
