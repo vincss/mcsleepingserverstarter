@@ -43,7 +43,7 @@ export class SleepingContainer {
     }
 
     startMinecraft = () => {
-        this.settings.minecraftCommand = 'notepad';
+        // this.settings.minecraftCommand = 'notepad';
         this.logger.info(`----------- Starting Minecraft : ${this.settings.minecraftCommand} ----------- `);
         execSync(this.settings.minecraftCommand, {
             stdio: 'inherit'
