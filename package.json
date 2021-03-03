@@ -5,7 +5,7 @@
   "main": "sleepingServerStarter.js",
   "scripts": {
     "start": "ts-node sleepingServerStarter.ts",
-    "prebuild": "rimraf build/ bin/",
+    "prebuild": "rimraf ./build/ ./bin/",
     "build": "npm-run-all build:*",
     "build:typescript": "tsc",
     "build:win": "pkg build/sleepingServerStarter.js --target win --output bin/sleepingServerStarter.exe",
