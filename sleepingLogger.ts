@@ -1,4 +1,3 @@
-import { transports, createLogger, format } from 'winston';
 import { existsSync, mkdirSync } from 'fs';
 import LoggerBuilder from '@jsprismarine/prismarine/dist/utils/Logger';
 
@@ -13,10 +12,6 @@ let initialized = false;
 
 const logFolder = 'logs/';
 
-function getDate() {
-    return new Date().toISOString();
-};
-
 export function getLogger() {
     try {
 
@@ -28,23 +23,23 @@ export function getLogger() {
             mkdirSync(logFolder);
         }
         logger = new LoggerBuilder();
-/* 
-        logger = createLogger({
-            level: 'info',
-            format: format.simple(),
-            transports: [
-                new (transports.Console)({
-                    // timestamp: getDate,
-                    // colorize: true                    
-                }),
-                new (transports.File)({
-                    filename: `${logFolder}sleepingServer.log`,
-                    // timestamp: getDate,
-                    maxsize: 2 * 1024 * 1024,
-                    maxFiles: 3,
-                    // json: false                
-                })]
-        }); */
+        /* 
+                logger = createLogger({
+                    level: 'info',
+                    format: format.simple(),
+                    transports: [
+                        new (transports.Console)({
+                            // timestamp: getDate,
+                            // colorize: true                    
+                        }),
+                        new (transports.File)({
+                            filename: `${logFolder}sleepingServer.log`,
+                            // timestamp: getDate,
+                            maxsize: 2 * 1024 * 1024,
+                            maxFiles: 3,
+                            // json: false                
+                        })]
+                }); */
     } catch (error) {
         logger.error('Failed to initialize logger', error);
         logger = DefaultLogger;

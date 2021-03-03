@@ -9,7 +9,7 @@ const SettingFilePath = 'sleepingSettings.yml';
 export type Settings = {
     serverName: string,
     serverPort: number,
-    bedrockPort : number,
+    bedrockPort: number,
     loginMessage: string,
     serverOnlineMode: boolean,
     webPort: number,
