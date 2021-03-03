@@ -1,9 +1,10 @@
 import { Client, createServer, Server } from 'minecraft-protocol';
 import { faviconString } from './sleepingContainer';
 import { getLogger, LoggerType } from './sleepingLogger';
+import { ISleepingServer } from './sleepingServerInterface';
 import { Settings } from './sleepingSettings';
 
-export class SleepingMcJava {
+export class SleepingMcJava implements ISleepingServer {
 
     server?: Server;
 
@@ -17,7 +18,7 @@ export class SleepingMcJava {
         this.logger = getLogger();
     }
 
-    init() {
+    init = async () => {
         this.server = createServer({
             'online-mode': this.settings.serverOnlineMode,
             // encryption: false,
@@ -61,7 +62,7 @@ export class SleepingMcJava {
         });
     }
 
-    close = () => {
+    close = async () => {
         this.logger.info('[McJava] Closing');
         if (this.server) {
             this.server.close();

@@ -7,13 +7,13 @@ const settings = getSettings();
 
 let sleepingContainer: SleepingContainer;
 
-process.on('SIGINT', async() => {
+process.on('SIGINT', async () => {
     logger.info('SIGINT signal received.');
     await close();
     process.exit(0);
 });
 
-process.on('SIGTERM', async() => {
+process.on('SIGTERM', async () => {
     logger.info('SIGTERM  signal received.');
     await close();
     process.exit(0);
@@ -50,7 +50,7 @@ const main = async () => {
     process.stdin.setEncoding('utf8');
 
     sleepingContainer = new SleepingContainer(settings);
-    sleepingContainer.init();
+    await sleepingContainer.init();
 
     process.stdin.on('data', (text) => {
         if (text.indexOf('quit') > -1) {
