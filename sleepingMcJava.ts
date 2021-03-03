@@ -1,8 +1,6 @@
-import { Logger } from '@jsprismarine/prismarine';
-
 import { Client, createServer, Server } from 'minecraft-protocol';
 import { faviconString } from './sleepingContainer';
-import { getLogger } from './sleepingLogger';
+import { getLogger, LoggerType } from './sleepingLogger';
 import { Settings } from './sleepingSettings';
 
 export class SleepingMcJava {
@@ -10,13 +8,13 @@ export class SleepingMcJava {
     server?: Server;
 
     settings: Settings;
-    logger: Logger;
+    logger: LoggerType;
     playerConnectionCallBack: () => void;
 
     constructor(settings: Settings, playerConnectionCallBack: () => void) {
         this.settings = settings;
         this.playerConnectionCallBack = playerConnectionCallBack;
-        this.logger = getLogger() as Logger;
+        this.logger = getLogger();
     }
 
     init() {

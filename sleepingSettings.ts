@@ -23,6 +23,7 @@ const DefaultSettings: Settings = {
     serverName: 'SleepingServer, waiting for his prince...',
     serverPort: 25565,
     bedrockPort: 19132,
+    
     loginMessage: '...Waking server up, come back in a minute...',
     serverOnlineMode: true,
 

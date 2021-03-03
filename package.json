@@ -5,6 +5,7 @@
   "main": "sleepingServerStarter.js",
   "scripts": {
     "start": "ts-node sleepingServerStarter.ts",
+    "start:development": "cross-env NODE_ENV=development ts-node sleepingServerStarter.ts",
     "prebuild": "rimraf ./build/ ./bin/",
     "build": "npm-run-all build:*",
     "build:typescript": "tsc",
@@ -26,6 +27,7 @@
     "@types/js-yaml": "^4.0.0",
     "@types/node": "^14.14.31",
     "@types/serve-static": "^1.13.9",
+    "cross-env": "^7.0.3",
     "npm-run-all": "^4.1.5",
     "pkg": "^4.4.9",
     "rimraf": "^3.0.2",

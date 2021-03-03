@@ -1,11 +1,9 @@
-import { Logger } from '@jsprismarine/prismarine';
-
 import connect from 'connect';
 import serveStatic from 'serve-static';
 import { execSync } from 'child_process';
 import * as http from 'http';
 
-import { getLogger } from './sleepingLogger';
+import { getLogger, LoggerType } from './sleepingLogger';
 import { Settings } from './sleepingSettings';
 import { SleepingBedrock } from './sleepingBedrock';
 import { SleepingMcJava } from './sleepingMcJava';
@@ -14,7 +12,7 @@ export const faviconString = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAA
 
 export class SleepingContainer {
 
-    logger: Logger;
+    logger: LoggerType;
     settings: Settings;
 
     mcServer?: SleepingMcJava;
@@ -23,7 +21,7 @@ export class SleepingContainer {
 
     constructor(settings: Settings) {
         this.settings = settings;
-        this.logger = getLogger() as Logger;
+        this.logger = getLogger();
     }
 
     init = () => {
@@ -45,9 +43,8 @@ export class SleepingContainer {
     }
 
     startMinecraft = () => {
-        this.logger.info(`----------- Starting Minecraft : ${this.settings.minecraftCommand} ----------- `);
-
-        // this.settings.minecraftCommand = 'notepad';
+        this.settings.minecraftCommand = 'notepad';
+        this.logger.info(`----------- Starting Minecraft : ${this.settings.minecraftCommand} ----------- `);        
         execSync(this.settings.minecraftCommand, {
             stdio: 'inherit'
         });
@@ -55,7 +52,7 @@ export class SleepingContainer {
         this.logger.info('----------- Minecraft stopped -----------');
     };
 
-    close = () => {
+    close = async() => {
         this.logger.info('Cleaning up the place.');
 
         if (this.mcServer) {
@@ -63,7 +60,7 @@ export class SleepingContainer {
         }
 
         if (this.brServer) {
-            this.brServer.close();
+            await this.brServer.close();
         }
 
         if (this.webServer) {
@@ -71,8 +68,8 @@ export class SleepingContainer {
         }
     }
 
-    playerConnectionCallBack = () => {
-        this.close();
+    playerConnectionCallBack = async() => {
+        await this.close();
 
         if (this.settings.startMinecraft > 0) {
             this.startMinecraft();

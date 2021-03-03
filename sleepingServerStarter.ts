@@ -1,21 +1,21 @@
-import { SleepingContainer } from "./sleepingContainer";
-import { getLogger } from "./sleepingLogger";
-import { getSettings } from "./sleepingSettings";
+import { SleepingContainer } from './sleepingContainer';
+import { getLogger, LoggerType } from './sleepingLogger';
+import { getSettings } from './sleepingSettings';
 
-const logger = getLogger();
+const logger: LoggerType = getLogger();
 const settings = getSettings();
 
 let sleepingContainer: SleepingContainer;
 
-process.on('SIGINT', () => {
+process.on('SIGINT', async() => {
     logger.info('SIGINT signal received.');
-    close();
+    await close();
     process.exit(0);
 });
 
-process.on('SIGTERM', () => {
+process.on('SIGTERM', async() => {
     logger.info('SIGTERM  signal received.');
-    close();
+    await close();
     process.exit(0);
 });
 
@@ -39,7 +39,12 @@ process.on('uncaughtException', function (err: any) {
     process.exit(1);
 });
 
-const main = () => {
+const close = async () => {
+    await sleepingContainer.close();
+    logger.info('... To be continued ... ')
+}
+
+const main = async () => {
 
     process.stdin.resume();
     process.stdin.setEncoding('utf8');
@@ -52,11 +57,6 @@ const main = () => {
             sleepingContainer.playerConnectionCallBack();
         }
     });
-
 };
-
-const close = () => {
-    sleepingContainer.close();
-}
 
 main();

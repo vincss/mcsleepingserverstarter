@@ -2,10 +2,11 @@ import { Config, Logger } from '@jsprismarine/prismarine';
 import { EventManager } from '@jsprismarine/prismarine/dist/events/EventManager';
 import { RaknetConnectEvent, RaknetEncapsulatedPacketEvent } from '@jsprismarine/prismarine/dist/events/Events';
 import PlayerManager from '@jsprismarine/prismarine/dist/player/PlayerManager';
+// import LoggerBuilder from '@jsprismarine/prismarine/dist/utils/Logger';
 import { Listener, Connection, InetAddress, Protocol } from '@jsprismarine/raknet';
 import Identifiers from '@jsprismarine/raknet/dist/protocol/Identifiers';
 
-import { getLogger } from './sleepingLogger';
+import { getLogger, LoggerType } from './sleepingLogger';
 import { Settings } from './sleepingSettings';
 
 const Address = '0.0.0.0';
@@ -14,7 +15,7 @@ const Version = '1.16.201';
 export class SleepingBedrock {
 
     settings: Settings;
-    logger: Logger;
+    logger: LoggerType;
     listener?: Listener;
     listenerBuilder: Listener;
     playerManager: PlayerManager;
@@ -26,7 +27,8 @@ export class SleepingBedrock {
 
         this.playerConnectionCallBack = playerConnectionCallBack;
 
-        this.logger = getLogger() as Logger;
+        this.logger = getLogger();
+        // this.logger = new LoggerBuilder() // getLogger();
         const config = new Config(Version);
         (config as any).motd = settings.serverName
         const server = {
@@ -39,7 +41,7 @@ export class SleepingBedrock {
         this.listenerBuilder = new Listener(server)
     }
 
-    async init() {
+    init = async () => {
 
         this.listener = await this.listenerBuilder.listen(Address, this.settings.bedrockPort);
         this.logger.info(`[BedRock] Listening on ${Address}:${this.settings.bedrockPort}`);
@@ -74,16 +76,27 @@ export class SleepingBedrock {
         await this.eventManager.emit('raknetEncapsulatedPacket', event);
     }
 
-    async close() {
+    close = async () => {
         this.logger.info(`[BedRock] Closing`);
         if (this.listener) {
-            await this.listener.kill();
-            await new Promise(resolve => {
-                this.listener!.getSocket().close(() => {
-                    this.logger.info(`[BedRock] Closed`);
-                    resolve('closed');
+            try {
+                this.listener.kill();
+                await new Promise((resolve, reject) => {
+
+                    const timeout = setTimeout(() => {
+                        this.logger.info(`[BedRock] Timeout during close`);
+                        reject('[BedRock] Timeout during close')
+                    }, 5000);
+                    this.listener!.getSocket().close(() => {
+                        this.logger.info(`[BedRock] Socket Closed`);
+                        resolve('closed');
+                        clearTimeout(timeout);
+                    });
                 });
-            });
+
+            } catch (error) {
+                this.logger.error(`[BedRock] Closing error: ${error.message}`);
+            }
             this.listener = undefined;
         }
     }
