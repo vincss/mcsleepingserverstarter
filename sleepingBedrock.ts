@@ -64,6 +64,7 @@ export class SleepingBedrock {
         const connection = raknetConnectEvent.getConnection();
         connection.disconnect(this.settings.loginMessage);
         await connection.close();
+        await this.close();
         this.playerConnectionCallBack();
     }
 
@@ -74,10 +75,16 @@ export class SleepingBedrock {
     }
 
     async close() {
-        this.logger.info(`[BedRock] close`);
+        this.logger.info(`[BedRock] Closing`);
         if (this.listener) {
             await this.listener.kill();
-            this.logger.info(`[BedRock] Killed`);
+            await new Promise(resolve => {
+                this.listener!.getSocket().close(() => {
+                    this.logger.info(`[BedRock] Closed`);
+                    resolve('closed');
+                });
+            });
+            this.listener = undefined;
         }
     }
 

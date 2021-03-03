@@ -64,8 +64,10 @@ export class SleepingMcJava {
     }
 
     close = () => {
+        this.logger.info('[McJava] Closing');
         if (this.server) {
             this.server.close();
+            this.logger.info('[McJava] Closed');
         }
     }
 }
