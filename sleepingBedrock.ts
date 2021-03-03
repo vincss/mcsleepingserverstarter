@@ -74,10 +74,10 @@ export class SleepingBedrock {
     }
 
     async close() {
-        this.logger.info(`[BedRock] close ${this.listener}`);
+        this.logger.info(`[BedRock] close`);
         if (this.listener) {
             await this.listener.kill();
-            this.logger.info(`[BedRock] Killed ${this.listener}`);
+            this.logger.info(`[BedRock] Killed`);
         }
     }
 
