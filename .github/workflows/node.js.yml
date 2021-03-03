@@ -5,7 +5,7 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ master, feature, chore ]
+    branches: [ master, feature/* , chore/* ]
   pull_request:
     branches: [ master, feature/* , chore/* ]
 
@@ -27,3 +27,13 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: npm run build --if-present
+    - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v2
+        with:
+          name: Binary Windows
+          path: bin/sleepingServerStarter.exe
+    - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v2
+        with:
+          name: Binary Linux
+          path: bin/sleepingServerStarter.run
