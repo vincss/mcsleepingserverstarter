@@ -27,7 +27,7 @@ jobs:
       - run:  |
           set -x
           assets=()
-          for asset in ./build/*; do
+          for asset in ./bin/*; do
             assets+=("-a" "$asset")
           done
           tag_name="${GITHUB_REF##*/}"
