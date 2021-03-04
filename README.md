@@ -16,9 +16,9 @@ With an original idea from https://github.com/tustin2121/MCSignOnDoor
 
 Require (if install from source) :
 NodeJs (^14.*) & NPM
-  * Windows : https://nodejs.org/en/download/
+  * Windows : https://nodejs.org/en/download/ 
   * Linux : https://github.com/nodesource/distributions#debinstall
-  * EmptyServerStopper to stop your server when nobody is there : http://dev.bukkit.org/bukkit-plugins/emptyserverstopper/
+  * EmptyServerStopper to stop your server when nobody is there : https://github.com/vincss/mcEmptyServerStopper
 
 * Install :
     * From Source

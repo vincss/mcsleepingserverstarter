@@ -56,9 +56,14 @@ eula.txt
 config.yaml
 
 # Spigot Build
-Spigot/*
+Spigot/
 
-# my land 
+# Paper
+.console_history
+version_history.json
+paper.yml
+
+# My lands
 ViPiLand*/*
 AFreshStart*/*
 backups*/*
