@@ -1,8 +1,7 @@
 import { Client, createServer, Server } from 'minecraft-protocol';
-import { faviconString } from './sleepingContainer';
 import { getLogger, LoggerType } from './sleepingLogger';
 import { ISleepingServer } from './sleepingServerInterface';
-import { Settings } from './sleepingSettings';
+import { DefaultFavIconString, Settings } from './sleepingSettings';
 
 export class SleepingMcJava implements ISleepingServer {
 
@@ -21,14 +20,14 @@ export class SleepingMcJava implements ISleepingServer {
     init = async () => {
         this.server = createServer({
             'online-mode': this.settings.serverOnlineMode,
-            // encryption: false,
-            // host: '0.0.0.0',
             motd: this.settings.serverName,
             port: this.settings.serverPort,
-            // version: settings.version,
+            version: this.settings.version,
             beforePing: (reponse) => {
-                reponse.favicon = faviconString;
+                reponse.favicon = this.settings.favIcon ?? DefaultFavIconString;
             }
+            // encryption: false,
+            // host: '0.0.0.0',
         });
 
         this.logger.info(`[McJava] Waiting for a Prince to come. [${this.settings.serverPort}] Or someone to type quit.`);
