@@ -52,11 +52,20 @@ spigot.yml
 server.properties
 eula.txt
 
-# Spigot Build
-Spigot/*
+# BedRock
+config.yaml
 
-# my land 
+# Spigot Build
+Spigot/
+
+# Paper
+.console_history
+version_history.json
+paper.yml
+
+# My lands
 ViPiLand*/*
 AFreshStart*/*
 backups*/*
 start.sh
+start_screen.sh

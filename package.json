@@ -5,7 +5,7 @@
   "main": "sleepingServerStarter.js",
   "scripts": {
     "start": "ts-node sleepingServerStarter.ts",
-    "prebuild": "rimraf build/ bin/",
+    "prebuild": "rimraf ./build/ ./bin/",
     "build": "npm-run-all build:*",
     "build:typescript": "tsc",
     "build:win": "pkg build/sleepingServerStarter.js --target win --output bin/sleepingServerStarter.exe",
@@ -13,11 +13,13 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@jsprismarine/prismarine": "^0.1.0-rc.43",
+    "@jsprismarine/raknet": "^0.1.0-rc.43",
     "connect": "^3.7.0",
-    "serve-static": "^1.14.1",
     "js-yaml": "^4.0.0",
     "minecraft-protocol": "^1.23.1",
-    "winston": "^2.2.0"
+    "serve-static": "^1.14.1",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@types/connect": "^3.4.34",
