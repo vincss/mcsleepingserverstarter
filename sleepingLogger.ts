@@ -1,3 +1,4 @@
+// import LoggerBuilder from '@jsprismarine/prismarine/dist/utils/Logger';
 import { existsSync, mkdirSync } from 'fs';
 import { createLogger, format, transports } from 'winston';
 
@@ -24,6 +25,8 @@ export const getLogger = () => {
         if (!existsSync(logFolder)) {
             mkdirSync(logFolder);
         }
+
+        // logger = new LoggerBuilder();
 
         logger = createLogger({
             level: 'info',
