@@ -10,7 +10,7 @@ Tutorial Video :
 https://youtu.be/WqvQISpr6-s
 
 Based on : 
-https://github.com/PrismarineJS/node-minecraft-protocol
+https://github.com/JSPrismarine/JSPrismarine
 
 With an original idea from https://github.com/tustin2121/MCSignOnDoor
 
