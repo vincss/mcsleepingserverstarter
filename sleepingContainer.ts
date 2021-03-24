@@ -1,21 +1,20 @@
-import connect from 'connect';
-import serveStatic from 'serve-static';
 import { execSync } from 'child_process';
-import * as http from 'http';
 
 import { getLogger, LoggerType } from './sleepingLogger';
 import { Settings } from './sleepingSettings';
 import { SleepingMcJava } from './sleepingMcJava';
 import { SleepingBedrock } from './sleepingBedrock';
+import { SleepingWeb } from './sleepingWeb';
+import { ISleepingServer } from './sleepingServerInterface';
 
-export class SleepingContainer {
+export class SleepingContainer implements ISleepingServer {
 
     logger: LoggerType;
     settings: Settings;
 
     mcServer?: SleepingMcJava;
     brServer?: SleepingBedrock;
-    webServer?: http.Server;
+    webServer?: SleepingWeb;
 
     constructor(settings: Settings) {
         this.settings = settings;
@@ -23,20 +22,24 @@ export class SleepingContainer {
     }
 
     init = async () => {
-        if (this.settings.webPort > 0) {
-            this.webServer = connect().use(serveStatic(this.settings.webDir)).listen(
-                this.settings.webPort);
-            this.logger.info(`Starting web server on *:${this.settings.webPort} webDir: ${this.settings.webDir}`);
-        }
+        try {
 
-        if (this.settings.serverPort > 0) {
-            this.mcServer = new SleepingMcJava(this.settings, this.playerConnectionCallBack);
-            await this.mcServer.init();
-        }
+            if (this.settings.webPort > 0) {
+                this.webServer = new SleepingWeb(this.settings, this.playerConnectionCallBack);
+                await this.webServer.init();
+            }
 
-        if (this.settings.bedrockPort > 0) {
-            this.brServer = new SleepingBedrock(this.settings, this.playerConnectionCallBack);
-            await this.brServer.init();
+            if (this.settings.serverPort > 0) {
+                this.mcServer = new SleepingMcJava(this.settings, this.playerConnectionCallBack);
+                await this.mcServer.init();
+            }
+
+            if (this.settings.bedrockPort > 0) {
+                this.brServer = new SleepingBedrock(this.settings, this.playerConnectionCallBack);
+                await this.brServer.init();
+            }
+        } catch (error) {
+            this.logger.error(`Error during init: ${error.mesage}`)
         }
     }
 
