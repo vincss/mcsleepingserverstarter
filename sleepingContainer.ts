@@ -22,7 +22,7 @@ export class SleepingContainer implements ISleepingServer {
     }
 
     init = async () => {
-        try {
+        // try {
 
             if (this.settings.webPort > 0) {
                 this.webServer = new SleepingWeb(this.settings, this.playerConnectionCallBack);
@@ -38,9 +38,9 @@ export class SleepingContainer implements ISleepingServer {
                 this.brServer = new SleepingBedrock(this.settings, this.playerConnectionCallBack);
                 await this.brServer.init();
             }
-        } catch (error) {
-            this.logger.error(`Error during init: ${error.mesage}`)
-        }
+        // } catch (error) {
+        //     this.logger.error(`Error during init: ${error.mesage}`)
+        // }
     }
 
     startMinecraft = () => {
