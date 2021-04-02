@@ -1,1 +1,13 @@
-<h1>Home Page</h1>
+<script>
+    startClick = () => {
+        console.log('WakeUp');
+        $.post('/wakeup',
+            (sucess) => { console.log('Sucess', sucess); });
+
+    };
+</script>
+<h1>Home Page {{ title }}</h1>
+<h2>{{message}}</h2>
+<div>
+    <button class="button secondary startButton" onclick="  startClick()  ">Wake Me Up</button>
+</div>

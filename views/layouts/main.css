@@ -1,0 +1,18 @@
+.bodyStyle {    
+    color:#FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100vh;
+    background-image:url('../res/background.png');
+}
+
+.bodyContainer {
+    width: 100%;
+    background-image:url('../res/background_darker.png')
+}
+
+.startButton {    
+    border: 2px darkgrey solid;
+}

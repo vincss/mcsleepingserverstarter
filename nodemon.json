@@ -1,0 +1,6 @@
+{
+    "watch": ["./"],
+    "ext": "ts,json,hbs",
+    "ignore": [""],
+    "exec": "npm start"      
+  }

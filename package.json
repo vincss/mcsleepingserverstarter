@@ -5,7 +5,7 @@
   "main": "sleepingServerStarter.js",
   "scripts": {
     "start": "ts-node sleepingServerStarter.ts",
-    "dev": "nodemon ts-node sleepingServerStarter.ts",
+    "dev": "nodemon",
     "prebuild": "rimraf ./build/ ./bin/",
     "build": "npm-run-all build:*",
     "build:typescript": "tsc",
