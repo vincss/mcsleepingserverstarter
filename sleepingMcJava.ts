@@ -1,4 +1,5 @@
 import { Client, createServer, Server } from 'minecraft-protocol';
+import { ServerStatus } from './sleepingHelper';
 import { getLogger, LoggerType } from './sleepingLogger';
 import { ISleepingServer } from './sleepingServerInterface';
 import { DefaultFavIconString, Settings } from './sleepingSettings';
@@ -65,7 +66,16 @@ export class SleepingMcJava implements ISleepingServer {
         this.logger.info('[McJava] Closing');
         if (this.server) {
             this.server.close();
+            this.server = undefined;
             this.logger.info('[McJava] Closed');
         }
     }
+
+    getStatus = () => {
+        let status = ServerStatus.Stopped;
+        if(this.server) {
+            status = ServerStatus.Sleeping;
+        }
+        return status;
+    };
 }

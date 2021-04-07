@@ -1,4 +1,4 @@
-import { execSync } from 'child_process';
+import { spawn } from 'child_process';
 
 import { getLogger, LoggerType } from './sleepingLogger';
 import { Settings } from './sleepingSettings';
@@ -6,6 +6,7 @@ import { SleepingMcJava } from './sleepingMcJava';
 import { SleepingBedrock } from './sleepingBedrock';
 import { SleepingWeb } from './sleepingWeb';
 import { ISleepingServer } from './sleepingServerInterface';
+import { isPortTaken, ServerStatus } from './sleepingHelper';
 
 export class SleepingContainer implements ISleepingServer {
 
@@ -21,12 +22,14 @@ export class SleepingContainer implements ISleepingServer {
         this.logger = getLogger();
     }
 
-    init = async () => {
-        // try {
+    init = async (isThisTheBeginning = false) => {
+        try {
 
-            if (this.settings.webPort > 0) {
-                this.webServer = new SleepingWeb(this.settings, this.playerConnectionCallBack);
-                await this.webServer.init();
+            if (isThisTheBeginning) {
+                if (this.settings.webPort > 0) {
+                    this.webServer = new SleepingWeb(this.settings, this.playerConnectionCallBack, this);
+                    await this.webServer.init();
+                }
             }
 
             if (this.settings.serverPort > 0) {
@@ -38,22 +41,27 @@ export class SleepingContainer implements ISleepingServer {
                 this.brServer = new SleepingBedrock(this.settings, this.playerConnectionCallBack);
                 await this.brServer.init();
             }
-        // } catch (error) {
-        //     this.logger.error(`Error during init: ${error.mesage}`)
-        // }
+        } catch (error) {
+            this.logger.error(`Error during init: ${error.mesage}`)
+        }
     }
 
-    startMinecraft = () => {
-        // this.settings.minecraftCommand = 'notepad';
+    startMinecraft = async (onProcessClosed: () => void) => {
         this.logger.info(`----------- Starting Minecraft : ${this.settings.minecraftCommand} ----------- `);
-        execSync(this.settings.minecraftCommand, {
+
+        const cmdArgs = this.settings.minecraftCommand.split(' ');
+        const exec = cmdArgs.splice(0, 1)[0];
+        const mcProcess = spawn(exec, cmdArgs, {
             stdio: 'inherit'
         });
 
-        this.logger.info('----------- Minecraft stopped -----------');
+        mcProcess.on('close', code => {
+            this.logger.info(`----------- Minecraft stopped ${code} -----------`);
+            onProcessClosed();
+        });
     };
 
-    close = async () => {
+    close = async (isThisTheEnd = false) => {
         this.logger.info('Cleaning up the place.');
 
         if (this.mcServer) {
@@ -64,8 +72,11 @@ export class SleepingContainer implements ISleepingServer {
             await this.brServer.close();
         }
 
-        if (this.webServer) {
-            this.webServer.close();
+        if (isThisTheEnd) {
+
+            if (this.webServer) {
+                this.webServer.close();
+            }
         }
     }
 
@@ -73,14 +84,34 @@ export class SleepingContainer implements ISleepingServer {
         await this.close();
 
         if (this.settings.startMinecraft > 0) {
-            this.startMinecraft();
 
-            this.logger.info('...Time to kill me if you want...');
-            setTimeout(async () => {
-                this.logger.info('...Too late !...');
-                await this.init();
-            }, 5000); // restart server
+
+            const onMcClosed = () => {
+                this.logger.info('...Time to kill me if you want...');
+                setTimeout(async () => {
+                    this.logger.info('...Too late !...');
+                    await this.init();
+                }, 10000); // restart server
+            }
+
+            this.startMinecraft(onMcClosed);
         }
     };
+
+    getStatus = async () => {
+        let status = ServerStatus.Stopped;
+        if (this.mcServer) {
+            status = this.mcServer?.getStatus();
+        }
+        if (status !== ServerStatus.Sleeping) {
+            const portTaken = await isPortTaken(this.settings.serverPort)
+            if (portTaken) {
+                status = ServerStatus.Running;
+            } else {
+                status = ServerStatus.Starting;
+            }
+        }
+        return status;
+    }
 
 }

@@ -1,10 +1,49 @@
 <script>
+    const REFRESH_INTERVAL = 2000;
+
     startClick = () => {
         console.log('WakeUp');
-        $.post('/wakeup',
-            (sucess) => { console.log('Sucess', sucess); });
-
+        $.post('/wakeup', {})
+            .done( (sucess) => { console.log('WakeUp Sucess', sucess); })
+            .fail( (error) => { console.log('WakeUp Error', error); } )
     };
+
+    getEmoji = (status) => {
+        let emoji = '🟥'
+        switch (status) {
+            case 'Running':
+                emoji = '🟩'
+                break;
+            case 'Sleeping':
+                emoji = '💤'
+                break;
+            case 'Starting':
+                emoji = '🟧'
+                break;
+        }
+        return emoji;
+    };
+
+    getStatus = () => {
+        $.get('/status')
+            .done(
+                (status) => {
+                    console.log(`${new Date().toISOString()} - getStatus ${status}`);
+                    $('#server-status').text(`${getEmoji(status)} ${status} ${getEmoji(status)}`);
+                })
+            .fail(
+                (error) => {
+                    $('#server-status').text('🛑 Offline 🛑');
+                })
+    };
+
+
+    homeLoaded = () => {
+        console.log("HomeLoaded");
+        getStatus();
+        setInterval(getStatus, REFRESH_INTERVAL);
+    }
+    homeLoaded();
 </script>
 
 
@@ -15,7 +54,7 @@
         </div>
         <div>
             <div> {{ title }} </div>
-            <div> {{ message }} </div>
+            <div id="server-status">🛑 Offline 🛑</div>
         </div>
     </div>
     <div class="buttonContainer">
