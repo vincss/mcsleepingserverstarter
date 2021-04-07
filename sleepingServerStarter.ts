@@ -45,7 +45,6 @@ const close = async () => {
 }
 
 const main = async () => {
-
     process.stdin.resume();
     process.stdin.setEncoding('utf8');
 

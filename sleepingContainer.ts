@@ -23,27 +23,23 @@ export class SleepingContainer implements ISleepingServer {
     }
 
     init = async (isThisTheBeginning = false) => {
-        try {
-
-            if (isThisTheBeginning) {
-                if (this.settings.webPort > 0) {
-                    this.webServer = new SleepingWeb(this.settings, this.playerConnectionCallBack, this);
-                    await this.webServer.init();
-                }
+        if (isThisTheBeginning) {
+            if (this.settings.webPort > 0) {
+                this.webServer = new SleepingWeb(this.settings, this.playerConnectionCallBack, this);
+                await this.webServer.init();
             }
-
-            if (this.settings.serverPort > 0) {
-                this.mcServer = new SleepingMcJava(this.settings, this.playerConnectionCallBack);
-                await this.mcServer.init();
-            }
-
-            if (this.settings.bedrockPort > 0) {
-                this.brServer = new SleepingBedrock(this.settings, this.playerConnectionCallBack);
-                await this.brServer.init();
-            }
-        } catch (error) {
-            this.logger.error(`Error during init: ${error.mesage}`)
         }
+
+        if (this.settings.serverPort > 0) {
+            this.mcServer = new SleepingMcJava(this.settings, this.playerConnectionCallBack);
+            await this.mcServer.init();
+        }
+
+        if (this.settings.bedrockPort > 0) {
+            this.brServer = new SleepingBedrock(this.settings, this.playerConnectionCallBack);
+            await this.brServer.init();
+        }
+
     }
 
     startMinecraft = async (onProcessClosed: () => void) => {

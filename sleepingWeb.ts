@@ -6,6 +6,7 @@ import { ISleepingServer } from "./sleepingServerInterface";
 import { DefaultFavIconString, Settings } from "./sleepingSettings";
 import { getLogger, LoggerType } from './sleepingLogger';
 import { SleepingContainer } from './sleepingContainer';
+import path from 'path';
 
 export class SleepingWeb implements ISleepingServer {
   settings: Settings;
@@ -27,6 +28,7 @@ export class SleepingWeb implements ISleepingServer {
 
     this.app.engine('hbs', exphbs({
       defaultLayout: 'main',
+      layoutsDir: path.join(__dirname, './views/layouts/'),
       extname: '.hbs',
       helpers: {
         title: () => { return this.settings.serverName },
@@ -35,10 +37,10 @@ export class SleepingWeb implements ISleepingServer {
     }));
 
     this.app.set('view engine', 'hbs');
-    this.app.use(express.static('views'));
+    this.app.use(express.static(path.join(__dirname, './views')));
 
     this.app.get('/', (req, res) => {
-      res.render('home', { message: this.settings.loginMessage });
+      res.render(path.join(__dirname, './views/home'), { message: this.settings.loginMessage });
     });
 
     this.app.post('/wakeup', (req, res) => {
@@ -54,7 +56,6 @@ export class SleepingWeb implements ISleepingServer {
     this.server = this.app.listen(this.settings.webPort, () => {
       this.logger.info(`Starting web server on *:${this.settings.webPort} webDir: ${this.settings.webDir}`);
     })
-
   };
 
   close = async () => {
