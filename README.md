@@ -54,3 +54,10 @@ You can use :
 ## Links :
 * Icons : https://www.flaticon.com/free-icon/geyser_1842245
 * Image encoder : https://www.base64-image.de/
+
+## ChangeLog
+  * 1.16.5_1.0.0 : 
+    * Add web-gui
+  * 1.16.4 :
+    * Add bedrock support.
+  * ...
