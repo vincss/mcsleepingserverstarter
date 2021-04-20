@@ -40,17 +40,16 @@ process.on('uncaughtException', function (err: any) {
 });
 
 const close = async () => {
-    await sleepingContainer.close();
+    await sleepingContainer.close(true);
     logger.info('... To be continued ... ')
 }
 
 const main = async () => {
-
     process.stdin.resume();
     process.stdin.setEncoding('utf8');
 
     sleepingContainer = new SleepingContainer(settings);
-    await sleepingContainer.init();
+    await sleepingContainer.init(true);
 
     process.stdin.on('data', (text) => {
         if (text.indexOf('quit') > -1) {

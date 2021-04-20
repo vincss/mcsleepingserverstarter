@@ -4,6 +4,7 @@ logs
 
 # IDE
 .idea/*
+.vscode/
 *.iml
 
 # Runtime data

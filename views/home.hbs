@@ -1,0 +1,63 @@
+<script>
+    const REFRESH_INTERVAL = 2000;
+
+    startClick = () => {
+        console.log('WakeUp');
+        $.post('/wakeup', {})
+            .done( (sucess) => { console.log('WakeUp Sucess', sucess); })
+            .fail( (error) => { console.log('WakeUp Error', error); } )
+    };
+
+    getEmoji = (status) => {
+        let emoji = '🟥'
+        switch (status) {
+            case 'Running':
+                emoji = '🟩'
+                break;
+            case 'Sleeping':
+                emoji = '💤'
+                break;
+            case 'Starting':
+                emoji = '🟧'
+                break;
+        }
+        return emoji;
+    };
+
+    getStatus = () => {
+        $.get('/status')
+            .done(
+                (status) => {
+                    console.log(`${new Date().toISOString()} - getStatus ${status}`);
+                    $('#server-status').text(`${getEmoji(status)} ${status} ${getEmoji(status)}`);
+                })
+            .fail(
+                (error) => {
+                    $('#server-status').text('🛑 Offline 🛑');
+                })
+    };
+
+
+    homeLoaded = () => {
+        console.log("HomeLoaded");
+        getStatus();
+        setInterval(getStatus, REFRESH_INTERVAL);
+    }
+    homeLoaded();
+</script>
+
+
+<div class="homeContainer">
+    <div class="homeCenter">
+        <div>
+            <img alt="FavIcon" class="imageContainer" src={{favIcon}}>
+        </div>
+        <div>
+            <div> {{ title }} </div>
+            <div id="server-status">🛑 Offline 🛑</div>
+        </div>
+    </div>
+    <div class="buttonContainer">
+        <button class="button secondary startButton" onclick=" startClick() ">Wake Me Up</button>
+    </div>
+</div>
