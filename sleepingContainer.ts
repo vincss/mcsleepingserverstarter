@@ -1,4 +1,4 @@
-import { spawn } from 'child_process';
+import { spawn, execSync } from 'child_process';
 
 import { getLogger, LoggerType } from './sleepingLogger';
 import { Settings } from './sleepingSettings';
@@ -45,16 +45,25 @@ export class SleepingContainer implements ISleepingServer {
     startMinecraft = async (onProcessClosed: () => void) => {
         this.logger.info(`----------- Starting Minecraft : ${this.settings.minecraftCommand} ----------- `);
 
-        const cmdArgs = this.settings.minecraftCommand.split(' ');
-        const exec = cmdArgs.splice(0, 1)[0];
-        const mcProcess = spawn(exec, cmdArgs, {
-            stdio: 'inherit'
-        });
+        if (this.settings.webPort > 0) {
+            const cmdArgs = this.settings.minecraftCommand.split(' ');
+            const exec = cmdArgs.splice(0, 1)[0];
+            const mcProcess = spawn(exec, cmdArgs, {
+                stdio: 'inherit'
+            });
 
-        mcProcess.on('close', code => {
-            this.logger.info(`----------- Minecraft stopped ${code} -----------`);
+            mcProcess.on('close', code => {
+                this.logger.info(`----------- Minecraft stopped ${code} -----------`);
+                onProcessClosed();
+            });
+        } else {
+            execSync(this.settings.minecraftCommand, {
+                stdio: 'inherit'
+            });
+            this.logger.info('----------- Minecraft stopped -----------');
             onProcessClosed();
-        });
+        }
+
     };
 
     close = async (isThisTheEnd = false) => {

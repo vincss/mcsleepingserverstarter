@@ -1,10 +1,15 @@
 # mcsleepingserverstarter
-Put your minecraft server to rest, while SleepingServerStarter is watching ! Save power, save the world !
+Put your minecraft server to rest, while SleepingServerStarter is watching ! 
+Save power, save the world !
 
 What it does :
 * Listen on the same port as your minecraft server.
+  * Added an option to connect from BedRock (Console version of minecraft)
+  * Add a web-gui, to connect from anywhere.
 * When someone connects, exit and launch your minecraft server.
 * When server is stopping (by EmptyServerStopper by example), watch until someone reconnects.
+
+![alt text](./views/res/sleepingserver.png?raw=true "SleepingWeb")
 
 Tutorial Video :
 https://youtu.be/WqvQISpr6-s
@@ -14,25 +19,30 @@ https://github.com/JSPrismarine/JSPrismarine
 
 With an original idea from https://github.com/tustin2121/MCSignOnDoor
 
-Require (if install from source) :
-NodeJs (^14.*) & NPM
-  * Windows : https://nodejs.org/en/download/ 
-  * Linux : https://github.com/nodesource/distributions#debinstall
+You can use :  
   * EmptyServerStopper to stop your server when nobody is there : https://github.com/vincss/mcEmptyServerStopper
 
-* Install :
-    * From Source
-        * Download this repository as zip.
-        * Unzip it at your minecraft's root.
-        * Launch "npm install", to restore the needed package.
-        * Start using "npm start".
-    * From Binaries
-        * Download binaries depending on your system.
-        * Place the executable next to your server file (rename it to spigot.jar ).
-        * (For linux, maybe a "chmod +x sleepingServerStarter.run", will be required, play tell me if it's work :-) ).
-        * Make sure your server is stopped.
-        * Run the executable.
- 
+# Install :
+  * From Binaries
+      * Download binaries depending on your system.
+      * Place the executable next to your server file (rename it to spigot.jar / paper.jar ).
+      * (For linux, maybe a "chmod +x sleepingServerStarter.run", will be required, tell me if it's work :-) ).
+      * Make sure your server is stopped.
+      * Run the executable.
+  * From Source
+      * Requirements
+        * NodeJs (^14.*) & NPM
+          * Windows : https://nodejs.org/en/download/ 
+          * Linux : https://github.com/nodesource/distributions#debinstall
+      * Download this repository as zip.
+      * Unzip it at your minecraft's root.
+      * Launch "npm install", to restore the needed package.
+      * Start using "npm start".
+
+# Settings :
+If running from Binaries, the settings file will be created on the first run next to the executable.
+[a relative link](./sleepingSettings.yml) 
+
 Update :
  * Run "npm update" to update packages (minecraft protocol could need some updates).
 
