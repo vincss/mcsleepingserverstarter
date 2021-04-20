@@ -56,7 +56,7 @@ You can use :
 * Image encoder : https://www.base64-image.de/
 
 ## ChangeLog
-  * 1.16.5_1.0.0 : 
+  * 1.0.0 - 1.16.5 : 
     * Add web-gui
   * 1.16.4 :
     * Add bedrock support.
