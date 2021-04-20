@@ -22,7 +22,7 @@ With an original idea from https://github.com/tustin2121/MCSignOnDoor
 You can use :  
   * EmptyServerStopper to stop your server when nobody is there : https://github.com/vincss/mcEmptyServerStopper
 
-# Install :
+## Install :
   * From Binaries
       * Download binaries depending on your system.
       * Place the executable next to your server file (rename it to spigot.jar / paper.jar ).
@@ -39,18 +39,18 @@ You can use :
       * Launch "npm install", to restore the needed package.
       * Start using "npm start".
 
-# Settings :
-If running from Binaries, the settings file will be created on the first run next to the executable.
-[a relative link](./sleepingSettings.yml) 
+## Settings :
+ * If running from Binaries, the settings file will be created on the first run next to the executable.
+ * [See sleepingSettings.yml](./sleepingSettings.yml) 
 
-Update :
+## Update :
  * Run "npm update" to update packages (minecraft protocol could need some updates).
 
-Use WebServer for dynmap :
+## Use WebServer for dynmap :
  * You need to change your configuration from class: org.dynmap.InternalClientUpdateComponent to class: org.dynmap.JsonFileClientUpdateComponent (comment all the section InternalClientUpdateComponent and uncomment JsonFileClientUpdateComponent).
  * Chat will not work when hosted by mcsleepingserverstarter. For a full compatibilty, you can use an apache server. https://github.com/webbukkit/dynmap/wiki/Setting-up-without-the-Internal-Web-Server
 
 
-Links :
-Icons : https://www.flaticon.com/free-icon/geyser_1842245
-Image encoder : https://www.base64-image.de/
+## Links :
+* Icons : https://www.flaticon.com/free-icon/geyser_1842245
+* Image encoder : https://www.base64-image.de/
