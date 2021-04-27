@@ -56,6 +56,8 @@ You can use :
 * Image encoder : https://www.base64-image.de/
 
 ## ChangeLog
+  * 1.0.1 - 1.16.5 : 
+    * Include version in log.
   * 1.0.0 - 1.16.5 : 
     * Add web-gui
   * 1.16.4 :

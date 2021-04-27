@@ -56,8 +56,7 @@ export function getSettings(): Settings {
     } catch (error) {
         logger.error('Failed to load setting, using default.', error.message);
         saveDefault();
-    }
-    logger.info('.........................');
+    }    
     logger.info(`Retrieved settings:${JSON.stringify(settings)}`);
     return settings;
 }

@@ -1,6 +1,7 @@
 // import LoggerBuilder from '@jsprismarine/prismarine/dist/utils/Logger';
 import { existsSync, mkdirSync } from 'fs';
 import { createLogger, format, transports } from 'winston';
+import { version } from './package.json';
 
 const DefaultLogger = {
     info: (...params: any) => console.info(params),
@@ -51,7 +52,10 @@ export const getLogger = () => {
         logger = DefaultLogger;
     }
     initialized = true;
-    logger.info('.........................');
-    logger.info('... A new story begin ...');
+    const msg = `... A new story begin v${version} ...`;
+    const separator = msg.replace(/./g,'.');
+    logger.info(separator);
+    logger.info(msg);
+    logger.info(separator)
     return logger;
 }
