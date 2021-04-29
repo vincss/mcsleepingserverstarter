@@ -16,8 +16,6 @@
   "dependencies": {
     "@jsprismarine/prismarine": "0.1.0-rc.49",
     "@jsprismarine/raknet": "0.1.0-rc.49",
-    "ejs": "^3.1.6",
-    "eta": "^1.12.1",
     "express": "^4.17.1",
     "express-handlebars": "^5.3.0",
     "js-yaml": "^4.1.0",
