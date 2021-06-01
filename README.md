@@ -55,7 +55,9 @@ You can use :
 * Icons : https://www.flaticon.com/free-icon/geyser_1842245
 * Image encoder : https://www.base64-image.de/
 
-## ChangeLog
+## ChangeLog  
+  * 1.0.2 - 1.16.5 : 
+    * add maxPlayers in settings 
   * 1.0.1 - 1.16.5 : 
     * Include version in log.
   * 1.0.0 - 1.16.5 : 
