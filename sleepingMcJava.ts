@@ -23,6 +23,7 @@ export class SleepingMcJava implements ISleepingServer {
             'online-mode': this.settings.serverOnlineMode,
             motd: this.settings.serverName,
             port: this.settings.serverPort,
+            maxPlayers: this.settings.maxPlayers,
             version: this.settings.version,
             beforePing: (reponse) => {
                 reponse.favicon = this.settings.favIcon ?? DefaultFavIconString;

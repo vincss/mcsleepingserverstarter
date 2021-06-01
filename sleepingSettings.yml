@@ -6,6 +6,7 @@ serverPort: 25565
 bedrockPort: 19132
 loginMessage: ...Waking server up, come back in a minute...
 serverOnlineMode: true # like in the server.properties, to check the licence of player or not.
+maxPlayers: 20
 
 webPort: 0	 					# 0 to disable web hosting (8123 default dynmap)
 webDir: plugins/dynmap/web 	# dir of dynmap web (currently not working)

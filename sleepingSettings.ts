@@ -12,6 +12,7 @@ export type Settings = {
     serverName: string,
     serverPort: number,
     bedrockPort: number,
+    maxPlayers: number,
     loginMessage: string,
     serverOnlineMode: boolean,
     webPort: number,
@@ -26,6 +27,7 @@ const DefaultSettings: Settings = {
     serverName: 'SleepingServer, waiting for his prince...',
     serverPort: 25565,
     bedrockPort: 19132,
+    maxPlayers: 20,
     
     loginMessage: '...Waking server up, come back in a minute...',
     serverOnlineMode: true,
