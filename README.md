@@ -56,6 +56,8 @@ You can use :
 * Image encoder : https://www.base64-image.de/
 
 ## ChangeLog  
+  * 1.0.3 - 1.16.5 : 
+    * update security
   * 1.0.2 - 1.16.5 : 
     * add maxPlayers in settings 
   * 1.0.1 - 1.16.5 : 
