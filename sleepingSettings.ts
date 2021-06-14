@@ -16,7 +16,6 @@ export type Settings = {
     loginMessage: string,
     serverOnlineMode: boolean,
     webPort: number,
-    webDir: string,
     startMinecraft: number,
     minecraftCommand: string,
     version?: string,
@@ -32,8 +31,7 @@ const DefaultSettings: Settings = {
     loginMessage: '...Waking server up, come back in a minute...',
     serverOnlineMode: true,
 
-    webPort: 0,	 				// 0 to disable web hosting, 8123default dynmap
-    webDir: 'plugins/dynmap/web', 	// dir of dynmap web
+    webPort: 0,	 				// 0 to disable web hosting
 
     startMinecraft: 1,				// 0 to disable
     minecraftCommand: 'java -jar spigot.jar nogui',

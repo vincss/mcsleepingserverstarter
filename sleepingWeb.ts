@@ -54,7 +54,7 @@ export class SleepingWeb implements ISleepingServer {
     });
 
     this.server = this.app.listen(this.settings.webPort, () => {
-      this.logger.info(`Starting web server on *:${this.settings.webPort} webDir: ${this.settings.webDir}`);
+      this.logger.info(`Starting web server on *:${this.settings.webPort}`);
     })
   };
 
