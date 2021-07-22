@@ -11,7 +11,7 @@ maxPlayers: 20
 webPort: 0	 					# 0 to disable web hosting
 
 startMinecraft: 1 				# 0 to disable	
-minecraftCommand: java -jar spigot.jar nogui # or paper.jar or whatever flavor you like
+minecraftCommand: java -jar paper.jar nogui # or paper.jar or whatever flavor you like
 
 # version: 1.15.2 # Force compatibility with a specific minecraft version
 

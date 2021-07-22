@@ -19,7 +19,7 @@
     "express": "^4.17.1",
     "express-handlebars": "^5.3.0",
     "js-yaml": "^4.1.0",
-    "minecraft-protocol": "^1.25.0",
+    "minecraft-protocol": "git+https://github.com/PrismarineJS/node-minecraft-protocol.git",
     "winston": "^3.3.3"
   },
   "devDependencies": {
