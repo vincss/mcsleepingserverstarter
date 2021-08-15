@@ -1,6 +1,6 @@
 {
   "name": "mcsleepingserverstarter",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Sleeps until someone connects",
   "bin": "build/sleepingServerStarter.js",
   "scripts": {
@@ -19,7 +19,7 @@
     "express": "^4.17.1",
     "express-handlebars": "^5.3.0",
     "js-yaml": "^4.1.0",
-    "minecraft-protocol": "^1.25.0",
+    "minecraft-protocol": "^1.26.0",
     "winston": "^3.3.3"
   },
   "devDependencies": {
