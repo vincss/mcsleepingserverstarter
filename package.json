@@ -6,7 +6,7 @@
   "scripts": {
     "start": "ts-node sleepingServerStarter.ts",
     "dev": "nodemon",
-    "prebuild": "rimraf ./build/ ./bin/ && cpx \"views/**/*.*\" build/views",
+    "prebuild": "rimraf ./build/ ./bin/ && cpx-fixed \"views/**/*.*\" build/views",
     "build": "npm-run-all build:*",
     "build:typescript": "tsc",
     "build:win": "pkg build/sleepingServerStarter.js --config package.json --target win --output bin/sleepingServerStarter.exe",
