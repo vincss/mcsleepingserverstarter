@@ -4,6 +4,10 @@
     <p>
     Put your minecraft server to rest, while SleepingServerStarter is watching! Save power, save the world!
     </p>
+    <p>
+
+[Tutorial Video](https://youtu.be/WqvQISpr6-s) | [Based on JSPrismarine](https://github.com/JSPrismarine/JSPrismarine) | [Original idea](https://github.com/tustin2121/MCSignOnDoor)
+    </p>
 </div>
 
 ## 🧰 Features
