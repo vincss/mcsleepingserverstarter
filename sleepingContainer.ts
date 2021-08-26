@@ -49,7 +49,8 @@ export class SleepingContainer implements ISleepingServer {
             const cmdArgs = this.settings.minecraftCommand.split(' ');
             const exec = cmdArgs.splice(0, 1)[0];
             const mcProcess = spawn(exec, cmdArgs, {
-                stdio: 'inherit'
+                stdio: 'inherit',
+                cwd: this.settings.minecraftWorkingDirectory ?? process.cwd()
             });
 
             mcProcess.on('close', code => {
@@ -58,7 +59,8 @@ export class SleepingContainer implements ISleepingServer {
             });
         } else {
             execSync(this.settings.minecraftCommand, {
-                stdio: 'inherit'
+                stdio: 'inherit',
+                cwd: this.settings.minecraftWorkingDirectory ?? process.cwd()
             });
             this.logger.info('----------- Minecraft stopped -----------');
             onProcessClosed();

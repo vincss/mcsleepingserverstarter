@@ -20,6 +20,7 @@ export type Settings = {
     minecraftCommand: string,
     version?: string,
     favIcon?: string,
+    minecraftWorkingDirectory?: string,
 };
 
 const DefaultSettings: Settings = {
@@ -27,7 +28,7 @@ const DefaultSettings: Settings = {
     serverPort: 25565,
     bedrockPort: 19132,
     maxPlayers: 20,
-    
+
     loginMessage: '...Waking server up, come back in a minute...',
     serverOnlineMode: true,
 
@@ -56,7 +57,7 @@ export function getSettings(): Settings {
     } catch (error) {
         logger.error('Failed to load setting, using default.', error.message);
         saveDefault();
-    }    
+    }
     logger.info(`Retrieved settings:${JSON.stringify(settings)}`);
     return settings;
 }

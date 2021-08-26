@@ -8,10 +8,13 @@ loginMessage: "...Waking server up, come back in a minute..."
 serverOnlineMode: true # like in the server.properties, to check the licence of player or not.
 maxPlayers: 20
 
-webPort: 0	 					# 0 to disable web hosting
+webPort: 0 # 0 to disable web hosting
 
-startMinecraft: 1 				# 0 to disable	
+startMinecraft: 1 # 0 to disable
 minecraftCommand: "java -jar paper.jar nogui" # or paper.jar or whatever flavor you like
+
+# /!\ Edit this setting only if you know what you are doing
+# minecraftWorkingDirectory: "" # Set a custom working directory (path to minecraft server folder)
 
 # version: 1.15.2 # Force compatibility with a specific minecraft version
 
