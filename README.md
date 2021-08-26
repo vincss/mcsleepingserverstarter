@@ -1,71 +1,77 @@
-# mcsleepingserverstarter
-Put your minecraft server to rest, while SleepingServerStarter is watching ! 
-Save power, save the world !
+<div style="text-align: center;">
+    <img src="https://raw.githubusercontent.com/vincss/mcsleepingserverstarter/master/views/res/sleepingserver.png">
+    <h1>Welcome to SleepingServerStarter 💤</h1>
+    <p>
+    Put your minecraft server to rest, while SleepingServerStarter is watching! Save power, save the world!
+    </p>
+</div>
 
-What it does :
-* Listen on the same port as your minecraft server.
-  * Added an option to connect from BedRock (Console version of minecraft)
-  * Add a web-gui, to connect from anywhere.
-* When someone connects, exit and launch your minecraft server.
-* When server is stopping (by EmptyServerStopper by example), watch until someone reconnects.
+## 🧰 Features
 
-![alt text](./views/res/sleepingserver.png?raw=true "SleepingWeb")
+- Listen on the same port as your minecraft server.
+  - Option to connect from BedRock *(Portable version of Minecraft)*
+  - Web-gui, to turn on or off your server from anywhere
+- When someone connects, immediately launch your minecraft server
 
-Tutorial Video :
-https://youtu.be/WqvQISpr6-s
+**Works better with [EmptyServerStopper](https://www.spigotmc.org/resources/emptyserverstopper.19409/), a plugin that automatically stops your server after a definied amount of time**
 
-Based on : 
-https://github.com/JSPrismarine/JSPrismarine
+## 📀 Install
 
-With an original idea from https://github.com/tustin2121/MCSignOnDoor
+There are two ways to run SleepingServerStarter :
 
-You can use :  
-  * EmptyServerStopper to stop your server when nobody is there : https://github.com/vincss/mcEmptyServerStopper
+### Download the binaries
 
-## Install :
-  * From Binaries
-      * Download binaries depending on your system.
-      * Place the executable next to your server file (rename it to spigot.jar / paper.jar ).
-      * (For linux, maybe a "chmod +x sleepingServerStarter.run", will be required, tell me if it's work :-) ).
-      * Make sure your server is stopped.
-      * Run the executable.
-  * From Source
-      * Requirements
-        * NodeJs (^14.*) & NPM
-          * Windows : https://nodejs.org/en/download/ 
-          * Linux : https://github.com/nodesource/distributions#debinstall
-      * Download this repository as zip.
-      * Unzip it at your minecraft's root.
-      * Launch "npm install", to restore the needed package.
-      * Start using "npm start".
+1. [Download binaries](https://github.com/vincss/mcsleepingserverstarter/releases/latest) corresponding to your OS
+2. Place the executable in the same folder as your server file (`spigot.jar`, `paper.jar`, etc...)
+3. Make sure your server is stopped
+4. Run the executable
+    - On Linux, try `chmod +x sleepingServerStarter.run` if you can't run the executable
 
-## Settings :
- * If running from Binaries, the settings file will be created on the first run next to the executable.
- * [See sleepingSettings.yml](./sleepingSettings.yml) 
+### Manually install and compile
 
-## Update :
- * Run "npm update" to update packages (minecraft protocol could need some updates).
+0. Requires [NodeJS](https://nodejs.org/en/) v14+
+1. Clone the repo or download the project as Zip
+2. Unzip or clone it **in the same folder as your minecraft server**
+3. Launch `npm install`
+4. Start the project with `npm start`
 
-## Use WebServer for dynmap :
- * You need to change your configuration from class: org.dynmap.InternalClientUpdateComponent to class: org.dynmap.JsonFileClientUpdateComponent (comment all the section InternalClientUpdateComponent and uncomment JsonFileClientUpdateComponent).
- * Chat will not work when hosted by mcsleepingserverstarter. For a full compatibilty, you can use an apache server. https://github.com/webbukkit/dynmap/wiki/Setting-up-without-the-Internal-Web-Server
+## ⚙️ Settings
+> Note: If running from binaries, the settings file will be created after the first execution in the same folder as the executable
+
+| Setting                     | Description                                                                                                                                                     | Default value                                   |
+|-----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------|
+| `serverName`                | The name of your server                                                                                                                                         | "SleepingServer, waiting for his prince..."     |
+| `serverPort`                | The port of your Java Edition server                                                                                                                            | 25565                                           |
+| `bedrockPort`               | The port of your Bedrock Edition server                                                                                                                         | 19132                                           |
+| `loginMessage`              | Message shown when the server is off and someone is trying to connect                                                                                           | "...Waking server up, come back in a minute..." |
+| `serverOnlineMode`          | Check if players has premium accounts                                                                                                                           | true                                            |
+| `maxPlayers`                | Maximum amount of players                                                                                                                                       | 20                                              |
+| `webPort`                   | Port for the Web-Gui (0 to disable)                                                                                                                             | 0                                               |
+| `startMinecraft`            | Start the Minecraft Server (0 to disable)                                                                                                                       | 1                                               |
+| `minecraftCommand`          | The command used to start the server                                                                                                                            | "java -jar paper.jar nogui"                     |
+| `minecraftWorkingDirectory` | Set a custom Working Directory for the server **EDIT ONLY IF YOU KNOW WHAT YOU'RE DOING** (should be the path to the server's directory, absolute path is best) | ""                                              |
+| `version`                   | Force compatibility with a specific Minecraft version                                                                                                           | ""                                              |
+| `favIcon`                   | Use a custom server-icon 64x64 png converted using https://www.base64-image.de/ (needs to be encoded in base64)                                                 | ""                                              |
+
+-----
+
+#### Use WebServer for dynmap :
+- You need to change your configuration from class: `org.dynmap.InternalClientUpdateComponent` to class `org.dynmap.JsonFileClientUpdateComponent` *(comment all the section InternalClientUpdateComponent and uncomment JsonFileClientUpdateComponent)*
+- Chat will not work when hosted by mcsleepingserverstarter. For a full compatibilty, you can use an apache server *(https://github.com/webbukkit/dynmap/wiki/Setting-up-without-the-Internal-Web-Server)*
 
 
-## Links :
-* Icons : https://www.flaticon.com/free-icon/geyser_1842245
-* Image encoder : https://www.base64-image.de/
+#### Links :
+- Icons: https://www.flaticon.com/free-icon/geyser_1842245
+- Image encoder: https://www.base64-image.de/
 
-## ChangeLog  
-  * 1.0.4 - 1.17.1 : 
-    * update node-minecraft-protocol ^1.26.1
-  * 1.0.3 - 1.16.5 : 
-    * update security
-  * 1.0.2 - 1.16.5 : 
-    * add maxPlayers in settings 
-  * 1.0.1 - 1.16.5 : 
-    * Include version in log.
-  * 1.0.0 - 1.16.5 : 
-    * Add web-gui
-  * 1.16.4 :
-    * Add bedrock support.
-  * ...
+## 👤 Author
+
+**[@vincss](https://github.com/vincss)**
+
+## 🤝 Contributing
+
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/vincss/mcsleepingserverstarter/issues)
+
+## 🙌 Show your support
+
+Give a ⭐️ if you like the project!
