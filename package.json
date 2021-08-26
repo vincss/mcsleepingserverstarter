@@ -1,66 +1,66 @@
 {
-  "name": "mcsleepingserverstarter",
-  "version": "1.0.4",
-  "description": "Sleeps until someone connects",
-  "bin": "build/sleepingServerStarter.js",
-  "scripts": {
-    "start": "ts-node sleepingServerStarter.ts",
-    "dev": "nodemon",
-    "prebuild": "rimraf ./build/ ./bin/ && cpx-fixed \"views/**/*.*\" build/views",
-    "build": "npm-run-all build:*",
-    "build:typescript": "tsc",
-    "build:win": "pkg build/sleepingServerStarter.js --config package.json --target win --output bin/sleepingServerStarter.exe",
-    "build:linux": "pkg build/sleepingServerStarter.js --config package.json --target linux --output bin/sleepingServerStarter.run",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "dependencies": {
-    "@jsprismarine/prismarine": "0.1.0-rc.49",
-    "@jsprismarine/raknet": "0.1.0-rc.49",
-    "express": "^4.17.1",
-    "express-handlebars": "^5.3.0",
-    "js-yaml": "^4.1.0",
-    "minecraft-protocol": "^1.26.1",
-    "winston": "^3.3.3"
-  },
-  "devDependencies": {
-    "@types/connect": "^3.4.34",
-    "@types/express": "^4.17.12",
-    "@types/express-handlebars": "^3.1.0",
-    "@types/js-yaml": "^4.0.1",
-    "@types/node": "^14.17.3",
-    "@types/serve-static": "^1.13.9",
-    "cpx-fixed": "^1.6.0",
-    "nodemon": "^2.0.7",
-    "npm-run-all": "^4.1.5",
-    "pkg": "^4.5.1",
-    "rimraf": "^3.0.2",
-    "ts-node": "^9.1.1",
-    "typescript": "^4.3.2"
-  },
-  "author": "Vincss",
-  "license": "ISC",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/vincss/mcsleepingserverstarter.git"
-  },
-  "keywords": [
-    "maintenance",
-    "minecraft",
-    "nodejs",
-    "emptyserverstopper",
-    "sleepingserver"
-  ],
-  "bugs": {
-    "url": "https://github.com/vincss/mcsleepingserverstarter/issues"
-  },
-  "homepage": "https://github.com/vincss/mcsleepingserverstarter#readme",
-  "engines": {
-    "node": ">=14"
-  },
-  "pkg": {
-    "scripts": "build/*.js",
-    "assets": [
-      "build/views/**/*"
-    ]
-  }
+    "name": "mcsleepingserverstarter",
+    "version": "1.0.4",
+    "description": "Sleeps until someone connects",
+    "bin": "build/sleepingServerStarter.js",
+    "scripts": {
+        "start": "ts-node src/sleepingServerStarter.ts",
+        "dev": "nodemon",
+        "prebuild": "rimraf ./build/ ./bin/ && cpx-fixed \"views/**/*.*\" build/views",
+        "build": "npm-run-all build:*",
+        "build:typescript": "tsc",
+        "build:win": "pkg build/sleepingServerStarter.js --config package.json --target win --output bin/sleepingServerStarter.exe",
+        "build:linux": "pkg build/sleepingServerStarter.js --config package.json --target linux --output bin/sleepingServerStarter.run",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+        "@jsprismarine/prismarine": "0.1.0-rc.49",
+        "@jsprismarine/raknet": "0.1.0-rc.49",
+        "express": "^4.17.1",
+        "express-handlebars": "^5.3.0",
+        "js-yaml": "^4.1.0",
+        "minecraft-protocol": "^1.26.1",
+        "winston": "^3.3.3"
+    },
+    "devDependencies": {
+        "@types/connect": "^3.4.34",
+        "@types/express": "^4.17.12",
+        "@types/express-handlebars": "^3.1.0",
+        "@types/js-yaml": "^4.0.1",
+        "@types/node": "^14.17.3",
+        "@types/serve-static": "^1.13.9",
+        "cpx-fixed": "^1.6.0",
+        "nodemon": "^2.0.7",
+        "npm-run-all": "^4.1.5",
+        "pkg": "^4.5.1",
+        "rimraf": "^3.0.2",
+        "ts-node": "^9.1.1",
+        "typescript": "^4.3.2"
+    },
+    "author": "Vincss",
+    "license": "ISC",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/vincss/mcsleepingserverstarter.git"
+    },
+    "keywords": [
+        "maintenance",
+        "minecraft",
+        "nodejs",
+        "emptyserverstopper",
+        "sleepingserver"
+    ],
+    "bugs": {
+        "url": "https://github.com/vincss/mcsleepingserverstarter/issues"
+    },
+    "homepage": "https://github.com/vincss/mcsleepingserverstarter#readme",
+    "engines": {
+        "node": ">=14"
+    },
+    "pkg": {
+        "scripts": "build/*.js",
+        "assets": [
+            "build/views/**/*"
+        ]
+    }
 }
