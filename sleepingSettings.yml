@@ -13,10 +13,8 @@ webPort: 0 # 0 to disable web hosting
 startMinecraft: 1 # 0 to disable
 minecraftCommand: "java -jar paper.jar nogui" # or paper.jar or whatever flavor you like
 
-# /!\ Edit this only if you know what you are doing
-#     otherwise, follow the tutorial here:
-# https://github.com/vincss/mcsleepingserverstarter#install-
-# minecraftWorkingDirectory: "" # Set a custom working directory (absolute path to minecraft server folder)
+# /!\ Edit this setting only if you know what you are doing
+# minecraftWorkingDirectory: "" # Set a custom working directory (path to minecraft server folder)
 
 # version: 1.15.2 # Force compatibility with a specific minecraft version
 
