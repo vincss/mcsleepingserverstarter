@@ -10,8 +10,8 @@
         "prebuild": "rimraf ./build/ ./bin/ && cpx-fixed \"views/**/*.*\" build/views",
         "build": "npm-run-all build:*",
         "build:typescript": "tsc",
-        "build:win": "pkg build/sleepingServerStarter.js --config package.json --target win --output bin/sleepingServerStarter.exe",
-        "build:linux": "pkg build/sleepingServerStarter.js --config package.json --target linux --output bin/sleepingServerStarter.run",
+        "build:win": "pkg build/sleepingServerStarter.js --config package.json --target node14-win-x64 --output bin/sleepingServerStarter.exe",
+        "build:linux": "pkg build/sleepingServerStarter.js --config package.json --target node14-linux-x64 --output bin/sleepingServerStarter.run",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {
