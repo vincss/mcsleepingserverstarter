@@ -2,6 +2,7 @@
   "name": "mcsleepingserverstarter",
   "version": "1.0.4",
   "description": "Sleeps until someone connects",
+    "main": "build/sleepingServerStarter.js",
   "bin": "build/sleepingServerStarter.js",
   "scripts": {
     "start": "ts-node sleepingServerStarter.ts",
