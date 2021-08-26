@@ -1,4 +1,4 @@
-<div style="text-align: center;">
+<div align="center">
     <img src="https://raw.githubusercontent.com/vincss/mcsleepingserverstarter/master/views/res/sleepingserver.png">
     <h1>Welcome to SleepingServerStarter 💤</h1>
     <p>
