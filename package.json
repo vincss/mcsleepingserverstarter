@@ -5,7 +5,7 @@
     "main": "build/sleepingServerStarter.js",
     "bin": "build/sleepingServerStarter.js",
     "scripts": {
-        "start": "tsc && node .",
+        "start": "npm run prebuild && npm run build:typescript && node .",
         "dev": "nodemon",
         "prebuild": "rimraf ./build/ ./bin/ && cpx-fixed \"views/**/*.*\" build/views",
         "build": "npm-run-all build:*",
