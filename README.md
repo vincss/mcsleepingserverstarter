@@ -45,8 +45,8 @@ There are two ways to run SleepingServerStarter :
 | Setting                     | Description                                                                                                                                                     | Default value                                   |
 |-----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------|
 | `serverName`                | The name of your server                                                                                                                                         | "SleepingServer, waiting for his prince..."     |
-| `serverPort`                | The port of your Java Edition server                                                                                                                            | 25565                                           |
-| `bedrockPort`               | The port of your Bedrock Edition server                                                                                                                         | 19132                                           |
+| `serverPort`                | The port of your Java Edition server (0 to disable)                                                                                                                           | 25565                                           |
+| `bedrockPort`               | The port of your Bedrock Edition server (0 to disable)                                                                                                                        | 19132                                           |
 | `loginMessage`              | Message shown when the server is off and someone is trying to connect                                                                                           | "...Waking server up, come back in a minute..." |
 | `serverOnlineMode`          | Check if players has premium accounts                                                                                                                           | true                                            |
 | `maxPlayers`                | Maximum amount of players                                                                                                                                       | 20                                              |
@@ -67,6 +67,25 @@ There are two ways to run SleepingServerStarter :
 #### Links :
 - Icons: https://www.flaticon.com/free-icon/geyser_1842245
 - Image encoder: https://www.base64-image.de/
+
+## 🕸 Bungeecord
+
+While SleepingServerStarter is made to run on a single server, it can be integrated to a Bungeecord network. **But please note that you'll need to install and configure SleepingServerStarter on every servers you want to be affected by the program.**
+
+Installing SleepingServerStarter only on your proxy server <u>**will NOT work**</u>
+
+For each server you're installing SleepingServerStarter on :
+- the `serverPort` should be the port of the server you're installing the program on, not the proxy's port
+- make sure `serverOnlineMode` is set to `false` to avoid any problems with Bungee when switching between servers
+
+We know this can be a little bit time consuming, but this solution is working great
+
+#### In action :
+
+When trying to join a sleeping server, you get this kind of message by Bungee<br/>
+Basically, it keeps kicking the player with `loginMessage` as reason, telling the player the server is being started
+
+![](./docs/bungeeStartingExample.png)
 
 ## 👤 Author
 
