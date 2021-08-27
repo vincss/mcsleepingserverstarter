@@ -1,7 +1,8 @@
 // import LoggerBuilder from '@jsprismarine/prismarine/dist/utils/Logger';
 import { existsSync, mkdirSync } from 'fs';
 import { createLogger, format, transports } from 'winston';
-import { version } from './package.json';
+
+const { version } = require('../package.json');
 
 const DefaultLogger = {
     info: (...params: any) => console.info(params),
@@ -33,10 +34,10 @@ export const getLogger = () => {
             level: 'info',
             format: format.combine(
                 format.timestamp({
-                  format: 'YYYY-MM-DD HH:mm:ss'
+                    format: 'YYYY-MM-DD HH:mm:ss'
                 }),
-                format.printf(info => `${info.timestamp} ${info.level}: ${info.message}`+(info.splat!==undefined?`${info.splat}`:" "))
-              ),
+                format.printf(info => `${info.timestamp} ${info.level}: ${info.message}` + (info.splat !== undefined ? `${info.splat}` : " "))
+            ),
             transports: [
                 new transports.Console(),
                 new (transports.File)({
@@ -53,7 +54,7 @@ export const getLogger = () => {
     }
     initialized = true;
     const msg = `... A new story begin v${version} ...`;
-    const separator = msg.replace(/./g,'.');
+    const separator = msg.replace(/./g, '.');
     logger.info(separator);
     logger.info(msg);
     logger.info(separator)
