@@ -80,7 +80,7 @@ For each server you're installing SleepingServerStarter on :
 
 We know this can be a little bit time consuming, but this solution is working great
 
-#### In action :
+#### In action :
 
 When trying to join a sleeping server, you get this kind of message by Bungee<br/>
 Basically, it keeps kicking the player with `loginMessage` as reason, telling the player the server is being started
