@@ -98,3 +98,18 @@ Contributions, issues and feature requests are welcome!<br />Feel free to check 
 ## 🙌 Show your support
 
 Give a ⭐️ if you like the project!
+
+## 📜 ChangeLog  
+  * 1.0.4 - 1.17.1 : 
+    * update node-minecraft-protocol ^1.26.1
+  * 1.0.3 - 1.16.5 : 
+    * update security
+  * 1.0.2 - 1.16.5 : 
+    * add maxPlayers in settings 
+  * 1.0.1 - 1.16.5 : 
+    * Include version in log.
+  * 1.0.0 - 1.16.5 : 
+    * Add web-gui
+  * 1.16.4 :
+    * Add bedrock support.
+  * ...
