@@ -15,11 +15,9 @@
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {
-        "@discordjs/rest": "^0.1.0-canary.0",
         "@jsprismarine/prismarine": "^0.1.0-rc.49",
         "@jsprismarine/raknet": "^0.1.0-rc.49",
-        "discord-api-types": "^0.24.0",
-        "discord.js": "^13.3.1",
+        "axios": "^0.24.0",
         "express": "^4.17.1",
         "express-handlebars": "^5.3.3",
         "js-yaml": "^4.1.0",

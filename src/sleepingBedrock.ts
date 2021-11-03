@@ -14,7 +14,7 @@ import { Settings } from './sleepingSettings';
 import { PlayerConnectionCallBackType } from './sleepingTypes';
 
 const Address = '0.0.0.0';
-const Version = '1.16.201';
+const Version = '1.17.41';
 
 export class SleepingBedrock implements ISleepingServer {
 
@@ -67,7 +67,7 @@ export class SleepingBedrock implements ISleepingServer {
     private handleRaknetConnect = async (raknetConnectEvent: RaknetConnectEvent) => {
         this.logger.info(`[BedRock] raknetConnect ${raknetConnectEvent}`);
         const connection = raknetConnectEvent.getConnection();
-        connection.disconnect(this.settings.loginMessage);
+        connection.disconnect(this.settings.loginMessage);        
         await connection.close();
         await this.close();
         this.playerConnectionCallBack('A BedRock Player');

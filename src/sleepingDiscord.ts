@@ -1,44 +1,32 @@
-import { Client, Intents } from 'discord.js';
+import axios from 'axios';
 import { getLogger, LoggerType } from './sleepingLogger';
-import { ISleepingServer } from './sleepingServerInterface';
 import { Settings } from './sleepingSettings';
 
-const AuthToken = 'OTA1NDMzMDY1NDY2MjUzMzIz.YYKAQA.-w0buY_hGW0qWwWRuwas2rfDmbE';
-const AuthLink = 'https://discord.com/api/oauth2/authorize?client_id=905433065466253323&permissions=2048&scope=bot'
-
-export class SleepingDiscord implements ISleepingServer {
+export class SleepingDiscord {
 
     logger: LoggerType;
     settings: Settings;
-    client: Client;
 
     constructor(settings: Settings) {
         this.settings = settings;
         this.logger = getLogger();
-
-        this.client = new Client({ intents: [Intents.FLAGS.DIRECT_MESSAGES] });
     }
 
-    async init() {
-
-        this.client.on('ready', () => {
-            this.logger.info(`[Discord] Logged in as ${this.client.user?.tag}!`)
-        });
-
-        this.logger.info(`[Discord] Logging...`)
-
-        this.client.login(AuthToken);
+    private sendMessage = async (message: string) => {
+        this.logger.info(`[Discord] Sending ${message}`)
+        const toSend = { content: message };
+        const response = await axios.post(this.settings.discordWebhookUrl!, toSend);
+        this.logger.info('[Discord] ', response.statusText);
     }
 
-    async close() {
-        this.logger.info('[Discord] Closing...');
-        this.client.destroy();
-    };
+    onPlayerLogging = async (playerName: string) => {
+        const message = `\` ⏰ ${playerName} has woke the server up. ⏰ \``;
+        await this.sendMessage(message);
 
-    onLogging = async (playerName: string) => {
-        const channel = await this.client.channels.fetch(this.settings.discordChannelId!);
-        if (channel) {
-            await (channel as any).send(`\` 💤 ${playerName} has woke the server up ! ⏰ \``);
-        }
+    }
+
+    onServerStop = async () => {
+        const message = `\` 💤 Server has shut down. 💤 \``;
+        await this.sendMessage(message);
     }
 }
