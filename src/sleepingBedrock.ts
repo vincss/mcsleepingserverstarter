@@ -11,6 +11,7 @@ import InetAddress from '@jsprismarine/raknet/dist/utils/InetAddress';
 import { getLogger, LoggerType } from './sleepingLogger';
 import { ISleepingServer } from './sleepingServerInterface';
 import { Settings } from './sleepingSettings';
+import { PlayerConnectionCallBackType } from './sleepingTypes';
 
 const Address = '0.0.0.0';
 const Version = '1.16.201';
@@ -23,9 +24,9 @@ export class SleepingBedrock implements ISleepingServer {
     listenerBuilder: Listener;
     playerManager: PlayerManager;
     private readonly eventManager = new EventManager();
-    playerConnectionCallBack: () => void;
+    playerConnectionCallBack: PlayerConnectionCallBackType;
 
-    constructor(settings: Settings, playerConnectionCallBack: () => void) {
+    constructor(settings: Settings, playerConnectionCallBack: PlayerConnectionCallBackType) {
         this.settings = settings;
 
         this.playerConnectionCallBack = playerConnectionCallBack;
@@ -69,7 +70,7 @@ export class SleepingBedrock implements ISleepingServer {
         connection.disconnect(this.settings.loginMessage);
         await connection.close();
         await this.close();
-        this.playerConnectionCallBack();
+        this.playerConnectionCallBack('A BedRock Player');
     }
 
     private handleEncapsulated = async (packet: Protocol.EncapsulatedPacket, inetAddr: InetAddress) => {

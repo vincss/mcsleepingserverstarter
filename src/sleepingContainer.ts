@@ -7,6 +7,8 @@ import { SleepingBedrock } from './sleepingBedrock';
 import { SleepingWeb } from './sleepingWeb';
 import { ISleepingServer } from './sleepingServerInterface';
 import { isPortTaken, ServerStatus } from './sleepingHelper';
+import { SleepingDiscord } from './sleepingDiscord';
+import { PlayerConnectionCallBackType } from './sleepingTypes';
 
 export class SleepingContainer implements ISleepingServer {
 
@@ -17,27 +19,35 @@ export class SleepingContainer implements ISleepingServer {
     brServer?: SleepingBedrock;
     webServer?: SleepingWeb;
 
+    discord?: SleepingDiscord;
+
     constructor(settings: Settings) {
         this.settings = settings;
         this.logger = getLogger();
     }
 
     init = async (isThisTheBeginning = false) => {
+        
         if (isThisTheBeginning) {
             if (this.settings.webPort > 0) {
                 this.webServer = new SleepingWeb(this.settings, this.playerConnectionCallBack, this);
-                await this.webServer.init();
+                await this.webServer?.init();
             }
         }
 
         if (this.settings.serverPort > 0) {
             this.mcServer = new SleepingMcJava(this.settings, this.playerConnectionCallBack);
-            await this.mcServer.init();
+            await this.mcServer?.init();
         }
 
         if (this.settings.bedrockPort > 0) {
             this.brServer = new SleepingBedrock(this.settings, this.playerConnectionCallBack);
-            await this.brServer.init();
+            await this.brServer?.init();
+        }
+
+        if (this.settings.discordChannelId) {
+            this.discord = new SleepingDiscord(this.settings);
+            await this.discord.init();
         }
 
     }
@@ -79,6 +89,10 @@ export class SleepingContainer implements ISleepingServer {
             await this.brServer.close();
         }
 
+        if(this.discord) {
+            await this.discord.close();
+        }
+
         if (isThisTheEnd) {
 
             if (this.webServer) {
@@ -87,11 +101,14 @@ export class SleepingContainer implements ISleepingServer {
         }
     }
 
-    playerConnectionCallBack = async () => {
+    playerConnectionCallBack : PlayerConnectionCallBackType = async (playerName:string) => {
+        if(this.settings.discordChannelId && this.discord) {
+           await this.discord.onLogging(playerName);
+        }
+        
         await this.close();
 
         if (this.settings.startMinecraft > 0) {
-
 
             const onMcClosed = () => {
                 this.logger.info('...Time to kill me if you want...');

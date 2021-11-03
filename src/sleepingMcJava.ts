@@ -3,6 +3,7 @@ import { ServerStatus } from './sleepingHelper';
 import { getLogger, LoggerType } from './sleepingLogger';
 import { ISleepingServer } from './sleepingServerInterface';
 import { DefaultFavIconString, Settings } from './sleepingSettings';
+import { PlayerConnectionCallBackType } from './sleepingTypes';
 
 export class SleepingMcJava implements ISleepingServer {
 
@@ -10,9 +11,9 @@ export class SleepingMcJava implements ISleepingServer {
 
     settings: Settings;
     logger: LoggerType;
-    playerConnectionCallBack: () => void;
+    playerConnectionCallBack: PlayerConnectionCallBackType;
 
-    constructor(settings: Settings, playerConnectionCallBack: () => void) {
+    constructor(settings: Settings, playerConnectionCallBack: PlayerConnectionCallBackType) {
         this.settings = settings;
         this.playerConnectionCallBack = playerConnectionCallBack;
         this.logger = getLogger();
@@ -47,11 +48,12 @@ export class SleepingMcJava implements ISleepingServer {
 
         this.server.on('login', (client) => {
 
-            this.logger.info(`Prince [${client.username}.${client.state}] has come, time to wake up.`);
+            const userName = client.username;
+            this.logger.info(`Prince [${userName}.${client.state}] has come, time to wake up.`);
 
             client.on('end', (client) => {
                 this.logger.info('The prince is gone, for now', client);
-                this.playerConnectionCallBack();
+                this.playerConnectionCallBack(userName);
             });
             this.logger.info(`Sending best regards ${this.settings.loginMessage}`);
             client.end(this.settings.loginMessage);

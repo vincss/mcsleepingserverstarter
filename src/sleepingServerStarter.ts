@@ -19,7 +19,7 @@ process.on('SIGTERM', async () => {
     process.exit(0);
 });
 
-process.on('uncaughtException', function (err: any) {
+process.on('uncaughtException', (err: any) => {
     logger.warn(`Caught uncaughtException: ${JSON.stringify(err)}`);
 
     if (err.code === 'ECONNRESET') {
@@ -48,12 +48,16 @@ const main = async () => {
     process.stdin.resume();
     process.stdin.setEncoding('utf8');
 
-    sleepingContainer = new SleepingContainer(settings);
-    await sleepingContainer.init(true);
+    try {
+        sleepingContainer = new SleepingContainer(settings);
+        await sleepingContainer.init(true);
+    } catch (error) {
+        logger.error('Something bad happened.', error)
+    }
 
     process.stdin.on('data', (text) => {
         if (text.indexOf('quit') > -1) {
-            sleepingContainer.playerConnectionCallBack();
+            sleepingContainer.playerConnectionCallBack('A CliUser');
         }
     });
 };
