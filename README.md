@@ -33,7 +33,7 @@ There are two ways to run SleepingServerStarter :
 
 ### Manually install and compile
 
-0. Requires [NodeJS](https://nodejs.org/en/) v14+
+0. Requires [NodeJS](https://nodejs.org/en/) v16+
 1. Clone the repo or download the project as Zip
 2. Unzip or clone it **in the same folder as your minecraft server**
 3. Launch `npm install`
@@ -56,7 +56,7 @@ There are two ways to run SleepingServerStarter :
 | `minecraftWorkingDirectory` | Set a custom Working Directory for the server **EDIT ONLY IF YOU KNOW WHAT YOU'RE DOING** (should be the path to the server's directory, absolute path is best) | ""                                              |
 | `version`                   | Force compatibility with a specific Minecraft version                                                                                                           | ""                                              |
 | `favIcon`                   | Use a custom server-icon 64x64 png converted using https://www.base64-image.de/ (needs to be encoded in base64)                                                 | ""                                              |
-
+| `discordWebhookUrl`                   | Setup a [Discord WebHook](https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks) to your channel | "REPLACE_ME"  
 -----
 
 #### Use WebServer for dynmap :
@@ -100,6 +100,9 @@ Contributions, issues and feature requests are welcome!<br />Feel free to check 
 Give a ⭐️ if you like the project!
 
 ## 📜 ChangeLog  
+  * 1.1.0 - 1.17.1 : 
+    * **Feature** Add Discord Notification
+    * Update dependencies (node16, npm8, typescript,...)
   * 1.0.4 - 1.17.1 : 
     * update node-minecraft-protocol ^1.26.1
   * 1.0.3 - 1.16.5 : 
@@ -109,7 +112,7 @@ Give a ⭐️ if you like the project!
   * 1.0.1 - 1.16.5 : 
     * Include version in log.
   * 1.0.0 - 1.16.5 : 
-    * Add web-gui
+    * **Feature** Add web-gui
   * 1.16.4 :
     * Add bedrock support.
   * ...
