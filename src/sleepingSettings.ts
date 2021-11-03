@@ -43,8 +43,8 @@ function saveDefault() {
     try {
         const yamlToWrite = dump(DefaultSettings);
         writeFileSync(SettingFilePath, yamlToWrite)
-    } catch (error) {
-        logger.error('Failed to write setting.', error.message);
+    } catch (error: any) {
+        logger.error('Failed to write setting.', error?.message);
     }
 }
 
@@ -54,8 +54,8 @@ export function getSettings(): Settings {
         const read = readFileSync(SettingFilePath).toString();
         const settingsFromFiles = load(read) as Settings;
         settings = { ...DefaultSettings, ...settingsFromFiles };
-    } catch (error) {
-        logger.error('Failed to load setting, using default.', error.message);
+    } catch (error: any) {
+        logger.error('Failed to load setting, using default.', error?.message);
         saveDefault();
     }
     logger.info(`Retrieved settings:${JSON.stringify(settings)}`);

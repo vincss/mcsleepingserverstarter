@@ -96,8 +96,8 @@ export class SleepingBedrock implements ISleepingServer {
                     });
                 });
 
-            } catch (error) {
-                this.logger.error(`[BedRock] Closing error: ${error.message}`);
+            } catch (error: any) {
+                this.logger.error(`[BedRock] Closing error: ${error?.message}`);
             }
             this.listener = undefined;
         }

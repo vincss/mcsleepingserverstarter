@@ -10,8 +10,8 @@
         "prebuild": "rimraf ./build/ ./bin/ && cpx-fixed \"views/**/*.*\" build/views",
         "build": "npm-run-all build:*",
         "build:typescript": "tsc",
-        "build:win": "pkg build/sleepingServerStarter.js --config package.json --target node14-win-x64 --output bin/sleepingServerStarter.exe",
-        "build:linux": "pkg build/sleepingServerStarter.js --config package.json --target node14-linux-x64 --output bin/sleepingServerStarter.run",
+        "build:win": "pkg build/sleepingServerStarter.js --config package.json --target node16-win-x64 --output bin/sleepingServerStarter.exe",
+        "build:linux": "pkg build/sleepingServerStarter.js --config package.json --target node16-linux-x64 --output bin/sleepingServerStarter.run",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {
@@ -26,16 +26,16 @@
     "devDependencies": {
         "@types/connect": "^3.4.35",
         "@types/express": "^4.17.13",
-        "@types/express-handlebars": "^3.1.0",
+        "@types/express-handlebars": "^5.3.1",
         "@types/js-yaml": "^4.0.3",
-        "@types/node": "^14.17.12",
+        "@types/node": "^16.11.6",
         "@types/serve-static": "^1.13.10",
         "cpx-fixed": "^1.6.0",
         "nodemon": "^2.0.12",
         "npm-run-all": "^4.1.5",
         "pkg": "^5.3.1",
         "rimraf": "^3.0.2",
-        "typescript": "~4.3.2"
+        "typescript": "^4.4.4"
     },
     "author": "Vincss",
     "license": "ISC",
@@ -55,7 +55,8 @@
     },
     "homepage": "https://github.com/vincss/mcsleepingserverstarter#readme",
     "engines": {
-        "node": ">=14"
+        "node": ">=16",
+        "npm": ">=8"
     },
     "pkg": {
         "scripts": "build/*.js",
