@@ -12,21 +12,46 @@ export class SleepingDiscord {
         this.logger = getLogger();
     }
 
-    private sendMessage = async (message: string) => {
-        this.logger.info(`[Discord] Sending ${message}`)
-        const toSend = { content: message };
-        const response = await axios.post(this.settings.discordWebhookUrl!, toSend);
+    private sendMessage = async (content: any, woke: boolean) => {
+        if (woke)
+            this.logger.info(`[Discord] Sending waking up message`);
+        else
+            this.logger.info(`[Discord] Sending closing server message`);
+
+        const response = await axios.post(this.settings.discordWebhookUrl!, content, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
         this.logger.info('[Discord] ', response.statusText);
     }
 
     onPlayerLogging = async (playerName: string) => {
-        const message = `\` ⏰ ${playerName} has woke the server up. ⏰ \``;
-        await this.sendMessage(message);
+        const content = `{
+            "content": null,
+            "embeds": [
+              {
+                "title": "⏰ ${playerName} woke up the server !",
+                "color": 25344
+              }
+            ],
+            "username": "SleepingServerStarter"
+        }`;
+        await this.sendMessage(content, true);
 
     }
 
     onServerStop = async () => {
-        const message = `\` 💤 Server has shut down. 💤 \``;
-        await this.sendMessage(message);
+        const content = `{
+            "content": null,
+            "embeds": [
+              {
+                "title": "💤 Server has shut down.",
+                "color": 25344
+              }
+            ],
+            "username": "SleepingServerStarter"
+        }`;
+        await this.sendMessage(content, false);
     }
 }
