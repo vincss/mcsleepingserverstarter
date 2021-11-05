@@ -35,7 +35,8 @@ export class SleepingDiscord {
                 "color": 25344
               }
             ],
-            "username": "SleepingServerStarter"
+            "username": "SleepingServerStarter",
+            "avatar_url": "https://raw.githubusercontent.com/vincss/mcsleepingserverstarter/feature/discord_notification/docs/sleepingLogo.png"
         }`;
         await this.sendMessage(content, true);
 
@@ -50,7 +51,8 @@ export class SleepingDiscord {
                 "color": 25344
               }
             ],
-            "username": "SleepingServerStarter"
+            "username": "SleepingServerStarter",
+            "avatar_url": "https://raw.githubusercontent.com/vincss/mcsleepingserverstarter/feature/discord_notification/docs/sleepingLogo.png"
         }`;
         await this.sendMessage(content, false);
     }
