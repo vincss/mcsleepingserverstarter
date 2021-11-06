@@ -21,6 +21,7 @@ export type Settings = {
     version?: string,
     favIcon?: string,
     minecraftWorkingDirectory?: string,
+    discordWebhookUrl?: string,
 };
 
 const DefaultSettings: Settings = {

@@ -7,16 +7,17 @@ import { DefaultFavIconString, Settings } from "./sleepingSettings";
 import { getLogger, LoggerType } from './sleepingLogger';
 import { SleepingContainer } from './sleepingContainer';
 import path from 'path';
+import { PlayerConnectionCallBackType } from './sleepingTypes';
 
 export class SleepingWeb implements ISleepingServer {
   settings: Settings;
   sleepingContainer: SleepingContainer;
-  playerConnectionCallBack: () => void;
+  playerConnectionCallBack: PlayerConnectionCallBackType;
   logger: LoggerType;
   app: Express;
   server?: http.Server;
 
-  constructor(settings: Settings, playerConnectionCallBack: () => void, sleepingContainer: SleepingContainer) {
+  constructor(settings: Settings, playerConnectionCallBack: PlayerConnectionCallBackType, sleepingContainer: SleepingContainer) {
     this.settings = settings;
     this.playerConnectionCallBack = playerConnectionCallBack;
     this.sleepingContainer = sleepingContainer;
@@ -44,7 +45,7 @@ export class SleepingWeb implements ISleepingServer {
     });
 
     this.app.post('/wakeup', (req, res) => {
-      this.playerConnectionCallBack();
+      this.playerConnectionCallBack('A WebUser');
       res.send('received');
     })
 

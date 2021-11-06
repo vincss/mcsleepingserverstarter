@@ -1,12 +1,14 @@
-import { spawn, execSync } from 'child_process';
-
-import { getLogger, LoggerType } from './sleepingLogger';
-import { Settings } from './sleepingSettings';
-import { SleepingMcJava } from './sleepingMcJava';
+import { execSync, spawn } from 'child_process';
 import { SleepingBedrock } from './sleepingBedrock';
-import { SleepingWeb } from './sleepingWeb';
-import { ISleepingServer } from './sleepingServerInterface';
+import { SleepingDiscord } from './sleepingDiscord';
 import { isPortTaken, ServerStatus } from './sleepingHelper';
+import { getLogger, LoggerType } from './sleepingLogger';
+import { SleepingMcJava } from './sleepingMcJava';
+import { ISleepingServer } from './sleepingServerInterface';
+import { Settings } from './sleepingSettings';
+import { PlayerConnectionCallBackType } from './sleepingTypes';
+import { SleepingWeb } from './sleepingWeb';
+
 
 export class SleepingContainer implements ISleepingServer {
 
@@ -17,27 +19,34 @@ export class SleepingContainer implements ISleepingServer {
     brServer?: SleepingBedrock;
     webServer?: SleepingWeb;
 
+    discord?: SleepingDiscord;
+
     constructor(settings: Settings) {
         this.settings = settings;
         this.logger = getLogger();
     }
 
     init = async (isThisTheBeginning = false) => {
+
         if (isThisTheBeginning) {
             if (this.settings.webPort > 0) {
                 this.webServer = new SleepingWeb(this.settings, this.playerConnectionCallBack, this);
-                await this.webServer.init();
+                await this.webServer?.init();
             }
         }
 
         if (this.settings.serverPort > 0) {
             this.mcServer = new SleepingMcJava(this.settings, this.playerConnectionCallBack);
-            await this.mcServer.init();
+            await this.mcServer?.init();
         }
 
         if (this.settings.bedrockPort > 0) {
             this.brServer = new SleepingBedrock(this.settings, this.playerConnectionCallBack);
-            await this.brServer.init();
+            await this.brServer?.init();
+        }
+
+        if (this.settings.discordWebhookUrl) {
+            this.discord = new SleepingDiscord(this.settings);
         }
 
     }
@@ -87,13 +96,21 @@ export class SleepingContainer implements ISleepingServer {
         }
     }
 
-    playerConnectionCallBack = async () => {
+    playerConnectionCallBack: PlayerConnectionCallBackType = async (playerName: string) => {
+        if (this.settings.discordWebhookUrl && this.discord) {
+            await this.discord.onPlayerLogging(playerName);
+        }
+
         await this.close();
 
         if (this.settings.startMinecraft > 0) {
 
+            const onMcClosed = async () => {
 
-            const onMcClosed = () => {
+                if (this.settings.discordWebhookUrl && this.discord) {
+                    await this.discord.onServerStop();
+                }
+
                 this.logger.info('...Time to kill me if you want...');
                 setTimeout(async () => {
                     this.logger.info('...Too late !...');
