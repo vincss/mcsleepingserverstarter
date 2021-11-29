@@ -17,7 +17,7 @@
   - Web-gui, to turn on or off your server from anywhere
 - When someone connects, immediately launch your minecraft server
 
-**Works better with [EmptyServerStopper](https://www.spigotmc.org/resources/emptyserverstopper.19409/), a plugin that automatically stops your server after a definied amount of time**
+**Works better with [EmptyServerStopper](https://github.com/vincss/mcEmptyServerStopper), a plugin that automatically stops your server after a definied amount of time**
 
 ## 📀 Install
 
