@@ -100,7 +100,8 @@ Contributions, issues and feature requests are welcome!<br />Feel free to check 
 
 ## 🙌 Show your support
 
-Give a ⭐️ if you like the project!
+Give a ⭐️ if you like the project! 
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog  
   * 1.1.0 - 1.17.1 : 
