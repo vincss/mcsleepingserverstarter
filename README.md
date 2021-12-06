@@ -17,7 +17,7 @@
   - Web-gui, to turn on or off your server from anywhere
 - When someone connects, immediately launch your minecraft server
 
-**Works better with [EmptyServerStopper](https://www.spigotmc.org/resources/emptyserverstopper.19409/), a plugin that automatically stops your server after a definied amount of time**
+**Works better with [EmptyServerStopper](https://github.com/vincss/mcEmptyServerStopper), a plugin that automatically stops your server after a definied amount of time**
 
 ## 📀 Install
 
@@ -60,6 +60,9 @@ If you're using PufferPanel, you can import [this template](./docs/pufferpanel.j
 | `version`                   | Force compatibility with a specific Minecraft version                                                                                                           | ""                                              |
 | `favIcon`                   | Use a custom server-icon 64x64 png converted using https://www.base64-image.de/ (needs to be encoded in base64)                                                 | ""                                              |
 | `discordWebhookUrl`                   | Setup a [Discord WebHook](https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks) to your channel | "REPLACE_ME"  
+
+> Note: if you need to shutdown the program, simply input a `ctrl + c`, the program will shut down normally afterwards
+
 -----
 
 #### Use WebServer for dynmap :
@@ -101,6 +104,8 @@ Contributions, issues and feature requests are welcome!<br />Feel free to check 
 ## 🙌 Show your support
 
 Give a ⭐️ if you like the project!
+
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog  
   * 1.1.0 - 1.17.1 : 

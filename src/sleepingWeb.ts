@@ -1,5 +1,5 @@
 import express, { Express } from 'express';
-import exphbs from 'express-handlebars';
+import { engine } from 'express-handlebars';
 import * as http from 'http';
 
 import { ISleepingServer } from "./sleepingServerInterface";
@@ -27,7 +27,7 @@ export class SleepingWeb implements ISleepingServer {
 
   init = async () => {
 
-    this.app.engine('hbs', exphbs({
+    this.app.engine('hbs', engine({
       defaultLayout: 'main',
       layoutsDir: path.join(__dirname, './views/layouts/'),
       extname: '.hbs',
