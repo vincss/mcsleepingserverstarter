@@ -39,6 +39,9 @@ There are two ways to run SleepingServerStarter :
 3. Launch `npm install`
 4. Start the project with `npm start`
 
+### 🐡 PufferPanel
+If you're using PufferPanel, you can import [this template](./docs/pufferpanel.json) as JSON to use Paper Spigot with Sleeping Server Starter via PufferPanel
+
 ## ⚙️ Settings
 > Note: If running from binaries, the settings file will be created after the first execution in the same folder as the executable
 
