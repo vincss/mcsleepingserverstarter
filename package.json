@@ -21,7 +21,7 @@
         "express": "^4.17.1",
         "express-handlebars": "^6.0.2",
         "js-yaml": "^4.1.0",
-        "minecraft-protocol": "^1.28.0",
+        "minecraft-protocol": "^1.29.0",
         "winston": "^3.3.3"
     },
     "devDependencies": {

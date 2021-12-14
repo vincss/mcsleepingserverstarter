@@ -108,6 +108,8 @@ Give a ⭐️ if you like the project!
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog  
+  * 1.1.1 - 1.18.1 : 
+    * update node-minecraft-protocol ^1.29.0 -> 1.18.1
   * 1.1.0 - 1.17.1 : 
     * **Feature** Add Discord Notification
     * Update dependencies (node16, npm8, typescript,...)
