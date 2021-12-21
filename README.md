@@ -29,7 +29,7 @@ There are two ways to run SleepingServerStarter :
 2. Place the executable in the same folder as your server file (`spigot.jar`, `paper.jar`, etc...)
 3. Make sure your server is stopped
 4. Run the executable
-    - On Linux, try `chmod +x sleepingServerStarter.run` if you can't run the executable
+    - On Linux, try `chmod +x mcsleepingserverstarter-linux` if you can't run the executable
 
 ### Manually install and compile
 
@@ -108,6 +108,8 @@ Give a ⭐️ if you like the project!
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog  
+  * 1.1.2 - 1.18.1 : 
+    * Compress binaries ( GZip )
   * 1.1.1 - 1.18.1 : 
     * update node-minecraft-protocol ^1.29.0 -> 1.18.1
   * 1.1.0 - 1.17.1 : 

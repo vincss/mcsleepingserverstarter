@@ -10,8 +10,7 @@
         "prebuild": "rimraf ./build/ ./bin/ && cpx-fixed \"views/**/*.*\" build/views",
         "build": "npm-run-all build:*",
         "build:typescript": "tsc",
-        "build:win": "pkg build/sleepingServerStarter.js --config package.json --target node16-win-x64 --output bin/sleepingServerStarter.exe",
-        "build:linux": "pkg build/sleepingServerStarter.js --config package.json --target node16-linux-x64 --output bin/sleepingServerStarter.run",
+        "build:target": "pkg build/sleepingServerStarter.js --config package.json --compress GZip --target node16-win-x64,node16-linux-x64 --out-path ./bin/",        
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {

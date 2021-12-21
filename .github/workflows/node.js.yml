@@ -31,9 +31,9 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: 'Binary Windows'
-        path: bin/sleepingServerStarter.exe
+        path: bin/mcsleepingserverstarter-win.exe
     - name: 'Upload Artifact Linux'
       uses: actions/upload-artifact@v2
       with:
         name: 'Binary Linux'
-        path: bin/sleepingServerStarter.run
+        path: bin/mcsleepingserverstarter-linux
