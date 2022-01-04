@@ -6,7 +6,7 @@
     </p>
     <p>
 
-[Tutorial Video](https://youtu.be/WqvQISpr6-s) | [Based on JSPrismarine](https://github.com/JSPrismarine/JSPrismarine) | [Original idea](https://github.com/tustin2121/MCSignOnDoor)
+[Tutorial Video](https://youtu.be/WqvQISpr6-s) | [Based on minecraft-protocol](https://www.npmjs.com/package/minecraft-protocol) | [Based on JSPrismarine](https://github.com/JSPrismarine/JSPrismarine) | [Original idea](https://github.com/tustin2121/MCSignOnDoor)
     </p>
 </div>
 
@@ -108,6 +108,9 @@ Give a ⭐️ if you like the project!
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog  
+  * 1.1.3 - 1.18.1 : 
+    * Fixed concurent wake up : https://github.com/vincss/mcsleepingserverstarter/issues/68 
+    * update node-minecraft-protocol ^1.30.0
   * 1.1.2 - 1.18.1 : 
     * Compress binaries ( GZip )
   * 1.1.1 - 1.18.1 : 

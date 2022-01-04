@@ -13,6 +13,8 @@ export class SleepingMcJava implements ISleepingServer {
     logger: LoggerType;
     playerConnectionCallBack: PlayerConnectionCallBackType;
 
+    isClosing = false;
+
     constructor(settings: Settings, playerConnectionCallBack: PlayerConnectionCallBackType) {
         this.settings = settings;
         this.playerConnectionCallBack = playerConnectionCallBack;
@@ -47,11 +49,22 @@ export class SleepingMcJava implements ISleepingServer {
 
         this.server.on('login', (client) => {
 
-            const userName = client.username;
+            const userName = client.username;            
+            
+            if(this.isClosing) {
+                this.logger.info(`Prince ${userName}.${client.state}, someone came before you...`);
+                client.on('end', (client) => {
+                    this.logger.info(`${userName} is gone.`, client);
+                });
+                client.end(this.settings.loginMessage);
+                return;
+            }
+            this.isClosing = true;
+
             this.logger.info(`Prince [${userName}.${client.state}] has come, time to wake up.`);
 
             client.on('end', (client) => {
-                this.logger.info('The prince is gone, for now', client);
+                this.logger.info( `[${userName}] The prince is gone, for now`, client);
                 this.playerConnectionCallBack(userName);
             });
             this.logger.info(`Sending best regards ${this.settings.loginMessage}`);

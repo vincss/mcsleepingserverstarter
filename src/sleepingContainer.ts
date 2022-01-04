@@ -21,6 +21,8 @@ export class SleepingContainer implements ISleepingServer {
 
     discord?: SleepingDiscord;
 
+    isClosing = false;
+
     constructor(settings: Settings) {
         this.settings = settings;
         this.logger = getLogger();
@@ -97,11 +99,18 @@ export class SleepingContainer implements ISleepingServer {
     }
 
     playerConnectionCallBack: PlayerConnectionCallBackType = async (playerName: string) => {
+        if(this.isClosing) {
+            this.logger.info(`[${playerName}] Server is already closing.`);
+            return;
+        }
+        this.isClosing = true;
+        
         if (this.settings.discordWebhookUrl && this.discord) {
             await this.discord.onPlayerLogging(playerName);
         }
 
         await this.close();
+        this.isClosing = false;
 
         if (this.settings.startMinecraft > 0) {
 
