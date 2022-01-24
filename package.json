@@ -40,7 +40,7 @@
     "license": "ISC",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/vincss/mcsleepingserverstarter.git"
+        "url": "https://github.com/vincss/mcsleepingserverstarter.git"
     },
     "keywords": [
         "maintenance",
