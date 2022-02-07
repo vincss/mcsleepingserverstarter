@@ -1,13 +1,14 @@
 import express, { Express } from 'express';
 import { engine } from 'express-handlebars';
 import * as http from 'http';
-
+import path from 'path';
+import { SleepingContainer } from './sleepingContainer';
+import { ServerStatus } from './sleepingHelper';
+import { getLogger, LoggerType } from './sleepingLogger';
 import { ISleepingServer } from "./sleepingServerInterface";
 import { DefaultFavIconString, Settings } from "./sleepingSettings";
-import { getLogger, LoggerType } from './sleepingLogger';
-import { SleepingContainer } from './sleepingContainer';
-import path from 'path';
 import { PlayerConnectionCallBackType } from './sleepingTypes';
+
 
 export class SleepingWeb implements ISleepingServer {
   settings: Settings;
@@ -44,9 +45,14 @@ export class SleepingWeb implements ISleepingServer {
       res.render(path.join(__dirname, './views/home'), { message: this.settings.loginMessage });
     });
 
-    this.app.post('/wakeup', (req, res) => {
-      this.playerConnectionCallBack('A WebUser');
-      res.send('received');
+    this.app.post('/wakeup', async (req, res) => {
+      const currentStatus = await this.sleepingContainer.getStatus();
+      if (currentStatus === ServerStatus.Sleeping) {
+        this.playerConnectionCallBack('A WebUser');
+        res.send('received');
+      } else {
+        this.logger.info(`Wake up server was already running *:${currentStatus}`);
+      }
     })
 
     this.app.get('/status', async (req, res) => {
