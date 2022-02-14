@@ -5,7 +5,7 @@ import { isPortTaken, ServerStatus } from './sleepingHelper';
 import { getLogger, LoggerType } from './sleepingLogger';
 import { SleepingMcJava } from './sleepingMcJava';
 import { ISleepingServer } from './sleepingServerInterface';
-import { Settings } from './sleepingSettings';
+import { getSettings, Settings } from './sleepingSettings';
 import { PlayerConnectionCallBackType } from './sleepingTypes';
 import { SleepingWeb } from './sleepingWeb';
 
@@ -23,12 +23,12 @@ export class SleepingContainer implements ISleepingServer {
 
     isClosing = false;
 
-    constructor(settings: Settings) {
-        this.settings = settings;
+    constructor() {
         this.logger = getLogger();
+        this.settings = getSettings();
     }
 
-    init = async (isThisTheBeginning = false) => {
+    init = async (isThisTheBeginning = false) => {        
 
         if (isThisTheBeginning) {
             if (this.settings.webPort > 0) {
@@ -122,9 +122,10 @@ export class SleepingContainer implements ISleepingServer {
 
                 this.logger.info('...Time to kill me if you want...');
                 setTimeout(async () => {
+                    this.settings = getSettings();
                     this.logger.info('...Too late !...');
                     await this.init();
-                }, 10000); // restart server
+                }, 5000); // restart server
             }
 
             this.startMinecraft(onMcClosed);
