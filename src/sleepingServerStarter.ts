@@ -1,9 +1,7 @@
 import { SleepingContainer } from './sleepingContainer';
 import { getLogger, LoggerType } from './sleepingLogger';
-import { getSettings } from './sleepingSettings';
 
 const logger: LoggerType = getLogger();
-const settings = getSettings();
 
 let sleepingContainer: SleepingContainer;
 
@@ -19,15 +17,15 @@ process.on('SIGTERM', async () => {
     process.exit(0);
 });
 
-process.on('uncaughtException', (err: any) => {
-    logger.warn(`Caught uncaughtException: ${JSON.stringify(err)}`);
+process.on('uncaughtException', (err: Error) => {
+    logger.warn(`Caught uncaughtException: ${JSON.stringify(err.message ?? err)}`);
 
-    if (err.code === 'ECONNRESET') {
+    if ((err as any).code === 'ECONNRESET') {
         logger.info('Connection reset client side... Keep on going.');
         return;
     }
-    if (err.code === 'EADDRINUSE') {
-        logger.info(`A server is already using the port ${settings.serverPort}. Kill it and restart the app.`)
+    if ((err as any).code === 'EADDRINUSE') {
+        logger.info(`A server is already using the port. Kill it and restart the app.`, err.message ?? err)
     }
     if (err.message !== 'undefined'
         // && err.message.indexOf('handshaking.toServer')
@@ -49,7 +47,7 @@ const main = async () => {
     process.stdin.setEncoding('utf8');
 
     try {
-        sleepingContainer = new SleepingContainer(settings);
+        sleepingContainer = new SleepingContainer();
         await sleepingContainer.init(true);
     } catch (error) {
         logger.error('Something bad happened.', error)
