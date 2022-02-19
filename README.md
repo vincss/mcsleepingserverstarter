@@ -65,7 +65,8 @@ If you're using PufferPanel, you can import [this template](./docs/pufferpanel.j
 
 -----
 #### Announcing the server startup time (Linux server):
-- To announce a time estimation to the user waking up the server you need to append ` && ./sleeping_wakeup_duration.sh` to the `minecraftCommand` option in the `sleepingSettings.yml`. Example: `minecraftCommand: "java -jar paper.jar nogui && ./sleeping_wakeup_duration.sh"`.
+- To announce a time estimation to the user waking up the server you need to append ` && ./sleeping_wakeup_duration.sh` to the `minecraftCommand` option in the `sleepingSettings.yml`.
+Example: `minecraftCommand: "java -jar paper.jar nogui && ./sleeping_wakeup_duration.sh"`.
 
 -----
 
