@@ -11,7 +11,7 @@ maxPlayers: 20
 webPort: 0 # 0 to disable web hosting, on a positive number a web page it will serve
 
 startMinecraft: 1 # 0 to disable
-minecraftCommand: "java -jar paper.jar nogui && ./sleeping_wakup_duration.sh" # or paper.jar or whatever flavor you like
+minecraftCommand: "java -jar paper.jar nogui" # or paper.jar or whatever flavor you like
 
 # /!\ Edit this setting only if you know what you are doing
 # minecraftWorkingDirectory: "" # Set a custom working directory (path to minecraft server folder)
