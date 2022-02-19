@@ -64,6 +64,10 @@ If you're using PufferPanel, you can import [this template](./docs/pufferpanel.j
 > Note: if you need to shutdown the program, simply input a `ctrl + c`, the program will shut down normally afterwards
 
 -----
+#### Announcing the server startup time (Linux server):
+- To announce a time estimation to the user waking up the server you need to append ` && ./sleeping_wakeup_duration.sh` to the `minecraftCommand` option in the `sleepingSettings.yml`. Example: `minecraftCommand: "java -jar paper.jar nogui && ./sleeping_wakeup_duration.sh"`.
+
+-----
 
 #### Use WebServer for dynmap :
 - You need to change your configuration from class: `org.dynmap.InternalClientUpdateComponent` to class `org.dynmap.JsonFileClientUpdateComponent` *(comment all the section InternalClientUpdateComponent and uncomment JsonFileClientUpdateComponent)*
