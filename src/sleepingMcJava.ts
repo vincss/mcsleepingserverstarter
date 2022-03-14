@@ -30,7 +30,9 @@ export class SleepingMcJava implements ISleepingServer {
             version: this.settings.version,
             beforePing: (reponse) => {
                 reponse.favicon = this.settings.favIcon ?? DefaultFavIconString;
-            }
+            },
+            validateChannelProtocol: true,
+            errorHandler: (client, error) => console.warn('SleepingMcJava.errorHandler: ', client, error)
             // encryption: false,
             // host: '0.0.0.0',
         });
@@ -40,7 +42,7 @@ export class SleepingMcJava implements ISleepingServer {
         this.server.on('connection', (client: Client) => {
             // @ts-ignore FixMe ToDo not exported in TS
             this.logger.info(`A Prince has taken a quick peek. [${client.protocolState}_${client.version}]`);
-            // logger.info(`A Prince has taken a quick peek. [${client.state}_${client.protocolVersion}]`);
+            // this.logger.info(`A Prince has taken a quick peek. [${client.state}_${client.protocolVersion}]`);
         });
 
         this.server.on('listening', () => {
@@ -49,9 +51,9 @@ export class SleepingMcJava implements ISleepingServer {
 
         this.server.on('login', (client) => {
 
-            const userName = client.username;            
-            
-            if(this.isClosing) {
+            const userName = client.username;
+
+            if (this.isClosing) {
                 this.logger.info(`Prince ${userName}.${client.state}, someone came before you...`);
                 client.on('end', (client) => {
                     this.logger.info(`${userName} is gone.`, client);
@@ -64,7 +66,7 @@ export class SleepingMcJava implements ISleepingServer {
             this.logger.info(`Prince [${userName}.${client.state}] has come, time to wake up.`);
 
             client.on('end', (client) => {
-                this.logger.info( `[${userName}] The prince is gone, for now`, client);
+                this.logger.info(`[${userName}] The prince is gone, for now`, client);
                 this.playerConnectionCallBack(userName);
             });
             this.logger.info(`Sending best regards ${this.settings.loginMessage}`);
@@ -88,7 +90,7 @@ export class SleepingMcJava implements ISleepingServer {
 
     getStatus = () => {
         let status = ServerStatus.Stopped;
-        if(this.server) {
+        if (this.server) {
             status = ServerStatus.Sleeping;
         }
         return status;

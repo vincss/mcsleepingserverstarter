@@ -108,6 +108,8 @@ Give a ⭐️ if you like the project!
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog  
+  * 1.1.4 - 1.18.2 : 
+    * update node-minecraft-protocol ^1.32.0
   * 1.1.3 - 1.18.1 : 
     * Fixed concurent wake up : https://github.com/vincss/mcsleepingserverstarter/issues/68 
     * update node-minecraft-protocol ^1.30.0
