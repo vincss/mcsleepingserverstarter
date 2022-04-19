@@ -56,7 +56,7 @@ export function getSettings(): Settings {
         const settingsFromFiles = load(read) as Settings;
         settings = { ...DefaultSettings, ...settingsFromFiles };
     } catch (error: any) {
-        logger.error('Failed to load setting, using default.', error?.message);
+        logger.error('Failed to load setting, using default.', error);
         saveDefault();
     }
     logger.info(`Retrieved settings:${JSON.stringify(settings)}`);
