@@ -54,7 +54,7 @@ If you're using PufferPanel, you can import [this template](./docs/pufferpanel.j
 | `serverOnlineMode`          | Check if players has premium accounts                                                                                                                           | true                                            |
 | `maxPlayers`                | Maximum amount of players                                                                                                                                       | 20                                              |
 | `webPort`                   | Port for the Web-Gui (0 to disable)                                                                                                                             | 0                                               |
-| `startMinecraft`            | Start the Minecraft Server (0 to disable)                                                                                                                       | 1                                               |
+| `startMinecraft`            | Start the Minecraft Server (false to disable)                                                                                                                       | true                                               |
 | `minecraftCommand`          | The command used to start the server                                                                                                                            | "java -jar paper.jar nogui"                     |
 | `minecraftWorkingDirectory` | Set a custom Working Directory for the server **EDIT ONLY IF YOU KNOW WHAT YOU'RE DOING** (should be the path to the server's directory, absolute path is best) | ""                                              |
 | `version`                   | Force compatibility with a specific Minecraft version                                                                                                           | ""                                              |
@@ -108,6 +108,9 @@ Give a ⭐️ if you like the project!
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog  
+  * 1.2.0 - 1.18.2 : 
+    * Add settings webStopOnStart
+    * Change settings startMinecraft to boolean
   * 1.1.5 - 1.18.2 : 
     * Add more logs when it fails to retreive settings
     * update node-minecraft-protocol ^1.34.0  

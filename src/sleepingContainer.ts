@@ -30,7 +30,7 @@ export class SleepingContainer implements ISleepingServer {
 
     init = async (isThisTheBeginning = false) => {        
 
-        if (isThisTheBeginning) {
+        if (isThisTheBeginning || this.settings.webStopOnStart) {
             if (this.settings.webPort > 0) {
                 this.webServer = new SleepingWeb(this.settings, this.playerConnectionCallBack, this);
                 await this.webServer?.init();
@@ -56,7 +56,7 @@ export class SleepingContainer implements ISleepingServer {
     startMinecraft = async (onProcessClosed: () => void) => {
         this.logger.info(`----------- Starting Minecraft : ${this.settings.minecraftCommand} ----------- `);
 
-        if (this.settings.webPort > 0) {
+        if (this.settings.webPort > 0 && !this.settings.webStopOnStart) {
             const cmdArgs = this.settings.minecraftCommand.split(' ');
             const exec = cmdArgs.splice(0, 1)[0];
             const mcProcess = spawn(exec, cmdArgs, {
@@ -90,7 +90,7 @@ export class SleepingContainer implements ISleepingServer {
             await this.brServer.close();
         }
 
-        if (isThisTheEnd) {
+        if (isThisTheEnd || this.settings.webStopOnStart) {
 
             if (this.webServer) {
                 this.webServer.close();
@@ -112,7 +112,7 @@ export class SleepingContainer implements ISleepingServer {
         await this.close();
         this.isClosing = false;
 
-        if (this.settings.startMinecraft > 0) {
+        if (this.settings.startMinecraft) {
 
             const onMcClosed = async () => {
 
