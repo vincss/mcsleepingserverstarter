@@ -51,7 +51,7 @@ export class SleepingWeb implements ISleepingServer {
         this.playerConnectionCallBack('A WebUser');
         res.send('received');
       } else {
-        this.logger.info(`Wake up server was already running *:${currentStatus}`);
+        this.logger.info(`[WebServer] Wake up server was already running *:${currentStatus}`);
       }
     })
 
@@ -61,7 +61,7 @@ export class SleepingWeb implements ISleepingServer {
     });
 
     this.server = this.app.listen(this.settings.webPort, () => {
-      this.logger.info(`Starting web server on *:${this.settings.webPort}`);
+      this.logger.info(`[WebServer] Starting web server on *:${this.settings.webPort}`);
     })
   };
 
