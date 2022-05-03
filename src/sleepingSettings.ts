@@ -16,7 +16,8 @@ export type Settings = {
     loginMessage: string,
     serverOnlineMode: boolean,
     webPort: number,
-    startMinecraft: number,
+    webStopOnStart: boolean,
+    startMinecraft: boolean,
     minecraftCommand: string,
     version?: string,
     favIcon?: string,
@@ -34,8 +35,9 @@ const DefaultSettings: Settings = {
     serverOnlineMode: true,
 
     webPort: 0,	 				// 0 to disable web hosting
+    webStopOnStart: false,
 
-    startMinecraft: 1,				// 0 to disable
+    startMinecraft: true,				// false to disable
     minecraftCommand: 'java -jar spigot.jar nogui',
     // version: '1.16.5',
 };

@@ -9,8 +9,9 @@ serverOnlineMode: true # like in the server.properties, to check the licence of 
 maxPlayers: 20
 
 webPort: 0 # 0 to disable web hosting, on a positive number a web page it will serve
+webStopOnStart: false
 
-startMinecraft: 1 # 0 to disable
+startMinecraft: true # false to disable
 minecraftCommand: "java -jar paper.jar nogui" # or paper.jar or whatever flavor you like
 
 # /!\ Edit this setting only if you know what you are doing
