@@ -1,6 +1,6 @@
 <div align="center">
     <img src="https://raw.githubusercontent.com/vincss/mcsleepingserverstarter/master/views/res/sleepingserver.png">
-    <h1>Welcome to SleepingServerStarter 💤</h1>
+    <h1>💤 Welcome to SleepingServerStarter 💤</h1>
     <p>
     Put your minecraft server to rest, while SleepingServerStarter is watching! Save power, save the world!
     </p>
@@ -15,7 +15,8 @@
 - Listen on the same port as your minecraft server.
   - Option to connect from BedRock *(Portable version of Minecraft)*
   - Web-gui, to turn on or off your server from anywhere
-- When someone connects, immediately launch your minecraft server
+- When someone connects, immediately launch your minecraft server.
+  - You can also type 'quit' in your console to start minecraft's server.  
 
 **Works better with [EmptyServerStopper](https://github.com/vincss/mcEmptyServerStopper), a plugin that automatically stops your server after a definied amount of time**
 
