@@ -39,7 +39,7 @@ const DefaultSettings: Settings = {
 
     startMinecraft: true,				// false to disable
     minecraftCommand: 'java -jar spigot.jar nogui',
-    // version: '1.16.5',
+    version: '1.19',
 };
 
 function saveDefault() {
