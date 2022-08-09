@@ -32,7 +32,8 @@ export class SleepingMcJava implements ISleepingServer {
                 reponse.favicon = this.settings.favIcon ?? DefaultFavIconString;
             },
             validateChannelProtocol: true,
-            errorHandler: (client, error) => console.warn('SleepingMcJava.errorHandler: ', client, error)
+            errorHandler: (client, error) => console.warn('SleepingMcJava.errorHandler: ', client, error),
+            enforceSecureProfile: this.settings.serverOnlineMode
             // encryption: false,
             // host: '0.0.0.0',
         });

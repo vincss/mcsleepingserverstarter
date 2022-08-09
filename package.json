@@ -20,7 +20,7 @@
         "express": "^4.17.3",
         "express-handlebars": "^6.0.5",
         "js-yaml": "^4.1.0",
-        "minecraft-protocol": "https://github.com/rob9315/node-minecraft-protocol/tree/Mc1.19",
+        "minecraft-protocol": "https://github.com/extremeheat/node-minecraft-protocol/tree/Mc1.19",
         "winston": "^3.7.2"
     },
     "devDependencies": {
