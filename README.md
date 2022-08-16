@@ -112,6 +112,8 @@ Give a ⭐️ if you like the project!
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog  
+  * 1.2.1 - 1.19 : 
+    - update node-minecraft-protocol for MC 1.19 (no 1.19.1 & 1.19.2 yet)
   * 1.2.0 - 1.18.2 : 
     * Add settings webStopOnStart
     * Change settings startMinecraft to boolean
