@@ -6,7 +6,7 @@
     </p>
     <p>
 
-[Tutorial Video](https://youtu.be/WqvQISpr6-s) | [Based on minecraft-protocol](https://www.npmjs.com/package/minecraft-protocol) | [Based on JSPrismarine](https://github.com/JSPrismarine/JSPrismarine) | [Original idea](https://github.com/tustin2121/MCSignOnDoor)
+[Tutorial Video](https://youtu.be/WqvQISpr6-s) | [Based on minecraft-protocol](https://github.com/PrismarineJS/node-minecraft-protocol) | [Based on JSPrismarine](https://github.com/JSPrismarine/JSPrismarine) | [Original idea](https://github.com/tustin2121/MCSignOnDoor)
     </p>
 </div>
 
