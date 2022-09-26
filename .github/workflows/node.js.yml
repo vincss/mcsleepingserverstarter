@@ -31,9 +31,14 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: 'Binary Windows'
-        path: bin/mcsleepingserverstarter-win.exe
+        path: bin/mcsleepingserverstarter-win-x64.exe
     - name: 'Upload Artifact Linux'
       uses: actions/upload-artifact@v2
       with:
         name: 'Binary Linux'
-        path: bin/mcsleepingserverstarter-linux
+        path: bin/mcsleepingserverstarter-linux-x64
+    - name: 'Upload Artifact Linux arm64'
+      uses: actions/upload-artifact@v2
+      with:
+        name: 'Binary Linux arm64 (Raspberry Pi)'
+        path: bin/mcsleepingserverstarter-linux-arm64       

@@ -43,7 +43,7 @@
     },
     {
       "commands": [
-        "chmod +x ./mcsleepingserverstarter-linux"
+        "chmod +x ./mcsleepingserverstarter-linux-x64"
       ],
       "type": "command"
     },
@@ -64,7 +64,7 @@
   ],
   "run": {
     "stop": "stop",
-    "command": "./mcsleepingserverstarter-linux",
+    "command": "./mcsleepingserverstarter-linux-x64",
     "workingDirectory": "",
     "pre": [],
     "post": [],
