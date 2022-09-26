@@ -27,7 +27,7 @@
     },
     {
       "files": [
-        "https://github.com/vincss/mcsleepingserverstarter/releases/latest/download/mcsleepingserverstarter-linux",
+        "https://github.com/vincss/mcsleepingserverstarter/releases/latest/download/mcsleepingserverstarter-linux-x64",
         "https://github.com/vincss/mcEmptyServerStopper/releases/download/v1.0.0/mcEmptyServerStopper-1.0.0.jar"
       ],
       "type": "download"
