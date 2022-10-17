@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2022-08-21T11:35:18+08:00",
+    "exported_at": "2022-10-17T11:14:57+02:00",
     "name": "Paper (mcsleepingserverstarter)",
     "author": "contact@megafyre.com",
     "description": "High performance Spigot fork that aims to fix gameplay and mechanics inconsistencies.",
@@ -21,7 +21,7 @@
         "files": "{\r\n    \"server.properties\": {\r\n        \"parser\": \"properties\",\r\n        \"find\": {\r\n            \"server-ip\": \"0.0.0.0\",\r\n            \"server-port\": \"{{server.build.default.port}}\",\r\n            \"query.port\": \"{{server.build.default.port}}\"\r\n        }\r\n    },\r\n    \"sleepingSettings.yml\": {\r\n        \"parser\": \"yaml\",\r\n        \"find\": {\r\n            \"serverPort\": \"{{server.build.default.port}}\",\r\n            \"minecraftCommand\": \"java -Xms128M -XX:MaxRAMPercentage=95.0 -Dterminal.jline=false -Dterminal.ansi=true -jar {{env.SERVER_JARFILE}}\"\r\n        }\r\n    }\r\n}",
         "startup": "{\r\n    \"done\": \")! For help, type \"\r\n}",
         "logs": "{}",
-        "stop": "stop"
+        "stop": "^C"
     },
     "scripts": {
         "installation": {
