@@ -112,6 +112,8 @@ Give a ⭐️ if you like the project!
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog  
+  * 1.2.3 - 1.19 :
+    - update to Node18
   * 1.2.2 - 1.19 :
     - add arm64 builds (Raspberry Pi)
   * 1.2.1 - 1.19 : 
