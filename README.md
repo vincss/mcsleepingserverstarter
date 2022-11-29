@@ -46,6 +46,8 @@ If you're using PufferPanel, you can import [this template](./docs/pufferpanel.j
 ### 🐦 Pterodactyl
 If you're using Pterodactyl, you can import [this egg](./docs/egg-paper-mcsleepingserverstarter.json) as JSON to use Paper Spigot with Sleeping Server Starter OR you can also import [this egg](./docs/egg-vanilla-minecraft-mcsleepingserverstarter.json) as JSON to use Vanilla Minecraft with Sleeping Server Starter on Pterodactyl
 
+Pterodactyl can be installed via [Unofficial pterodactyl-installer](https://github.com/vilhelmprytz/pterodactyl-installer)
+
 ## ⚙️ Settings
 > Note: If running from binaries, the settings file will be created after the first execution in the same folder as the executable
 
