@@ -62,7 +62,7 @@ Spigot/
 # Paper
 .console_history
 version_history.json
-paper.yml
+paper*
 
 # My lands
 ViPiLand*/*

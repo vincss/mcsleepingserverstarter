@@ -9,6 +9,7 @@ import { getSettings, Settings } from './sleepingSettings';
 import { PlayerConnectionCallBackType } from './sleepingTypes';
 import { SleepingWeb } from './sleepingWeb';
 
+const MC_TIMEOUT = 5000;
 
 export class SleepingContainer implements ISleepingServer {
 
@@ -28,7 +29,7 @@ export class SleepingContainer implements ISleepingServer {
         this.settings = getSettings();
     }
 
-    init = async (isThisTheBeginning = false) => {        
+    init = async (isThisTheBeginning = false) => {
 
         if (isThisTheBeginning || this.settings.webStopOnStart) {
             if (this.settings.webPort > 0) {
@@ -99,12 +100,12 @@ export class SleepingContainer implements ISleepingServer {
     }
 
     playerConnectionCallBack: PlayerConnectionCallBackType = async (playerName: string) => {
-        if(this.isClosing) {
+        if (this.isClosing) {
             this.logger.info(`[${playerName}] Server is already closing.`);
             return;
         }
         this.isClosing = true;
-        
+
         if (this.settings.discordWebhookUrl && this.discord) {
             await this.discord.onPlayerLogging(playerName);
         }
@@ -120,12 +121,12 @@ export class SleepingContainer implements ISleepingServer {
                     await this.discord.onServerStop();
                 }
 
-                this.logger.info('...Time to kill me if you want...');
+                this.logger.info(`...Time to kill me if you want (${MC_TIMEOUT / 1000} secs)...`);
                 setTimeout(async () => {
                     this.settings = getSettings();
                     this.logger.info('...Too late !...');
                     await this.init();
-                }, 5000); // restart server
+                }, MC_TIMEOUT); // restart server
             }
 
             this.startMinecraft(onMcClosed);
