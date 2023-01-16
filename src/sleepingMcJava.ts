@@ -40,7 +40,7 @@ export class SleepingMcJava implements ISleepingServer {
 
         this.logger.info(`[McJava] Waiting for a Prince to come. [${this.settings.serverPort}] Or someone to type quit.`);
 
-        this.server.on('connection', (client: Client) => {
+        this.server.on('connection', (client: Client) => {                  
             // @ts-ignore FixMe ToDo not exported in TS
             this.logger.info(`A Prince has taken a quick peek. [${client.protocolState}_${client.version}]`);
             // this.logger.info(`A Prince has taken a quick peek. [${client.state}_${client.protocolVersion}]`);
@@ -51,8 +51,14 @@ export class SleepingMcJava implements ISleepingServer {
         });
 
         this.server.on('login', (client) => {
-
+            
             const userName = client.username;
+            
+            if(this.settings.blackListedAddress?.some( address => client.socket.remoteAddress?.includes(address) )) {
+                this.logger.info(`${userName}.${client.state}:[${client.socket.remoteAddress}], rejected: blacklisted`);
+                client.end('Connection rejected : blacklisted.');
+                return;
+            }            
 
             if (this.isClosing) {
                 this.logger.info(`Prince ${userName}.${client.state}, someone came before you...`);
