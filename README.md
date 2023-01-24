@@ -114,6 +114,8 @@ Give a ⭐️ if you like the project!
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog  
+  * 1.2.5 - 1.19.3 :
+    - update node-minecraft-protocol for MC 1.19.3
   * 1.2.4 - 1.19.2 :
     - update node-minecraft-protocol for MC 1.19.2 (no 1.19.3 yet)
   * 1.2.3 - 1.19 :
