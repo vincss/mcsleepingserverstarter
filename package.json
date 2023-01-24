@@ -6,7 +6,7 @@
     "bin": "build/sleepingServerStarter.js",
     "scripts": {
         "start": "npm run prebuild && npm run build:typescript && node .",
-        "dev": "nodemon",
+        "dev": "ts-node ./src/sleepingServerStarter.ts",
         "prebuild": "rimraf ./build/ ./bin/ && cpx-fixed \"views/**/*.*\" build/views",
         "build": "npm-run-all build:*",
         "build:typescript": "tsc",
@@ -16,7 +16,6 @@
     "dependencies": {
         "@jsprismarine/prismarine": "^0.1.0-rc.49",
         "@jsprismarine/raknet": "^0.1.0-rc.49",
-        "axios": "^1.2.3",
         "express": "^4.18.2",
         "express-handlebars": "^6.0.5",
         "js-yaml": "^4.1.0",
@@ -34,7 +33,8 @@
         "npm-run-all": "^4.1.5",
         "pkg": "^5.8.0",
         "rimraf": "^4.1.2",
-        "typescript": "^4.9.4"
+        "typescript": "^4.9.4",
+        "ts-node":"^10.9.1"
     },
     "author": "Vincss",
     "license": "ISC",
