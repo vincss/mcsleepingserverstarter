@@ -17,6 +17,7 @@ export type Settings = {
     serverOnlineMode: boolean,
     webPort: number,
     webStopOnStart: boolean,
+    webServeDynmap?: boolean | string,
     startMinecraft: boolean,
     minecraftCommand: string,
     version?: string,

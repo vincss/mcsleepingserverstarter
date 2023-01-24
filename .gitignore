@@ -52,6 +52,7 @@ help.yml
 spigot.yml
 server.properties
 eula.txt
+crash-reports/
 
 # BedRock
 config.yaml

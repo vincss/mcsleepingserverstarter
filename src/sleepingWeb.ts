@@ -1,12 +1,13 @@
 import express, { Express } from 'express';
+import { existsSync } from 'fs';
 import { engine } from 'express-handlebars';
 import * as http from 'http';
 import path from 'path';
 import { SleepingContainer } from './sleepingContainer';
 import { ServerStatus } from './sleepingHelper';
 import { getLogger, LoggerType } from './sleepingLogger';
-import { ISleepingServer } from "./sleepingServerInterface";
-import { DefaultFavIconString, Settings } from "./sleepingSettings";
+import { ISleepingServer } from './sleepingServerInterface';
+import { DefaultFavIconString, Settings } from './sleepingSettings';
 import { PlayerConnectionCallBackType } from './sleepingTypes';
 
 
@@ -41,6 +42,12 @@ export class SleepingWeb implements ISleepingServer {
     this.app.set('view engine', 'hbs');
     this.app.use(express.static(path.join(__dirname, './views')));
 
+    if (this.settings.webServeDynmap) {
+      const dynmapPath = typeof this.settings.webServeDynmap === 'string' ? this.settings.webServeDynmap : path.join(__dirname, '../plugins/dynmap/web/');
+      this.logger.info(`[WebServer] Serving dynmap: ${dynmapPath}`);
+      this.app.use('/dynmap', express.static(dynmapPath));
+    }
+
     this.app.get('/', (req, res) => {
       res.render(path.join(__dirname, './views/home'), { message: this.settings.loginMessage });
     });
@@ -51,7 +58,7 @@ export class SleepingWeb implements ISleepingServer {
         this.playerConnectionCallBack('A WebUser');
         res.send('received');
       } else {
-        this.logger.info(`[WebServer] Wake up server was already running *:${currentStatus}`);
+        this.logger.info(`[WebServer] Wake up server was already running *: ${currentStatus}`);
       }
     })
 
@@ -61,7 +68,7 @@ export class SleepingWeb implements ISleepingServer {
     });
 
     this.server = this.app.listen(this.settings.webPort, () => {
-      this.logger.info(`[WebServer] Starting web server on *:${this.settings.webPort}`);
+      this.logger.info(`[WebServer] Starting web server on *: ${this.settings.webPort}`);
     })
   };
 

@@ -26,7 +26,7 @@ There are two ways to run SleepingServerStarter :
 
 ### Download the binaries
 
-1. [Download binaries](https://github.com/vincss/mcsleepingserverstarter/releases/latest) corresponding to your OS
+1. [Download binaries](./releases/latest) corresponding to your OS
 2. Place the executable in the same folder as your server file (`spigot.jar`, `paper.jar`, etc...)
 3. Make sure your server is stopped
 4. Run the executable
@@ -72,9 +72,8 @@ Pterodactyl can be installed via [Unofficial pterodactyl-installer](https://gith
 
 -----
 
-#### Use WebServer for dynmap :
-- You need to change your configuration from class: `org.dynmap.InternalClientUpdateComponent` to class `org.dynmap.JsonFileClientUpdateComponent` *(comment all the section InternalClientUpdateComponent and uncomment JsonFileClientUpdateComponent)*
-- Chat will not work when hosted by mcsleepingserverstarter. For a full compatibilty, you can use an apache server *(https://github.com/webbukkit/dynmap/wiki/Setting-up-without-the-Internal-Web-Server)*
+#### Use WebServer for dynmap
+ - [How use with dynamp](./wiki/Use-internal-SSS-WebServer-for-dynmap)
 
 
 #### Links :
@@ -106,7 +105,7 @@ Basically, it keeps kicking the player with `loginMessage` as reason, telling th
 
 ## 🤝 Contributing
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/vincss/mcsleepingserverstarter/issues)
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](./issues)
 
 ## 🙌 Show your support
 
@@ -138,7 +137,7 @@ Give a ⭐️ if you like the project!
   * 1.1.4 - 1.18.2 : 
     * update node-minecraft-protocol ^1.32.0
   * 1.1.3 - 1.18.1 : 
-    * Fixed concurent wake up : https://github.com/vincss/mcsleepingserverstarter/issues/68 
+    * Fixed concurent wake up : ./issues/68 
     * update node-minecraft-protocol ^1.30.0
   * 1.1.2 - 1.18.1 : 
     * Compress binaries ( GZip )
