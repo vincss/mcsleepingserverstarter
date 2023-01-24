@@ -90,7 +90,7 @@ export class SleepingBedrock implements ISleepingServer {
                         this.logger.info(`[BedRock] Timeout during close`);
                         reject('[BedRock] Timeout during close')
                     }, 5000);
-                    this.listener!.getSocket().close(() => {
+                    this.listener?.getSocket().close(() => {
                         this.logger.info(`[BedRock] Socket Closed`);
                         resolve('closed');
                         clearTimeout(timeout);
