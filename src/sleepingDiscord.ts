@@ -41,7 +41,7 @@ export class SleepingDiscord {
                 method: 'POST',
                 body: JSON.stringify(content)
             });
-            
+
             this.logger.info('[Discord] response: ', await response.text());
         }
     }
