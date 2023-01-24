@@ -23,6 +23,7 @@ export type Settings = {
     favIcon?: string,
     minecraftWorkingDirectory?: string,
     discordWebhookUrl?: string,
+    blackListedAddress?: string[]
 };
 
 const DefaultSettings: Settings = {

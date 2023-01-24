@@ -66,6 +66,7 @@ Pterodactyl can be installed via [Unofficial pterodactyl-installer](https://gith
 | `version`                   | Force compatibility with a specific Minecraft version                                                                                                           | ""                                              |
 | `favIcon`                   | Use a custom server-icon 64x64 png converted using https://www.base64-image.de/ (needs to be encoded in base64)                                                 | ""                                              |
 | `discordWebhookUrl`                   | Setup a [Discord WebHook](https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks) to your channel | "REPLACE_ME"  
+| `blackListedAddress`                   | Prevent connections from thoses addresses to wake up the server | ["127.0.0.1"]
 
 > Note: if you need to shutdown the program, simply input a `ctrl + c`, the program will shut down normally afterwards
 
@@ -114,6 +115,8 @@ Give a ⭐️ if you like the project!
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog  
+  * 1.3.0 - 1.19.3 :
+    - add blackListedAddress parameters
   * 1.2.6 - 1.19.3 :
     - update third-parties
   * 1.2.5 - 1.19.3 :
