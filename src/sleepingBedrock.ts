@@ -67,7 +67,7 @@ export class SleepingBedrock implements ISleepingServer {
     private handleRaknetConnect = async (raknetConnectEvent: RaknetConnectEvent) => {
         this.logger.info(`[BedRock] raknetConnect ${raknetConnectEvent}`);
         const connection = raknetConnectEvent.getConnection();
-        connection.disconnect(this.settings.loginMessage);        
+        connection.disconnect(this.settings.loginMessage);
         await connection.close();
         await this.close();
         this.playerConnectionCallBack('A BedRock Player');
@@ -90,7 +90,7 @@ export class SleepingBedrock implements ISleepingServer {
                         this.logger.info(`[BedRock] Timeout during close`);
                         reject('[BedRock] Timeout during close')
                     }, 5000);
-                    this.listener!.getSocket().close(() => {
+                    this.listener?.getSocket().close(() => {
                         this.logger.info(`[BedRock] Socket Closed`);
                         resolve('closed');
                         clearTimeout(timeout);

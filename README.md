@@ -115,8 +115,10 @@ Give a ⭐️ if you like the project!
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog  
-  * 1.3.0 - 1.19.2 :
+  * 1.3.0 - 1.19.3 :
     - add blackListedAddress parameters
+  * 1.2.6 - 1.19.3 :
+    - update third-parties
   * 1.2.5 - 1.19.3 :
     - update node-minecraft-protocol for MC 1.19.3
   * 1.2.4 - 1.19.2 :

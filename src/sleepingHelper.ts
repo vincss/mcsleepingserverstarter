@@ -7,7 +7,7 @@ export const isInDev = () => {
     return false;
 }
 
-export const isPortTaken = (port: number) => new Promise<boolean>((resolve, reject) => {
+export const isPortTaken = (port: number) => new Promise<boolean>((resolve) => {
 
     const client = createConnection({ port }, () => {
         client.end();
