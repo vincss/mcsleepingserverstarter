@@ -117,6 +117,8 @@ Give a ⭐️ if you like the project!
 ## 📜 ChangeLog  
   * 1.3.0 - 1.19.2 :
     - add blackListedAddress parameters
+  * 1.2.5 - 1.19.3 :
+    - update node-minecraft-protocol for MC 1.19.3
   * 1.2.4 - 1.19.2 :
     - update node-minecraft-protocol for MC 1.19.2 (no 1.19.3 yet)
   * 1.2.3 - 1.19 :
