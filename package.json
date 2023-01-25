@@ -12,8 +12,8 @@
         "build": "run-s build:typescript build:target",
         "build-release": "run-s build:typescript build:target-release",
         "build:typescript": "tsc",
-        "build:target": "pkg build/sleepingServerStarter.js --config package.json --compress Brotli --target node18-win-x64,node18-linux-x64,node18-linux-arm64 --out-path ./bin/",
-        "build:target-release": "pkg build/sleepingServerStarter.js --config package.json --compress GZip --target node18-win-x64,node18-linux-x64,node18-linux-arm64 --out-path ./bin/",
+        "build:target": "pkg build/sleepingServerStarter.js --config package.json --compress GZip --target node18-win-x64,node18-linux-x64,node18-linux-arm64 --out-path ./bin/",
+        "build:target-release": "pkg build/sleepingServerStarter.js --config package.json --compress Brotli --target node18-win-x64,node18-linux-x64,node18-linux-arm64 --out-path ./bin/",
         "test": "echo \"Error: no test specified\" && exit 1",
         "lint": "eslint . --ext .ts --fix"
     },
