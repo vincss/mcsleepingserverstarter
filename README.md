@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="https://raw.githubusercontent.com/vincss/mcsleepingserverstarter/master/views/res/sleepingserver.png">
+    <img src="https://raw.githubusercontent.com/vincss/mcsleepingserverstarter/master/docs/sleepingserver.png">
     <h1>💤 Welcome to SleepingServerStarter 💤</h1>
     <p>
     Put your minecraft server to rest, while SleepingServerStarter is watching! Save power, save the world!

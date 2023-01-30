@@ -1,4 +1,4 @@
-import { execSync, spawn } from 'child_process';
+import { ChildProcess, execSync, spawn } from 'child_process';
 import { SleepingBedrock } from './sleepingBedrock';
 import { SleepingDiscord } from './sleepingDiscord';
 import { isPortTaken, ServerStatus } from './sleepingHelper';
@@ -17,6 +17,7 @@ export class SleepingContainer implements ISleepingServer {
     settings: Settings;
 
     mcServer?: SleepingMcJava;
+    mcProcess?: ChildProcess;
     brServer?: SleepingBedrock;
     webServer?: SleepingWeb;
 
@@ -60,12 +61,13 @@ export class SleepingContainer implements ISleepingServer {
         if (this.settings.webPort > 0 && !this.settings.webStopOnStart) {
             const cmdArgs = this.settings.minecraftCommand.split(' ');
             const exec = cmdArgs.splice(0, 1)[0];
-            const mcProcess = spawn(exec, cmdArgs, {
+
+            this.mcProcess = spawn(exec, cmdArgs, {
                 stdio: 'inherit',
                 cwd: this.settings.minecraftWorkingDirectory ?? process.cwd()
             });
 
-            mcProcess.on('close', code => {
+            this.mcProcess.on('close', code => {
                 this.logger.info(`----------- Minecraft stopped ${code} -----------`);
                 onProcessClosed();
             });
@@ -79,6 +81,10 @@ export class SleepingContainer implements ISleepingServer {
         }
 
     };
+
+    killMinecraft = () => {
+        this.mcProcess?.stdin?.write('stop\r\n');
+    }
 
     close = async (isThisTheEnd = false) => {
         this.logger.info('Cleaning up the place.');

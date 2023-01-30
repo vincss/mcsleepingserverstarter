@@ -4,32 +4,41 @@
     startClick = () => {
         console.log('WakeUp');
         $.post('/wakeup', {})
-            .done( (sucess) => { console.log('WakeUp Sucess', sucess); })
-            .fail( (error) => { console.log('WakeUp Error', error); } )
+            .done((sucess) => { console.log('WakeUp Sucess', sucess); })
+            .fail((error) => { console.log('WakeUp Error', error); })
     };
 
-    getEmoji = (status) => {
+    getTexts = (status) => {
         let emoji = '🟥'
+        let buttonText = 'Wake Up';
         switch (status) {
             case 'Running':
                 emoji = '🟩'
+                buttonText = 'Sleep'
                 break;
             case 'Sleeping':
                 emoji = '💤'
                 break;
             case 'Starting':
                 emoji = '🟧'
+                buttonText = '...Waiting...'
                 break;
         }
-        return emoji;
+        return { emoji, buttonText };
     };
 
     getStatus = () => {
         $.get('/status')
             .done(
-                (status) => {
-                    console.log(`${new Date().toISOString()} - getStatus ${status}`);
-                    $('#server-status').text(`${getEmoji(status)} ${status} ${getEmoji(status)}`);
+                (value) => {
+                    console.log(`${new Date().toISOString()} - getStatus`, value);
+                    const { status, dynmap } = value;
+                    const { emoji, buttonText } = getTexts(status)
+                    $('#server-status').text(`${emoji} ${status} ${emoji}`);
+                    $('#wakeup-button').text(buttonText);
+                    const display = dynmap ? 'unset' : 'none';
+                    $('#dynmap-button').css('display', display);
+
                 })
             .fail(
                 (error) => {
@@ -41,23 +50,28 @@
     homeLoaded = () => {
         console.log("HomeLoaded");
         getStatus();
-        setInterval(getStatus, REFRESH_INTERVAL);
+        setTimeout(() => {
+            setInterval(getStatus, REFRESH_INTERVAL);
+        }, REFRESH_INTERVAL);
     }
     homeLoaded();
 </script>
 
 
 <div class="homeContainer">
+    <div>
+        <img alt="FavIcon" class="imageContainer" src={{favIcon}}>
+    </div>
     <div class="homeCenter">
-        <div>
-            <img alt="FavIcon" class="imageContainer" src={{favIcon}}>
-        </div>
         <div>
             <div> {{ title }} </div>
             <div id="server-status" style="text-align: center;">🛑 Offline 🛑</div>
         </div>
     </div>
     <div class="buttonContainer">
-        <button class="button secondary startButton" onclick=" startClick() ">Wake Me Up</button>
+        <button class="button secondary actionButton" onclick=" startClick() " id="wakeup-button">Wake Up
+        </button>
+        <button class="button secondary actionButton" onclick=" window.open('./dynmap','_blank') " target="_blank"
+            id="dynmap-button" style="display: none;">Dynmap</button>
     </div>
 </div>

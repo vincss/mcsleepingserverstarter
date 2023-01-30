@@ -53,18 +53,34 @@ export class SleepingWeb implements ISleepingServer {
     });
 
     this.app.post('/wakeup', async (req, res) => {
+      res.send('received');
+
       const currentStatus = await this.sleepingContainer.getStatus();
-      if (currentStatus === ServerStatus.Sleeping) {
-        this.playerConnectionCallBack('A WebUser');
-        res.send('received');
-      } else {
-        this.logger.info(`[WebServer] Wake up server was already running *: ${currentStatus}`);
+      switch (currentStatus) {
+        case ServerStatus.Sleeping: {
+          this.playerConnectionCallBack('A WebUser');
+        }
+          break;
+        case ServerStatus.Running: {
+          this.logger.info(`[WebServer] Server is already running, stopping it: ${currentStatus}`);
+          this.sleepingContainer.killMinecraft();
+        }
+          break;
+        case ServerStatus.Starting: {
+          this.logger.info(`[WebServer] Wake up server was already running : ${currentStatus}`);
+        }
+          break;
+        default: {
+          this.logger.warn(`[WebServer] Server is ?! ${currentStatus}`);
+        }
       }
+
+
     })
 
     this.app.get('/status', async (req, res) => {
       const status = await this.sleepingContainer.getStatus()
-      res.json(status);
+      res.json({ status, dynmap: this.settings.webServeDynmap });
     });
 
     this.server = this.app.listen(this.settings.webPort, () => {
