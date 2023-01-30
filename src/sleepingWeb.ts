@@ -43,7 +43,15 @@ export class SleepingWeb implements ISleepingServer {
     this.app.use(express.static(path.join(__dirname, './views')));
 
     if (this.settings.webServeDynmap) {
-      const dynmapPath = typeof this.settings.webServeDynmap === 'string' ? this.settings.webServeDynmap : path.join(__dirname, '../plugins/dynmap/web/');
+      let dynmapPath;
+      if (typeof this.settings.webServeDynmap === 'string') {
+        dynmapPath = this.settings.webServeDynmap;
+      } else {
+        dynmapPath = './plugins/dynmap/web/';
+        if (!existsSync(dynmapPath)) {
+          dynmapPath = path.join(__dirname, '../plugins/dynmap/web/');
+        }
+      }
       this.logger.info(`[WebServer] Serving dynmap: ${dynmapPath}`);
       if (existsSync(dynmapPath)) {
         this.app.use('/dynmap', express.static(dynmapPath));
