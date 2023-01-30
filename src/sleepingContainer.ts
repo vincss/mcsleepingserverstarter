@@ -1,4 +1,5 @@
 import { ChildProcess, execSync, spawn } from 'child_process';
+import { platform } from 'os';
 import { SleepingBedrock } from './sleepingBedrock';
 import { SleepingDiscord } from './sleepingDiscord';
 import { isPortTaken, ServerStatus } from './sleepingHelper';
@@ -83,11 +84,15 @@ export class SleepingContainer implements ISleepingServer {
     };
 
     killMinecraft = () => {
-        this.mcProcess?.stdin?.write('stop\r\n');
+        if (platform() !== 'win32') {
+            this.mcProcess?.kill();
+        } else {
+            this.logger.info(`[Container] Not killing server:${platform()}, signals are not working well on Windows`);
+        }
     }
 
     close = async (isThisTheEnd = false) => {
-        this.logger.info('Cleaning up the place.');
+        this.logger.info('[Container] Cleaning up the place.');
 
         if (this.mcServer) {
             await this.mcServer.close();
@@ -107,7 +112,7 @@ export class SleepingContainer implements ISleepingServer {
 
     playerConnectionCallBack: PlayerConnectionCallBackType = async (playerName: string) => {
         if (this.isClosing) {
-            this.logger.info(`[${playerName}] Server is already closing.`);
+            this.logger.info(`[Container] ${playerName}: Server is already closing.`);
             return;
         }
         this.isClosing = true;
@@ -127,10 +132,10 @@ export class SleepingContainer implements ISleepingServer {
                     await this.discord.onServerStop();
                 }
 
-                this.logger.info(`...Time to kill me if you want (${MC_TIMEOUT / 1000} secs)...`);
+                this.logger.info(`[Container] ...Time to kill me if you want (${MC_TIMEOUT / 1000} secs)...`);
                 setTimeout(async () => {
                     this.settings = getSettings();
-                    this.logger.info('...Too late !...');
+                    this.logger.info('[Container] ...Too late !...');
                     await this.init();
                 }, MC_TIMEOUT); // restart server
             }
