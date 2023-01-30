@@ -61,22 +61,24 @@ via [Unofficial pterodactyl-installer](https://github.com/vilhelmprytz/pterodact
 > Note: If running from binaries, the settings file will be created after the first execution in the same folder as the
 > executable
 
-| Setting                     | Description                                                                                                                                                     | Default value                                   |
-|-----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------|
-| `serverName`                | The name of your server                                                                                                                                         | "SleepingServer, waiting for his prince..."     |
-| `serverPort`                | The port of your Java Edition server (0 to disable)                                                                                                             | 25565                                           |
-| `bedrockPort`               | The port of your Bedrock Edition server (0 to disable)                                                                                                          | 19132                                           |
-| `loginMessage`              | Message shown when the server is off and someone is trying to connect                                                                                           | "...Waking server up, come back in a minute..." |
-| `serverOnlineMode`          | Check if players has premium accounts                                                                                                                           | true                                            |
-| `maxPlayers`                | Maximum amount of players                                                                                                                                       | 20                                              |
-| `webPort`                   | Port for the Web-Gui (0 to disable)                                                                                                                             | 0                                               |
-| `startMinecraft`            | Start the Minecraft Server (false to disable)                                                                                                                   | true                                            |
-| `minecraftCommand`          | The command used to start the server                                                                                                                            | "java -jar paper.jar nogui"                     |
-| `minecraftWorkingDirectory` | Set a custom Working Directory for the server **EDIT ONLY IF YOU KNOW WHAT YOU'RE DOING** (should be the path to the server's directory, absolute path is best) | ""                                              |
-| `version`                   | Force compatibility with a specific Minecraft version                                                                                                           | ""                                              |
-| `favIcon`                   | Use a custom server-icon 64x64 png converted using https://www.base64-image.de/ (needs to be encoded in base64)                                                 | ""                                              |
-| `discordWebhookUrl`         | Setup a [Discord WebHook](https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks) to your channel                                            | "REPLACE_ME"                                    |
-| `blackListedAddress`        | Prevent connections from thoses addresses to wake up the server                                                                                                 | ["127.0.0.1"]                                   |
+| Setting                     | Description                                                                                                                                                                                                     | Default value                                   |
+|-----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------|
+| `serverName`                | The name of your server                                                                                                                                                                                         | "SleepingServer, waiting for his prince..."     |
+| `serverPort`                | The port of your Java Edition server (0 to disable)                                                                                                                                                             | 25565                                           |
+| `bedrockPort`               | The port of your Bedrock Edition server (0 to disable)                                                                                                                                                          | 19132                                           |
+| `loginMessage`              | Message shown when the server is off and someone is trying to connect                                                                                                                                           | "...Waking server up, come back in a minute..." |
+| `serverOnlineMode`          | Check if players has premium accounts                                                                                                                                                                           | true                                            |
+| `maxPlayers`                | Maximum amount of players                                                                                                                                                                                       | 20                                              |
+| `webPort`                   | Port for the Web-Gui (0 to disable)                                                                                                                                                                             | 0                                               |
+| `webStopOnStart`            | Stop the web-server when minecraft starts                                                                                                                                                                       | false                                           |
+| `webServeDynmap`            | true or an absolute path to enable it, by default it will serve './plugins/dynmap/web/'. You can specify an absolute path to serve instead. [How use with dynamp](./wiki/Use-internal-SSS-WebServer-for-dynmap) | false                                           |
+| `startMinecraft`            | Start the Minecraft Server (false to disable)                                                                                                                                                                   | true                                            |
+| `minecraftCommand`          | The command used to start the server                                                                                                                                                                            | "java -jar paper.jar nogui"                     |
+| `minecraftWorkingDirectory` | Set a custom Working Directory for the server **EDIT ONLY IF YOU KNOW WHAT YOU'RE DOING** (should be the path to the server's directory, absolute path is best)                                                 | ""                                              |
+| `version`                   | Force compatibility with a specific Minecraft version                                                                                                                                                           | ""                                              |
+| `favIcon`                   | Use a custom server-icon 64x64 png converted using https://www.base64-image.de/ (needs to be encoded in base64)                                                                                                 | ""                                              |
+| `discordWebhookUrl`         | Setup a [Discord WebHook](https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks) to your channel                                                                                            | "REPLACE_ME"                                    |
+| `blackListedAddress`        | Prevent connections from thoses addresses to wake up the server                                                                                                                                                 | ["127.0.0.1"]                                   |
 
 > Note: if you need to shutdown the program, simply input a `ctrl + c`, the program will shut down normally afterwards
 
@@ -131,6 +133,7 @@ Give a ⭐️ if you like the project!
 
 * 1.3.0 - 1.19.3 :
     - add blackListedAddress parameters
+    - add dynmap
 * 1.2.6 - 1.19.3 :
     - update third-parties
 * 1.2.5 - 1.19.3 :
