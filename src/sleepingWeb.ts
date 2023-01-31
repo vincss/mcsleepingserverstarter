@@ -10,7 +10,6 @@ import { ISleepingServer } from './sleepingServerInterface';
 import { DefaultFavIconString, Settings } from './sleepingSettings';
 import { PlayerConnectionCallBackType } from './sleepingTypes';
 
-
 export class SleepingWeb implements ISleepingServer {
   settings: Settings;
   sleepingContainer: SleepingContainer;
@@ -68,20 +67,21 @@ export class SleepingWeb implements ISleepingServer {
       const currentStatus = await this.sleepingContainer.getStatus();
       switch (currentStatus) {
         case ServerStatus.Sleeping: {
+          this.logger.info(`[WebServer](${req.socket.remoteAddress}) Wake up server was ${currentStatus}`);
           this.playerConnectionCallBack('A WebUser');
         }
           break;
         case ServerStatus.Running: {
-          this.logger.info(`[WebServer] Server is already running, stopping it: ${currentStatus}`);
+          this.logger.info(`[WebServer](${req.socket.remoteAddress}) Stopping server was ${currentStatus}`);
           this.sleepingContainer.killMinecraft();
         }
           break;
         case ServerStatus.Starting: {
-          this.logger.info(`[WebServer] Wake up server was already running : ${currentStatus}`);
+          this.logger.info(`[WebServer](${req.socket.remoteAddress}) Doing nothing server was ${currentStatus}`);
         }
           break;
         default: {
-          this.logger.warn(`[WebServer] Server is ?! ${currentStatus}`);
+          this.logger.warn(`[WebServer](${req.socket.remoteAddress}) Server is ?! ${currentStatus}`);
         }
       }
 
