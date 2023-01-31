@@ -38,7 +38,7 @@ export class SleepingMcJava implements ISleepingServer {
             // host: '0.0.0.0',
         });
 
-        this.logger.info(`[McJava] Waiting for a Prince to come. [${this.settings.serverPort}] Or someone to type quit.`);
+        this.logger.info(`[McJava] Waiting for a Prince to come. [${this.settings.serverPort}]`);
 
         this.server.on('connection', (client: Client) => {
             this.logger.info(`A Prince has taken a quick peek. [${client.version}_${client.socket.remoteAddress}]`);

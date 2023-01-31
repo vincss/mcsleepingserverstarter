@@ -26,9 +26,10 @@ export class SleepingContainer implements ISleepingServer {
 
     isClosing = false;
 
-    constructor() {
+    constructor(callBack: (settings: Settings) => void) {
         this.logger = getLogger();
         this.settings = getSettings();
+        callBack(this.settings);
     }
 
     init = async (isThisTheBeginning = false) => {
@@ -84,6 +85,11 @@ export class SleepingContainer implements ISleepingServer {
     };
 
     killMinecraft = () => {
+        if (this.settings.preventStop) {
+            this.logger.info(`[Container] killMinecraft: preventStop is set.`);
+            return;
+        }
+
         if (platform() !== 'win32') {
             this.mcProcess?.kill();
         } else {

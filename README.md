@@ -74,6 +74,7 @@ via [Unofficial pterodactyl-installer](https://github.com/vilhelmprytz/pterodact
 | `webServeDynmap`            | true or an absolute path to enable it, by default it will serve './plugins/dynmap/web/'. You can specify an absolute path to serve instead. [How use with dynamp](./wiki/Use-internal-SSS-WebServer-for-dynmap) | false                                           |
 | `startMinecraft`            | Start the Minecraft Server (false to disable)                                                                                                                                                                   | true                                            |
 | `minecraftCommand`          | The command used to start the server                                                                                                                                                                            | "java -jar paper.jar nogui"                     |
+| `preventStop`          | Prevent the user to stop the server (trought web-server or cli).                                                                                                                                                                            | false                     |
 | `minecraftWorkingDirectory` | Set a custom Working Directory for the server **EDIT ONLY IF YOU KNOW WHAT YOU'RE DOING** (should be the path to the server's directory, absolute path is best)                                                 | ""                                              |
 | `version`                   | Force compatibility with a specific Minecraft version                                                                                                                                                           | ""                                              |
 | `favIcon`                   | Use a custom server-icon 64x64 png converted using https://www.base64-image.de/ (needs to be encoded in base64)                                                                                                 | ""                                              |
@@ -134,6 +135,7 @@ Give a ⭐️ if you like the project!
 * 1.3.0 - 1.19.3 :
     - add blackListedAddress parameters
     - add dynmap
+    - add preventStop
 * 1.2.6 - 1.19.3 :
     - update third-parties
 * 1.2.5 - 1.19.3 :

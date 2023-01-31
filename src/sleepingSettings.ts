@@ -20,6 +20,7 @@ export type Settings = {
     webServeDynmap?: boolean | string,
     startMinecraft: boolean,
     minecraftCommand: string,
+    preventStop?: boolean,
     version?: string,
     favIcon?: string,
     minecraftWorkingDirectory?: string,
