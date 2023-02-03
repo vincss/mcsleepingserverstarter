@@ -136,12 +136,13 @@ Give a ⭐️ if you like the project!
     - add blackListedAddress parameters
     - add dynmap
     - add preventStop
+    - update minecraft-protocol: 1.40.3
 * 1.2.6 - 1.19.3 :
     - update third-parties
 * 1.2.5 - 1.19.3 :
-    - update node-minecraft-protocol for MC 1.19.3
+    - update minecraft-protocol for MC 1.19.3
 * 1.2.4 - 1.19.2 :
-    - update node-minecraft-protocol for MC 1.19.2 (no 1.19.3 yet)
+    - update minecraft-protocol for MC 1.19.2 (no 1.19.3 yet)
 * 1.2.3 - 1.19 :
     - update to Node18
 * 1.2.2 - 1.19 :
