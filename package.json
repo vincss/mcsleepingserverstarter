@@ -5,12 +5,15 @@
     "main": "build/sleepingServerStarter.js",
     "bin": "build/sleepingServerStarter.js",
     "scripts": {
-        "start": "npm run prebuild && npm run build:typescript && node .",
+        "start": "run-s prebuild build:typescript run",
+        "run" :"node .",
         "dev": "ts-node ./src/sleepingServerStarter.ts",
         "prebuild": "rimraf ./build/ ./bin/ && cpx-fixed \"views/**/*.*\" build/views",
-        "build": "npm-run-all build:*",
+        "build": "run-s build:typescript build:target",
+        "build-release": "run-s build:typescript build:target-release",
         "build:typescript": "tsc",
         "build:target": "pkg build/sleepingServerStarter.js --config package.json --compress GZip --target node18-win-x64,node18-linux-x64,node18-linux-arm64 --out-path ./bin/",
+        "build:target-release": "pkg build/sleepingServerStarter.js --config package.json --compress Brotli --target node18-win-x64,node18-linux-x64,node18-linux-arm64 --out-path ./bin/",
         "test": "echo \"Error: no test specified\" && exit 1",
         "lint": "eslint . --ext .ts --fix"
     },
@@ -20,7 +23,7 @@
         "express": "^4.18.2",
         "express-handlebars": "^6.0.5",
         "js-yaml": "^4.1.0",
-        "minecraft-protocol": "^1.40.2",
+        "minecraft-protocol": "^1.40.3",
         "winston": "^3.7.2"
     },
     "devDependencies": {

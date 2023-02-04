@@ -32,15 +32,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
     text-align: start;
+    margin: 10px;
 }
 
 .imageContainer {
     margin: 10px;
 }
 
-.startButton {    
+.actionButton {    
     border: 2px darkgrey solid;
     margin: 5px;
 }

@@ -1,14 +1,14 @@
 import express, { Express } from 'express';
+import { existsSync } from 'fs';
 import { engine } from 'express-handlebars';
 import * as http from 'http';
 import path from 'path';
 import { SleepingContainer } from './sleepingContainer';
 import { ServerStatus } from './sleepingHelper';
 import { getLogger, LoggerType } from './sleepingLogger';
-import { ISleepingServer } from "./sleepingServerInterface";
-import { DefaultFavIconString, Settings } from "./sleepingSettings";
+import { ISleepingServer } from './sleepingServerInterface';
+import { DefaultFavIconString, Settings } from './sleepingSettings';
 import { PlayerConnectionCallBackType } from './sleepingTypes';
-
 
 export class SleepingWeb implements ISleepingServer {
   settings: Settings;
@@ -41,27 +41,60 @@ export class SleepingWeb implements ISleepingServer {
     this.app.set('view engine', 'hbs');
     this.app.use(express.static(path.join(__dirname, './views')));
 
+    if (this.settings.webServeDynmap) {
+      let dynmapPath;
+      if (typeof this.settings.webServeDynmap === 'string') {
+        dynmapPath = this.settings.webServeDynmap;
+      } else {
+        dynmapPath = './plugins/dynmap/web/';
+        if (!existsSync(dynmapPath)) {
+          dynmapPath = path.join(__dirname, '../plugins/dynmap/web/');
+        }
+      }
+      this.logger.info(`[WebServer] Serving dynmap: ${dynmapPath}`);
+      if (existsSync(dynmapPath)) {
+        this.app.use('/dynmap', express.static(dynmapPath));
+      }
+    }
+
     this.app.get('/', (req, res) => {
       res.render(path.join(__dirname, './views/home'), { message: this.settings.loginMessage });
     });
 
     this.app.post('/wakeup', async (req, res) => {
+      res.send('received');
+
       const currentStatus = await this.sleepingContainer.getStatus();
-      if (currentStatus === ServerStatus.Sleeping) {
-        this.playerConnectionCallBack('A WebUser');
-        res.send('received');
-      } else {
-        this.logger.info(`[WebServer] Wake up server was already running *:${currentStatus}`);
+      switch (currentStatus) {
+        case ServerStatus.Sleeping: {
+          this.logger.info(`[WebServer](${req.socket.remoteAddress}) Wake up server was ${currentStatus}`);
+          this.playerConnectionCallBack('A WebUser');
+        }
+          break;
+        case ServerStatus.Running: {
+          this.logger.info(`[WebServer](${req.socket.remoteAddress}) Stopping server was ${currentStatus}`);
+          this.sleepingContainer.killMinecraft();
+        }
+          break;
+        case ServerStatus.Starting: {
+          this.logger.info(`[WebServer](${req.socket.remoteAddress}) Doing nothing server was ${currentStatus}`);
+        }
+          break;
+        default: {
+          this.logger.warn(`[WebServer](${req.socket.remoteAddress}) Server is ?! ${currentStatus}`);
+        }
       }
+
+
     })
 
     this.app.get('/status', async (req, res) => {
       const status = await this.sleepingContainer.getStatus()
-      res.json(status);
+      res.json({ status, dynmap: this.settings.webServeDynmap });
     });
 
     this.server = this.app.listen(this.settings.webPort, () => {
-      this.logger.info(`[WebServer] Starting web server on *:${this.settings.webPort}`);
+      this.logger.info(`[WebServer] Starting web server on *: ${this.settings.webPort}`);
     })
   };
 
