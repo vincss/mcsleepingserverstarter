@@ -87,7 +87,7 @@ via [Unofficial pterodactyl-installer](https://github.com/vilhelmprytz/pterodact
 
 #### Use WebServer for dynmap
 
-- [How use with dynamp](./wiki/Use-internal-SSS-WebServer-for-dynmap)
+- [How use with dynamp](https://github.com/vincss/mcsleepingserverstarter/wiki/Use-internal-SSS-WebServer-for-dynmap)
 
 #### Links :
 
