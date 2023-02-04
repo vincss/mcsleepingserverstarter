@@ -9,11 +9,9 @@
         "run" :"node .",
         "dev": "ts-node ./src/sleepingServerStarter.ts",
         "prebuild": "rimraf ./build/ ./bin/ && cpx-fixed \"views/**/*.*\" build/views",
-        "build": "run-s build:typescript build:target",
-        "build-release": "run-s build:typescript build:target-release",
+        "build": "run-s build:typescript build:bin",
         "build:typescript": "tsc",
-        "build:target": "pkg build/sleepingServerStarter.js --config package.json --compress GZip --target node18-win-x64,node18-linux-x64,node18-linux-arm64 --out-path ./bin/",
-        "build:target-release": "pkg build/sleepingServerStarter.js --config package.json --compress Brotli --target node18-win-x64,node18-linux-x64,node18-linux-arm64 --out-path ./bin/",
+        "build:bin": "pkg build/sleepingServerStarter.js --config package.json --compress GZip --target node18-win-x64,node18-linux-x64,node18-linux-arm64 --out-path ./bin/",
         "test": "echo \"Error: no test specified\" && exit 1",
         "lint": "eslint . --ext .ts --fix"
     },
