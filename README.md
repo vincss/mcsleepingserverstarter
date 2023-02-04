@@ -27,7 +27,7 @@ There are two ways to run SleepingServerStarter :
 
 ### Download the binaries
 
-1. [Download binaries](./releases/latest) corresponding to your OS
+1. [Download binaries](https://github.com/vincss/mcsleepingserverstarter) corresponding to your OS
 2. Place the executable in the same folder as your server file (`spigot.jar`, `paper.jar`, etc...)
 3. Make sure your server is stopped
 4. Run the executable
