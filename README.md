@@ -132,6 +132,8 @@ Give a ⭐️ if you like the project!
 
 ## 📜 ChangeLog
 
+* 1.3.1 - 1.19.3 :
+    - update minecraft-protocol: 1.41.0
 * 1.3.0 - 1.19.3 :
     - add blackListedAddress parameters
     - add dynmap
