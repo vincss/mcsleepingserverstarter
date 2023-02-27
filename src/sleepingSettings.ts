@@ -21,7 +21,7 @@ export type Settings = {
     startMinecraft: boolean,
     minecraftCommand: string,
     preventStop?: boolean,
-    version?: string,
+    version?: string | false,
     favIcon?: string,
     minecraftWorkingDirectory?: string,
     discordWebhookUrl?: string,
@@ -42,7 +42,7 @@ const DefaultSettings: Settings = {
 
     startMinecraft: true,				// false to disable
     minecraftCommand: 'java -jar spigot.jar nogui',
-    // version: '1.19',
+    version: false,
 };
 
 function saveDefault() {

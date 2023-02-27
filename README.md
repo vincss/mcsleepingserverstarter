@@ -76,7 +76,7 @@ via [Unofficial pterodactyl-installer](https://github.com/vilhelmprytz/pterodact
 | `minecraftCommand`          | The command used to start the server                                                                                                                                                                            | "java -jar paper.jar nogui"                     |
 | `preventStop`          | Prevent the user to stop the server (trought web-server or cli).                                                                                                                                                                            | false                     |
 | `minecraftWorkingDirectory` | Set a custom Working Directory for the server **EDIT ONLY IF YOU KNOW WHAT YOU'RE DOING** (should be the path to the server's directory, absolute path is best)                                                 | ""                                              |
-| `version`                   | Force compatibility with a specific Minecraft version                                                                                                                                                           | ""                                              |
+| `version`                   | Force compatibility with a specific Minecraft. If set to false, it should handle any compatible version version                                                                                                                                                           | ""                                              |
 | `favIcon`                   | Use a custom server-icon 64x64 png converted using https://www.base64-image.de/ (needs to be encoded in base64)                                                                                                 | ""                                              |
 | `discordWebhookUrl`         | Setup a [Discord WebHook](https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks) to your channel                                                                                            | "REPLACE_ME"                                    |
 | `blackListedAddress`        | Prevent connections from thoses addresses to wake up the server                                                                                                                                                 | ["127.0.0.1"]                                   |
@@ -131,7 +131,8 @@ Give a ⭐️ if you like the project!
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog
-
+* 1.4.0 - 1.19.3 :
+    - set option 'version' to false by default (it should handle any compatible version).
 * 1.3.1 - 1.19.3 :
     - update minecraft-protocol: 1.41.0
 * 1.3.0 - 1.19.3 :
