@@ -53,10 +53,16 @@ export class SleepingMcJava implements ISleepingServer {
             const userName = client.username;
 
             if (this.settings.blackListedAddress?.some(address => client.socket.remoteAddress?.includes(address))) {
-                this.logger.info(`${userName}.${client.state}:[${client.socket.remoteAddress}], rejected: blacklisted`);
+                this.logger.info(`${userName}.${client.state}:[${client.socket.remoteAddress}], rejected: blacklisted.`);
                 client.end('Connection rejected : blacklisted.');
                 return;
             }
+            if(this.settings.whiteListedNames && !this.settings.whiteListedNames.includes(userName)) {          
+                this.logger.info(`${userName}.${client.state}:[${client.socket.remoteAddress}], rejected: not on the guest list.`);
+                client.end('You are not on the guest list.');
+                return;
+            }
+    
 
             if (this.isClosing) {
                 this.logger.info(`Prince ${userName}.${client.state}, someone came before you...`);

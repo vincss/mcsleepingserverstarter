@@ -46,7 +46,7 @@ export class SleepingContainer implements ISleepingServer {
             await this.mcServer?.init();
         }
 
-        if (this.settings.bedrockPort > 0) {
+        if (this.settings.bedrockPort) {
             this.brServer = new SleepingBedrock(this.settings, this.playerConnectionCallBack);
             await this.brServer?.init();
         }
@@ -117,6 +117,11 @@ export class SleepingContainer implements ISleepingServer {
     }
 
     playerConnectionCallBack: PlayerConnectionCallBackType = async (playerName: string) => {
+        if(this.settings.whiteListedNames && !this.settings.whiteListedNames.includes(playerName)) {
+            this.logger.info(`[Container] ${playerName}: not on the guess list.`);
+            return;
+        }
+
         if (this.isClosing) {
             this.logger.info(`[Container] ${playerName}: Server is already closing.`);
             return;

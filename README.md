@@ -80,6 +80,7 @@ via [Unofficial pterodactyl-installer](https://github.com/vilhelmprytz/pterodact
 | `favIcon`                   | Use a custom server-icon 64x64 png converted using https://www.base64-image.de/ (needs to be encoded in base64)                                                                                                 | ""                                              |
 | `discordWebhookUrl`         | Setup a [Discord WebHook](https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks) to your channel                                                                                            | "REPLACE_ME"                                    |
 | `blackListedAddress`        | Prevent connections from thoses addresses to wake up the server                                                                                                                                                 | ["127.0.0.1"]                                   |
+| `whiteListedNames`        | Only allow people with their name on the white list to wake the server up                                                                                                                                                 | ["vincss"]                                   |
 
 > Note: if you need to shutdown the program, simply input a `ctrl + c`, the program will shut down normally afterwards
 
@@ -133,6 +134,8 @@ Give a ⭐️ if you like the project!
 ## 📜 ChangeLog
 * 1.4.1 - 1.19.3 :
     - update minecraft-protocol: 1.41.1
+    - disable bedrock by default
+    - add whiteListedNames
 * 1.4.0 - 1.19.3 :
     - set option 'version' to false by default (it should handle any compatible version).
 * 1.3.1 - 1.19.3 :

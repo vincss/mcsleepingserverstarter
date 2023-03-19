@@ -46,7 +46,7 @@ export class SleepingBedrock implements ISleepingServer {
 
     init = async () => {
 
-        this.listener = await this.listenerBuilder.listen(Address, this.settings.bedrockPort);
+        this.listener = await this.listenerBuilder.listen(Address, this.settings.bedrockPort!);
         this.logger.info(`[BedRock] Listening on ${Address}:${this.settings.bedrockPort}`);
 
 
