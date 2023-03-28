@@ -41,7 +41,6 @@ const DefaultSettings: Settings = {
 
     webPort: 0,	 				// 0 to disable web hosting
     webStopOnStart: false,
-    webSubPath: '',
 
     startMinecraft: true,				// false to disable
     minecraftCommand: 'java -jar spigot.jar nogui',
