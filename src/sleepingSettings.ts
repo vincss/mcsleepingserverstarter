@@ -18,6 +18,7 @@ export type Settings = {
     webPort: number,
     webStopOnStart: boolean,
     webServeDynmap?: boolean | string,
+    webSubPath?: string,
     startMinecraft: boolean,
     minecraftCommand: string,
     preventStop?: boolean,
@@ -40,6 +41,7 @@ const DefaultSettings: Settings = {
 
     webPort: 0,	 				// 0 to disable web hosting
     webStopOnStart: false,
+    webSubPath: '',
 
     startMinecraft: true,				// false to disable
     minecraftCommand: 'java -jar spigot.jar nogui',

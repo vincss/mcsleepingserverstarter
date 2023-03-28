@@ -35,11 +35,13 @@ export class SleepingWeb implements ISleepingServer {
       helpers: {
         title: () => { return this.settings.serverName },
         favIcon: () => { return this.settings.favIcon || DefaultFavIconString },
+        stylesheet: () => { return this.settings.webSubPath + '/layouts/main.css' },
       }
     }));
 
     this.app.set('view engine', 'hbs');
-    this.app.use(express.static(path.join(__dirname, './views')));
+    this.app.use(this.settings.webSubPath + '/layouts', express.static(path.join(__dirname, './views/layouts')));
+    this.app.use(this.settings.webSubPath + '/res', express.static(path.join(__dirname, './views/res')));
 
     if (this.settings.webServeDynmap) {
       let dynmapPath;
@@ -53,15 +55,15 @@ export class SleepingWeb implements ISleepingServer {
       }
       this.logger.info(`[WebServer] Serving dynmap: ${dynmapPath}`);
       if (existsSync(dynmapPath)) {
-        this.app.use('/dynmap', express.static(dynmapPath));
+        this.app.use(this.settings.webSubPath + '/dynmap', express.static(dynmapPath));
       }
     }
 
-    this.app.get('/', (req, res) => {
+    this.app.get(this.settings.webSubPath + '/', (req, res) => {
       res.render(path.join(__dirname, './views/home'), { message: this.settings.loginMessage });
     });
 
-    this.app.post('/wakeup', async (req, res) => {
+    this.app.post(this.settings.webSubPath + '/wakeup', async (req, res) => {
       res.send('received');
 
       const currentStatus = await this.sleepingContainer.getStatus();
@@ -88,7 +90,7 @@ export class SleepingWeb implements ISleepingServer {
 
     })
 
-    this.app.get('/status', async (req, res) => {
+    this.app.get(this.settings.webSubPath + '/status', async (req, res) => {
       const status = await this.sleepingContainer.getStatus()
       res.json({ status, dynmap: this.settings.webServeDynmap });
     });
