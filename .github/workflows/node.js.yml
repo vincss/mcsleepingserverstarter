@@ -41,4 +41,24 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: 'Binary Linux arm64 (Raspberry Pi)'
-        path: bin/mcsleepingserverstarter-linux-arm64       
+        path: bin/mcsleepingserverstarter-linux-arm64
+    - name: 'Upload Artifact MacOS (Apple Silicon)'
+      uses: actions/upload-artifact@v3
+      with:
+        name: 'Binary MacOS (Apple Silicon)'
+        path: bin/mcsleepingserverstarter-macos-arm64
+    - name: 'Upload Artifact MacOS (Intel)'
+      uses: actions/upload-artifact@v3
+      with:
+        name: 'Binary MacOS (Intel)'
+        path: bin/mcsleepingserverstarter-macos-x64
+    - name: 'Upload Artifact Alpine Linux'
+      uses: actions/upload-artifact@v3
+      with:
+        name: 'Binary Alpine Linux (Docker Container)'
+        path: bin/mcsleepingserverstarter-alpine-x64
+    - name: 'Upload Artifact Alpine Linux arm64'
+      uses: actions/upload-artifact@v3
+      with:
+        name: 'Binary Alpine Linux (arm64 Docker Container)'
+        path: bin/mcsleepingserverstarter-alpine-arm64
