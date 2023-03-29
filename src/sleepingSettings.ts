@@ -18,6 +18,7 @@ export type Settings = {
     webPort: number,
     webStopOnStart: boolean,
     webServeDynmap?: boolean | string,
+    webSubPath?: string,
     startMinecraft: boolean,
     minecraftCommand: string,
     preventStop?: boolean,

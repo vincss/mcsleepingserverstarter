@@ -17,9 +17,13 @@ export class SleepingWeb implements ISleepingServer {
   logger: LoggerType;
   app: Express;
   server?: http.Server;
+  webPath: string = '';
 
   constructor(settings: Settings, playerConnectionCallBack: PlayerConnectionCallBackType, sleepingContainer: SleepingContainer) {
     this.settings = settings;
+    if (this.settings.webSubPath) {
+      this.webPath = this.settings.webSubPath;
+    }
     this.playerConnectionCallBack = playerConnectionCallBack;
     this.sleepingContainer = sleepingContainer;
     this.logger = getLogger();
@@ -35,11 +39,13 @@ export class SleepingWeb implements ISleepingServer {
       helpers: {
         title: () => { return this.settings.serverName },
         favIcon: () => { return this.settings.favIcon || DefaultFavIconString },
+        stylesheet: () => { return `${this.webPath}/layouts/main.css` },
       }
     }));
 
     this.app.set('view engine', 'hbs');
-    this.app.use(express.static(path.join(__dirname, './views')));
+    this.app.use(`${this.webPath}/layouts`, express.static(path.join(__dirname, './views/layouts')));
+    this.app.use(`${this.webPath}/res`, express.static(path.join(__dirname, './views/res')));
 
     if (this.settings.webServeDynmap) {
       let dynmapPath;
@@ -53,15 +59,15 @@ export class SleepingWeb implements ISleepingServer {
       }
       this.logger.info(`[WebServer] Serving dynmap: ${dynmapPath}`);
       if (existsSync(dynmapPath)) {
-        this.app.use('/dynmap', express.static(dynmapPath));
+        this.app.use(`${this.webPath}/dynmap`, express.static(dynmapPath));
       }
     }
 
-    this.app.get('/', (req, res) => {
+    this.app.get(`${this.webPath}/`, (req, res) => {
       res.render(path.join(__dirname, './views/home'), { message: this.settings.loginMessage });
     });
 
-    this.app.post('/wakeup', async (req, res) => {
+    this.app.post(`${this.webPath}/wakeup`, async (req, res) => {
       res.send('received');
 
       const currentStatus = await this.sleepingContainer.getStatus();
@@ -88,7 +94,7 @@ export class SleepingWeb implements ISleepingServer {
 
     })
 
-    this.app.get('/status', async (req, res) => {
+    this.app.get(`${this.webPath}/status`, async (req, res) => {
       const status = await this.sleepingContainer.getStatus()
       res.json({ status, dynmap: this.settings.webServeDynmap });
     });

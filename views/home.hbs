@@ -3,7 +3,7 @@
 
     startClick = () => {
         console.log('WakeUp');
-        $.post('/wakeup', {})
+        $.post('./wakeup', {})
             .done((sucess) => { console.log('WakeUp Sucess', sucess); })
             .fail((error) => { console.log('WakeUp Error', error); })
     };
@@ -28,7 +28,7 @@
     };
 
     getStatus = () => {
-        $.get('/status')
+        $.get('./status')
             .done(
                 (value) => {
                     console.log(`${new Date().toISOString()} - getStatus`, value);
