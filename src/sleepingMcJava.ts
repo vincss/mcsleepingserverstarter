@@ -1,5 +1,5 @@
 import { Client, createServer, Server } from 'minecraft-protocol';
-import { ServerStatus } from './sleepingHelper';
+import { getMOTD, ServerStatus } from './sleepingHelper';
 import { getLogger, LoggerType } from './sleepingLogger';
 import { ISleepingServer } from './sleepingServerInterface';
 import { DefaultFavIconString, Settings } from './sleepingSettings';
@@ -24,7 +24,7 @@ export class SleepingMcJava implements ISleepingServer {
     init = async () => {
         this.server = createServer({
             'online-mode': this.settings.serverOnlineMode,
-            motd: this.settings.serverName,
+            motdMsg: getMOTD(this.settings, 'json'),
             port: this.settings.serverPort,
             maxPlayers: this.settings.maxPlayers,
             version: this.settings.version,

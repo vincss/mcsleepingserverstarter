@@ -4,7 +4,7 @@ import { engine } from 'express-handlebars';
 import * as http from 'http';
 import path from 'path';
 import { SleepingContainer } from './sleepingContainer';
-import { ServerStatus } from './sleepingHelper';
+import { getMOTD, ServerStatus } from './sleepingHelper';
 import { getLogger, LoggerType } from './sleepingLogger';
 import { ISleepingServer } from './sleepingServerInterface';
 import { DefaultFavIconString, Settings } from './sleepingSettings';
@@ -37,7 +37,8 @@ export class SleepingWeb implements ISleepingServer {
       layoutsDir: path.join(__dirname, './views/layouts/'),
       extname: '.hbs',
       helpers: {
-        title: () => { return this.settings.serverName },
+        title: () => { return getMOTD(this.settings, 'plain') },
+        motd: () => { return getMOTD(this.settings, 'html') },
         favIcon: () => { return this.settings.favIcon || DefaultFavIconString },
         stylesheet: () => { return `${this.webPath}/layouts/main.css` },
       }

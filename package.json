@@ -6,7 +6,7 @@
     "bin": "build/sleepingServerStarter.js",
     "scripts": {
         "start": "run-s prebuild build:typescript run",
-        "run" :"node .",
+        "run": "node .",
         "dev": "ts-node ./src/sleepingServerStarter.ts",
         "prebuild": "rimraf ./build/ ./bin/ && cpx-fixed \"views/**/*.*\" build/views",
         "build": "run-s build:typescript build:bin",
@@ -18,10 +18,12 @@
     "dependencies": {
         "@jsprismarine/prismarine": "^0.1.0-rc.49",
         "@jsprismarine/raknet": "^0.1.0-rc.49",
+        "@sfirew/minecraft-motd-parser": "^1.1.1",
         "express": "^4.18.2",
         "express-handlebars": "^6.0.5",
         "js-yaml": "^4.1.0",
         "minecraft-protocol": "^1.41.1",
+        "prismarine-chat": "^1.8.0",
         "winston": "^3.7.2"
     },
     "devDependencies": {

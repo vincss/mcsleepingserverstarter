@@ -7,6 +7,7 @@ import Connection from '@jsprismarine/raknet/dist/Connection';
 import Listener from '@jsprismarine/raknet/dist/Listener';
 import Identifiers from '@jsprismarine/raknet/dist/protocol/Identifiers';
 import InetAddress from '@jsprismarine/raknet/dist/utils/InetAddress';
+import { getMOTD } from './sleepingHelper';
 
 import { getLogger, LoggerType } from './sleepingLogger';
 import { ISleepingServer } from './sleepingServerInterface';
@@ -33,7 +34,7 @@ export class SleepingBedrock implements ISleepingServer {
 
         this.logger = getLogger();
         const config = new Config(Version);
-        (config as any).motd = settings.serverName
+        (config as any).motd = getMOTD(settings, 'plain')
         const server = {
             getConfig() { return config },
             getIdentifiers() { return Identifiers },
