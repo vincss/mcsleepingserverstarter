@@ -4,10 +4,10 @@ import { engine } from 'express-handlebars';
 import * as http from 'http';
 import path from 'path';
 import { SleepingContainer } from './sleepingContainer';
-import { getMOTD, ServerStatus } from './sleepingHelper';
+import { getFavIcon, getMOTD, ServerStatus } from './sleepingHelper';
 import { getLogger, LoggerType } from './sleepingLogger';
 import { ISleepingServer } from './sleepingServerInterface';
-import { DefaultFavIconString, Settings } from './sleepingSettings';
+import { Settings } from './sleepingSettings';
 import { PlayerConnectionCallBackType } from './sleepingTypes';
 
 export class SleepingWeb implements ISleepingServer {
@@ -39,7 +39,7 @@ export class SleepingWeb implements ISleepingServer {
       helpers: {
         title: () => { return getMOTD(this.settings, 'plain') },
         motd: () => { return getMOTD(this.settings, 'html') },
-        favIcon: () => { return this.settings.favIcon || DefaultFavIconString },
+        favIcon: () => { return getFavIcon(this.settings) },
         stylesheet: () => { return `${this.webPath}/layouts/main.css` },
       }
     }));

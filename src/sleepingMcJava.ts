@@ -1,8 +1,8 @@
 import { Client, createServer, Server } from 'minecraft-protocol';
-import { getMOTD, ServerStatus } from './sleepingHelper';
+import { getFavIcon, getMOTD, ServerStatus } from './sleepingHelper';
 import { getLogger, LoggerType } from './sleepingLogger';
 import { ISleepingServer } from './sleepingServerInterface';
-import { DefaultFavIconString, Settings } from './sleepingSettings';
+import { Settings } from './sleepingSettings';
 import { PlayerConnectionCallBackType } from './sleepingTypes';
 
 export class SleepingMcJava implements ISleepingServer {
@@ -29,7 +29,7 @@ export class SleepingMcJava implements ISleepingServer {
             maxPlayers: this.settings.maxPlayers,
             version: this.settings.version,
             beforePing: (reponse) => {
-                reponse.favicon = this.settings.favIcon ?? DefaultFavIconString;
+                reponse.favicon = getFavIcon(this.settings)
             },
             validateChannelProtocol: true,
             errorHandler: (client, error) => console.warn('SleepingMcJava.errorHandler: ', client, error),
