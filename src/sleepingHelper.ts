@@ -1,4 +1,5 @@
 import fs from 'fs';
+import path from 'path';
 import { createConnection } from 'net';
 import { autoToHtml, cleanTags } from '@sfirew/minecraft-motd-parser'
 import ChatMessage from 'prismarine-chat';
@@ -36,9 +37,9 @@ export const getFavIcon = (settings: Settings): string => {
         return DefaultFavIconString;
     }
 
-    if (!favIconPath.startsWith('/') && !favIconPath.startsWith('\\')) {
+    if (!path.isAbsolute(favIconPath)) {
         const directory = settings.minecraftWorkingDirectory ?? process.cwd();
-        favIconPath = `${directory}/${favIconPath}`;
+        favIconPath = path.join(directory, favIconPath);
     }
     if (fs.existsSync(favIconPath)) {
         const fileData = fs.readFileSync(favIconPath, { encoding: 'base64' });
