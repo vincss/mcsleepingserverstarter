@@ -134,6 +134,13 @@ Give a ⭐️ if you like the project!
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog
+* 1.5.0 - 1.19.3 :
+    - add setting webSubPath  
+    - add more architectures builds 
+    - add setting favIconPath to use a png as icon.
+    - handle motd in serverName 
+     - Thanks to markmetcalfe for thoses improvements)
+    - update minecraft-protocol: 1.41.2
 * 1.4.1 - 1.19.3 :
     - update minecraft-protocol: 1.41.1
     - disable bedrock by default
