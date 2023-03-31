@@ -23,7 +23,7 @@ stops your server after a definied amount of time**
 
 ## 📀 Install
 
-There are two ways to run SleepingServerStarter :
+There are multiple ways to run SleepingServerStarter:
 
 ### Download the binaries
 
@@ -40,6 +40,14 @@ There are two ways to run SleepingServerStarter :
 2. Unzip or clone it **in the same folder as your minecraft server**
 3. Launch `npm install`
 4. Start the project with `npm start`
+
+### 🐋 Docker
+
+SleepingServerStarter is available as a Docker image: [ghcr.io/vincss/mcsleepingserverstarter](https://github.com/vincss/mcsleepingserverstarter/pkgs/container/mcsleepingserverstarter)
+
+It supports both x64 and arm64 host system architectures.
+
+For detailed examples and instructions for setup via Docker, [see the wiki page here](https://github.com/vincss/mcsleepingserverstarter/wiki/Docker-Configuration).
 
 ### 🐡 PufferPanel
 
