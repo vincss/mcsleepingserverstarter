@@ -53,14 +53,14 @@ export class SleepingWeb implements ISleepingServer {
       if (typeof this.settings.webServeDynmap === 'string') {
         dynmapPath = this.settings.webServeDynmap;
       } else {
-        dynmapPath = './plugins/dynmap/web/';
-        if (!existsSync(dynmapPath)) {
-          dynmapPath = path.join(__dirname, '../plugins/dynmap/web/');
-        }
+        const mcPath = this.settings.minecraftWorkingDirectory ?? process.cwd();
+        dynmapPath = path.join(mcPath, 'plugins/dynmap/web');
       }
       this.logger.info(`[WebServer] Serving dynmap: ${dynmapPath}`);
       if (existsSync(dynmapPath)) {
         this.app.use(`${this.webPath}/dynmap`, express.static(dynmapPath));
+      } else {
+        getLogger().error(`Dynmap directory at ${dynmapPath} does not exist!`);
       }
     }
 
