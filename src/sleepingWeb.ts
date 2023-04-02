@@ -60,7 +60,7 @@ export class SleepingWeb implements ISleepingServer {
       if (existsSync(dynmapPath)) {
         this.app.use(`${this.webPath}/dynmap`, express.static(dynmapPath));
       } else {
-        getLogger().error(`Dynmap directory at ${dynmapPath} does not exist!`);
+        this.logger.error(`Dynmap directory at ${dynmapPath} does not exist!`);
       }
     }
 
