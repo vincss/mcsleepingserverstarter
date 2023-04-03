@@ -7,3 +7,7 @@ test('should start the container with default settings', (done) => {
         done();
     });
 })
+
+test('it should fail and prevent release', () => {
+    expect(false).toBeTruthy();
+})
