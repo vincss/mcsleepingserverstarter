@@ -29,7 +29,7 @@ export type Settings = {
     whiteListedNames?: string[]
 };
 
-const DefaultSettings: Settings = {
+export const DefaultSettings: Settings = {
     serverName: 'SleepingServer, waiting for his prince...',
     serverPort: 25565,
     
@@ -42,7 +42,7 @@ const DefaultSettings: Settings = {
     webStopOnStart: false,
 
     startMinecraft: true,				// false to disable
-    minecraftCommand: 'java -jar spigot.jar nogui',
+    minecraftCommand: 'java -jar paper.jar nogui',
     version: false,
 };
 
