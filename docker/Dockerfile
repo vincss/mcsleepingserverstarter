@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:17-jre-jammy
 
 # Copy both x64 and arm64 binaries
 COPY --chmod=755 ./mcsleepingserverstarter-linux-x64 /mcsleepingserverstarter-linux-x64
