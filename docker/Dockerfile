@@ -1,7 +1,4 @@
-FROM ubuntu:latest
-
-# Install Java 17
-RUN apt update && apt install -y openjdk-17-jre
+FROM eclipse-temurin:17-jre-alpine
 
 # Copy both x64 and arm64 binaries
 COPY --chmod=755 ./mcsleepingserverstarter-linux-x64 /mcsleepingserverstarter-linux-x64

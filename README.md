@@ -142,6 +142,8 @@ Give a ⭐️ if you like the project!
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog
+* 1.5.2 - 1.19.3 :
+    - docker: base image eclipse-temurin:17-jre-alpine
 * 1.5.1 - 1.19.3 :
     - add docker generation (@markmetcalfe)
     - fix minecraftDirectory not being used as base path when serving dynmap via web GUI (@markmetcalfe)
