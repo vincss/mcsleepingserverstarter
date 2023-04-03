@@ -143,7 +143,7 @@ Give a ⭐️ if you like the project!
 
 ## 📜 ChangeLog
 * 1.5.2 - 1.19.3 :
-    - docker: base image eclipse-temurin:17-jre-alpine
+    - docker: base image eclipse-temurin:17-jre-jammy
 * 1.5.1 - 1.19.3 :
     - add docker generation (@markmetcalfe)
     - fix minecraftDirectory not being used as base path when serving dynmap via web GUI (@markmetcalfe)
