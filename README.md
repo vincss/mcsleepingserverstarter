@@ -142,6 +142,8 @@ Give a ⭐️ if you like the project!
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog
+* 1.5.3 - 1.19.3 :
+    - docker: copy only needed binary
 * 1.5.2 - 1.19.3 :
     - docker: base image eclipse-temurin:17-jre-jammy
 * 1.5.1 - 1.19.3 :
