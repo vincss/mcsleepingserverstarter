@@ -10,6 +10,10 @@
 </p>
 </div>
 
+## ✅ Compatible versions
+ - Minecraft Java: up to 1.19.3 ( 1.19.4 and up not working ) [node-minecraft-protocol](https://github.com/PrismarineJS/node-minecraft-protocol)
+ - Bedrock: Waiting for third party compatibility ( you can use the web-gui as a workarround ) [JSPrismarine](https://github.com/JSPrismarine/JSPrismarine)
+
 ## 🧰 Features
 
 - Listen on the same port as your minecraft server.
