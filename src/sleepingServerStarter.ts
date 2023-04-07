@@ -64,8 +64,6 @@ const main = async () => {
     } catch (error) {
         logger.error('[Main] Something bad happened.', error)
     }
-
-
 };
 
 main();

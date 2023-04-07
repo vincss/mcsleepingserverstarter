@@ -27,6 +27,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: npm run build --if-present
+    - run: npm run test --if-present    
     - name: 'Upload Artifact Windows'
       uses: actions/upload-artifact@v3
       with:

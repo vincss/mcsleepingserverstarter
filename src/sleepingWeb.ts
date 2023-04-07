@@ -17,7 +17,7 @@ export class SleepingWeb implements ISleepingServer {
   logger: LoggerType;
   app: Express;
   server?: http.Server;
-  webPath: string = '';
+  webPath = '';
 
   constructor(settings: Settings, playerConnectionCallBack: PlayerConnectionCallBackType, sleepingContainer: SleepingContainer) {
     this.settings = settings;
