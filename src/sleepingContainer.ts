@@ -3,7 +3,7 @@ import { platform } from 'os';
 import { SleepingBedrock } from './sleepingBedrock';
 import { SleepingDiscord } from './sleepingDiscord';
 import { isPortTaken, ServerStatus } from './sleepingHelper';
-import { getLogger, LoggerType } from './sleepingLogger';
+import { getLogger, LoggerType, version } from './sleepingLogger';
 import { SleepingMcJava } from './sleepingMcJava';
 import { ISleepingServer } from './sleepingServerInterface';
 import { getSettings, Settings } from './sleepingSettings';
@@ -58,7 +58,7 @@ export class SleepingContainer implements ISleepingServer {
     }
 
     startMinecraft = async (onProcessClosed: () => void) => {
-        this.logger.info(`----------- Starting Minecraft : ${this.settings.minecraftCommand} ----------- `);
+        this.logger.info(`----------- [v${version}] Starting Minecraft : ${this.settings.minecraftCommand} ----------- `);
 
         if (this.settings.webPort > 0 && !this.settings.webStopOnStart) {
             const cmdArgs = this.settings.minecraftCommand.split(' ');
@@ -70,7 +70,7 @@ export class SleepingContainer implements ISleepingServer {
             });
 
             this.mcProcess.on('close', code => {
-                this.logger.info(`----------- Minecraft stopped ${code} -----------`);
+                this.logger.info(`----------- [v${version}] Minecraft stopped ${code} -----------`);
                 onProcessClosed();
             });
         } else {
@@ -78,7 +78,7 @@ export class SleepingContainer implements ISleepingServer {
                 stdio: 'inherit',
                 cwd: this.settings.minecraftWorkingDirectory ?? process.cwd()
             });
-            this.logger.info('----------- Minecraft stopped -----------');
+            this.logger.info(`----------- [v${version}] Minecraft stopped -----------`);
             onProcessClosed();
         }
 
