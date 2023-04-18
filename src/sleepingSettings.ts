@@ -25,14 +25,15 @@ export type Settings = {
     favIconPath?: string,
     minecraftWorkingDirectory?: string,
     discordWebhookUrl?: string,
-    blackListedAddress?: string[]
-    whiteListedNames?: string[]
+    blackListedAddress?: string[],
+    whiteListedNames?: string[],
+    hideIpInLogs?: boolean,
 };
 
 export const DefaultSettings: Settings = {
     serverName: 'SleepingServer, waiting for his prince...',
     serverPort: 25565,
-    
+
     maxPlayers: 20,
 
     loginMessage: '...Waking server up, come back in a minute...',
@@ -67,11 +68,11 @@ export function getSettings(): Settings {
     }
     logger.info(
         `Retrieved settings:${JSON.stringify({
-          ...settings,
-          favIcon: settings.favIcon
-            ? `${settings.favIcon?.substring(0, 38)}...`
-            : undefined,
+            ...settings,
+            favIcon: settings.favIcon
+                ? `${settings.favIcon?.substring(0, 38)}...`
+                : undefined,
         })}`
-      );
+    );
     return settings;
 }

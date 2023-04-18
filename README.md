@@ -74,8 +74,8 @@ via [Unofficial pterodactyl-installer](https://github.com/vilhelmprytz/pterodact
 > executable
 
 | Setting                     | Description                                                                                                                                                                                                     | Default value                                   |
-|-----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------|
-| `serverName`                | The name of your server.<br>You can specify [colour codes](https://motd.gg) by using the `§` prefix (Does not work on Bedrock)                                                                                                                                                                                        | "SleepingServer, waiting for his prince..."     |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| `serverName`                | The name of your server.<br>You can specify [colour codes](https://motd.gg) by using the `§` prefix (Does not work on Bedrock)                                                                                  | "SleepingServer, waiting for his prince..."     |
 | `serverPort`                | The port of your Java Edition server (0 to disable)                                                                                                                                                             | 25565                                           |
 | `bedrockPort`               | The port of your Bedrock Edition server (0 to disable)                                                                                                                                                          | 19132                                           |
 | `loginMessage`              | Message shown when the server is off and someone is trying to connect                                                                                                                                           | "...Waking server up, come back in a minute..." |
@@ -84,17 +84,18 @@ via [Unofficial pterodactyl-installer](https://github.com/vilhelmprytz/pterodact
 | `webPort`                   | Port for the Web-Gui (0 to disable)                                                                                                                                                                             | 0                                               |
 | `webStopOnStart`            | Stop the web-server when minecraft starts                                                                                                                                                                       | false                                           |
 | `webServeDynmap`            | true or an absolute path to enable it, by default it will serve './plugins/dynmap/web/'. You can specify an absolute path to serve instead. [How use with dynamp](./wiki/Use-internal-SSS-WebServer-for-dynmap) | false                                           |
-| `webSubPath`                | Set the path to the Web-GUI if serving from behind a reverse proxy | "" |
+| `webSubPath`                | Set the path to the Web-GUI if serving from behind a reverse proxy                                                                                                                                              | ""                                              |
 | `startMinecraft`            | Start the Minecraft Server (false to disable)                                                                                                                                                                   | true                                            |
 | `minecraftCommand`          | The command used to start the server                                                                                                                                                                            | "java -jar paper.jar nogui"                     |
-| `preventStop`          | Prevent the user to stop the server (trought web-server or cli).                                                                                                                                                                            | false                     |
+| `preventStop`               | Prevent the user to stop the server (trought web-server or cli).                                                                                                                                                | false                                           |
 | `minecraftWorkingDirectory` | Set a custom Working Directory for the server **EDIT ONLY IF YOU KNOW WHAT YOU'RE DOING** (should be the path to the server's directory, absolute path is best)                                                 | ""                                              |
-| `version`                   | Force compatibility with a specific Minecraft. If set to false, it should handle any compatible version                                                                                                                                                           | ""                                              |
-| `favIconPath`               | Path to a PNG file to use as the server icon.<br>If this is set to `server-icon.png` then it will use the same icon as the server.                                           | ""
+| `version`                   | Force compatibility with a specific Minecraft. If set to false, it should handle any compatible version                                                                                                         | ""                                              |
+| `favIconPath`               | Path to a PNG file to use as the server icon.<br>If this is set to `server-icon.png` then it will use the same icon as the server.                                                                              | ""                                              |
 | `favIcon`                   | Use a custom server-icon 64x64 png converted using https://www.base64-image.de/ (needs to be encoded in base64)                                                                                                 | ""                                              |
 | `discordWebhookUrl`         | Setup a [Discord WebHook](https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks) to your channel                                                                                            | "REPLACE_ME"                                    |
 | `blackListedAddress`        | Prevent connections from thoses addresses to wake up the server                                                                                                                                                 | ["127.0.0.1"]                                   |
-| `whiteListedNames`        | Only allow people with their name on the white list to wake the server up                                                                                                                                                 | ["vincss"]                                   |
+| `whiteListedNames`          | Only allow people with their name on the white list to wake the server up                                                                                                                                       | ["vincss"]                                      |
+| `hideIpInLogs`              | Hide the ip from the remote player in the logs                                                                                                                                                                                                                | false                                           |
 
 > Note: if you need to shutdown the program, simply input a `ctrl + c`, the program will shut down normally afterwards
 
@@ -146,6 +147,8 @@ Give a ⭐️ if you like the project!
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog
+* 1.5.5 - 1.19.3 :
+    - add hideIpInLogs parameter
 * 1.5.4 - 1.19.3 :
     - add version number in start/stop minecraft
 * 1.5.3 - 1.19.3 :

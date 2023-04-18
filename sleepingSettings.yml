@@ -27,5 +27,7 @@ minecraftCommand: "java -jar paper.jar nogui" # or paper.jar or whatever flavor 
 
 # version: false # Force compatibility with a specific minecraft version. If set to false, it should handle any compatible version
 
+# hideIpInLogs: true
+
 # /!\ Edit this setting only if you know what you are doing
 # minecraftWorkingDirectory: "" # Set a custom working directory (path to minecraft server folder)

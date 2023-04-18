@@ -21,6 +21,10 @@ export class SleepingMcJava implements ISleepingServer {
         this.logger = getLogger();
     }
 
+    getIp = (client: Client) => {
+        return this.settings.hideIpInLogs ? '' : `_${client.socket.remoteAddress}`;
+    }
+
     init = async () => {
         this.server = createServer({
             'online-mode': this.settings.serverOnlineMode,
@@ -41,7 +45,7 @@ export class SleepingMcJava implements ISleepingServer {
         this.logger.info(`[McJava] Waiting for a Prince to come. [${this.settings.serverPort}]`);
 
         this.server.on('connection', (client: Client) => {
-            this.logger.info(`A Prince has taken a quick peek. [${client.version}_${client.socket.remoteAddress}]`);
+            this.logger.info(`A Prince has taken a quick peek. [${client.version}${this.getIp(client)}]`);
         });
 
         this.server.on('listening', () => {
@@ -74,7 +78,7 @@ export class SleepingMcJava implements ISleepingServer {
             }
             this.isClosing = true;
 
-            this.logger.info(`Prince [${userName}.${client.state}_${client.socket.remoteAddress}] has come, time to wake up.`);
+            this.logger.info(`Prince [${userName}.${client.state}${this.getIp(client)}] has come, time to wake up.`);
 
             client.on('end', (client) => {
                 this.logger.info(`[${userName}] The prince is gone, for now`, client);

@@ -9,6 +9,7 @@ import { getLogger, LoggerType } from './sleepingLogger';
 import { ISleepingServer } from './sleepingServerInterface';
 import { Settings } from './sleepingSettings';
 import { PlayerConnectionCallBackType } from './sleepingTypes';
+import { Socket } from 'node:net';
 
 export class SleepingWeb implements ISleepingServer {
   settings: Settings;
@@ -28,6 +29,10 @@ export class SleepingWeb implements ISleepingServer {
     this.sleepingContainer = sleepingContainer;
     this.logger = getLogger();
     this.app = express();
+  }
+
+  getIp = (socket: Socket) => {
+    return this.settings.hideIpInLogs ? '' : `(${socket.remoteAddress})`;
   }
 
   init = async () => {
@@ -74,21 +79,21 @@ export class SleepingWeb implements ISleepingServer {
       const currentStatus = await this.sleepingContainer.getStatus();
       switch (currentStatus) {
         case ServerStatus.Sleeping: {
-          this.logger.info(`[WebServer](${req.socket.remoteAddress}) Wake up server was ${currentStatus}`);
+          this.logger.info(`[WebServer]${this.getIp(req.socket)} Wake up server was ${currentStatus}`);
           this.playerConnectionCallBack('A WebUser');
         }
           break;
         case ServerStatus.Running: {
-          this.logger.info(`[WebServer](${req.socket.remoteAddress}) Stopping server was ${currentStatus}`);
+          this.logger.info(`[WebServer]${this.getIp(req.socket)} Stopping server was ${currentStatus}`);
           this.sleepingContainer.killMinecraft();
         }
           break;
         case ServerStatus.Starting: {
-          this.logger.info(`[WebServer](${req.socket.remoteAddress}) Doing nothing server was ${currentStatus}`);
+          this.logger.info(`[WebServer]${this.getIp(req.socket)} Doing nothing server was ${currentStatus}`);
         }
           break;
         default: {
-          this.logger.warn(`[WebServer](${req.socket.remoteAddress}) Server is ?! ${currentStatus}`);
+          this.logger.warn(`[WebServer]${this.getIp(req.socket)} Server is ?! ${currentStatus}`);
         }
       }
 
