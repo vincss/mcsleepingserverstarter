@@ -147,6 +147,8 @@ Give a ⭐️ if you like the project!
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog
+* 1.5.6 - 1.19.3 :
+    - do not exit on 'uncaughtException'
 * 1.5.5 - 1.19.3 :
     - add hideIpInLogs parameter
 * 1.5.4 - 1.19.3 :

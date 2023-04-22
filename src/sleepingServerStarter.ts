@@ -33,9 +33,6 @@ process.on('uncaughtException', (err: Error) => {
     ) {
         logger.error('[Main] Something bad happened', err.message);
     }
-
-    logger.info('[Main] ...Exiting...');
-    process.exit(1);
 });
 
 const close = async () => {
