@@ -1,4 +1,4 @@
-import { SleepingContainer } from './sleepingContainer';
+import { MC_TIMEOUT, SleepingContainer } from './sleepingContainer';
 import { getLogger, LoggerType } from './sleepingLogger';
 import { Settings } from './sleepingSettings';
 
@@ -33,6 +33,14 @@ process.on('uncaughtException', (err: Error) => {
     ) {
         logger.error('[Main] Something bad happened', err.message);
     }
+
+
+    logger.info(`[Main] ... Restarting the server in (${MC_TIMEOUT / 1000} secs)...`);
+    setTimeout(async () => {
+        await sleepingContainer.close(true);
+        sleepingContainer.init(true);        
+    }, MC_TIMEOUT); 
+
 });
 
 const close = async () => {
