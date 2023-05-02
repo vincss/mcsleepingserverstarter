@@ -38,6 +38,7 @@ process.on('uncaughtException', (err: Error) => {
     logger.info(`[Main] ... Restarting the server in (${MC_TIMEOUT / 1000} secs)...`);
     setTimeout(async () => {
         await sleepingContainer.close(true);
+        sleepingContainer.reloadSettings();
         sleepingContainer.init(true);        
     }, MC_TIMEOUT); 
 

@@ -145,7 +145,7 @@ export class SleepingContainer implements ISleepingServer {
 
                 this.logger.info(`[Container] ...Time to kill me if you want (${MC_TIMEOUT / 1000} secs)...`);
                 setTimeout(async () => {
-                    this.settings = getSettings();
+                    this.reloadSettings();
                     this.logger.info('[Container] ...Too late !...');
                     await this.init();
                 }, MC_TIMEOUT); // restart server
@@ -154,6 +154,10 @@ export class SleepingContainer implements ISleepingServer {
             this.startMinecraft(onMcClosed);
         }
     };
+
+    reloadSettings = () => {
+        this.settings = getSettings();
+    }
 
     getStatus = async () => {
         let status = ServerStatus.Stopped;

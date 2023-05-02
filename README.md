@@ -147,6 +147,8 @@ Give a ⭐️ if you like the project!
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog
+* 1.5.8 - 1.19.3 :
+    - reload settings on restart
 * 1.5.7 - 1.19.3 :
     - restart on 'uncaughtException'
 * 1.5.6 - 1.19.3 :
