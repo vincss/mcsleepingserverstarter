@@ -19,7 +19,7 @@ minecraftCommand: "java -jar paper.jar nogui" # or paper.jar or whatever flavor 
 
 # discordWebhookUrl: "https://discord.com/api/webhooks/REPLACE_ME"
 
-# blackListedAddress: ["127.0.0.1"]
+# blackListedAddress: ["149.102.143.151", "132.145.71.44", "193.35.18.165"]
 # whiteListedNames: ["vincss"]
 
 # Use a custom icon 64x64 png converted using https://www.base64-image.de/
