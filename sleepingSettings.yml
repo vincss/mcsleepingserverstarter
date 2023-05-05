@@ -18,8 +18,7 @@ minecraftCommand: "java -jar paper.jar nogui" # or paper.jar or whatever flavor 
 # preventStop: true # Prevent the user to stop the server (trought web-server or cli).
 
 # discordWebhookUrl: "https://discord.com/api/webhooks/REPLACE_ME"
-
-# blackListedAddress: ["149.102.143.151", "132.145.71.44", "193.35.18.165"]
+# blackListedAddress: ["149.102.143.151", "132.145.71.44", "193.35.18.165", "45.128.232.206", "193.35.18.92", "193.35.18.210"]
 # whiteListedNames: ["vincss"]
 
 # Use a custom icon 64x64 png converted using https://www.base64-image.de/
