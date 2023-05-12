@@ -64,6 +64,16 @@ export function getSettings(): Settings {
         settings = { ...DefaultSettings, ...settingsFromFiles };
     } catch (error: any) {
         logger.error('Failed to load setting, using default.', error);
+
+        try {
+            const pathBackup = `${SettingFilePath}.${new Date().toISOString().replace(/:/g,'')}.bak`;
+            logger.info(`Backing up your old config to : ${pathBackup}`);
+            const read = readFileSync(SettingFilePath).toString();
+            writeFileSync(pathBackup, read);
+        } catch (error) {
+            logger.error('Backup setting', error);
+        }
+
         saveDefault();
     }
     logger.info(
