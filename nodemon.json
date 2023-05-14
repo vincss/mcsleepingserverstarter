@@ -1,10 +1,6 @@
 {
-    "watch": [
-        "./src"
-    ],
-    "ext": "ts,json,hbs",
-    "ignore": [
-        ""
-    ],
-    "exec": "npm start"
+  "watch": ["./src"],
+  "ext": "ts,json,hbs",
+  "ignore": [""],
+  "exec": "npm start"
 }

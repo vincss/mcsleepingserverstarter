@@ -42,9 +42,7 @@
       "type": "move"
     },
     {
-      "commands": [
-        "chmod +x ./mcsleepingserverstarter-linux-x64"
-      ],
+      "commands": ["chmod +x ./mcsleepingserverstarter-linux-x64"],
       "type": "command"
     },
     {
