@@ -68,26 +68,13 @@ export class SleepingWeb implements ISleepingServer {
       `${this.webPath}/layouts`,
       express.static(path.join(__dirname, "./views/layouts"))
     );
+
     this.app.use(
       `${this.webPath}/res`,
       express.static(path.join(__dirname, "./views/res"))
     );
 
-    if (this.settings.webServeDynmap) {
-      let dynmapPath;
-      if (typeof this.settings.webServeDynmap === "string") {
-        dynmapPath = this.settings.webServeDynmap;
-      } else {
-        const mcPath = this.settings.minecraftWorkingDirectory ?? process.cwd();
-        dynmapPath = path.join(mcPath, "plugins/dynmap/web");
-      }
-      this.logger.info(`[WebServer] Serving dynmap: ${dynmapPath}`);
-      if (existsSync(dynmapPath)) {
-        this.app.use(`${this.webPath}/dynmap`, express.static(dynmapPath));
-      } else {
-        this.logger.error(`Dynmap directory at ${dynmapPath} does not exist!`);
-      }
-    }
+    this.configureDynmap();
 
     this.app.get(`${this.webPath}/`, (req, res) => {
       res.render(path.join(__dirname, "./views/home"), {
@@ -149,9 +136,32 @@ export class SleepingWeb implements ISleepingServer {
     });
   };
 
+  configureDynmap = () => {
+    if (this.settings.webServeDynmap) {
+      let dynmapPath;
+      if (typeof this.settings.webServeDynmap === "string") {
+        dynmapPath = this.settings.webServeDynmap;
+        if (dynmapPath.includes("http")) {
+          return;
+        }
+      } else {
+        const mcPath = this.settings.minecraftWorkingDirectory ?? process.cwd();
+        dynmapPath = path.join(mcPath, "plugins/dynmap/web");
+      }
+      this.logger.info(`[WebServer] Serving dynmap: ${dynmapPath}`);
+      if (existsSync(dynmapPath)) {
+        this.app.use(`${this.webPath}/dynmap`, express.static(dynmapPath));
+      } else {
+        this.logger.error(`Dynmap directory at ${dynmapPath} does not exist!`);
+      }
+    }
+  }
+
   close = async () => {
     if (this.server) {
       this.server.close();
     }
   };
 }
+
+

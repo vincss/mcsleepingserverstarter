@@ -1,5 +1,6 @@
 <script>
     const REFRESH_INTERVAL = 2000;
+    let dynmapLink = './dynmap';
 
     startClick = () => {
         console.log('WakeUp');
@@ -36,9 +37,10 @@
                     const { emoji, buttonText } = getTexts(status)
                     $('#server-status').text(`${emoji} ${status} ${emoji}`);
                     $('#wakeup-button').text(buttonText);
+
                     const display = dynmap ? 'unset' : 'none';
                     $('#dynmap-button').css('display', display);
-
+                    dynmapLink = typeof dynmap === 'string' && dynmap.includes("http") ? dynmap : './dynmap';
                 })
             .fail(
                 (error) => {
@@ -49,7 +51,15 @@
 
     homeLoaded = () => {
         console.log("HomeLoaded");
+
         getStatus();
+
+        setTimeout(() => {
+            $('#dynmap-button').click(() => {
+                window.open(dynmapLink, '_blank')
+            });
+        }, 50);
+
         setTimeout(() => {
             setInterval(getStatus, REFRESH_INTERVAL);
         }, REFRESH_INTERVAL);
@@ -71,7 +81,7 @@
     <div class="buttonContainer">
         <button class="button secondary actionButton" onclick=" startClick() " id="wakeup-button">Wake Up
         </button>
-        <button class="button secondary actionButton" onclick=" window.open('./dynmap','_blank') " target="_blank"
-            id="dynmap-button" style="display: none;">Dynmap</button>
+        <button class="button secondary actionButton" target="_blank" id="dynmap-button"
+            style="display: none;">Dynmap</button>
     </div>
 </div>

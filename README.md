@@ -83,7 +83,7 @@ via [Unofficial pterodactyl-installer](https://github.com/vilhelmprytz/pterodact
 | `maxPlayers`                | Maximum amount of players                                                                                                                                                                                       | 20                                              |
 | `webPort`                   | Port for the Web-Gui (0 to disable)                                                                                                                                                                             | 0                                               |
 | `webStopOnStart`            | Stop the web-server when minecraft starts                                                                                                                                                                       | false                                           |
-| `webServeDynmap`            | true or an absolute path to enable it, by default it will serve './plugins/dynmap/web/'. You can specify an absolute path to serve instead. [How use with dynamp](./wiki/Use-internal-SSS-WebServer-for-dynmap) | false                                           |
+| `webServeDynmap`            | true or an absolute path to enable it, by default it will serve './plugins/dynmap/web/'. You can specify an absolute path to serve instead or an url to redirect to. [How use with dynamp](./wiki/Use-internal-SSS-WebServer-for-dynmap) | false                                           |
 | `webSubPath`                | Set the path to the Web-GUI if serving from behind a reverse proxy                                                                                                                                              | ""                                              |
 | `startMinecraft`            | Start the Minecraft Server (false to disable)                                                                                                                                                                   | true                                            |
 | `minecraftCommand`          | The command used to start the server                                                                                                                                                                            | "java -jar paper.jar nogui"                     |
@@ -147,6 +147,8 @@ Give a ⭐️ if you like the project!
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog
+* 1.5.10 - 1.19.3 :
+    - webServeDynmap setting can be set to an url
 * 1.5.9 - 1.19.3 :
     - backup config file before setting to default
 * 1.5.8 - 1.19.3 :
