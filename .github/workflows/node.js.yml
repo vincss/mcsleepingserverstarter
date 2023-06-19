@@ -1,0 +1,55 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Commit Build
+
+on:
+  push:
+    branches: [ master, feature/* , chore/* ]
+  pull_request:
+    branches: [ master, feature/* , chore/* ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm run test --if-present    
+    - name: 'Upload Artifact Windows'
+      uses: actions/upload-artifact@v3
+      with:
+        name: 'Binary Windows'
+        path: bin/mcsleepingserverstarter-win-x64.exe
+    - name: 'Upload Artifact Linux'
+      uses: actions/upload-artifact@v3
+      with:
+        name: 'Binary Linux'
+        path: bin/mcsleepingserverstarter-linux-x64
+    - name: 'Upload Artifact Linux arm64'
+      uses: actions/upload-artifact@v3
+      with:
+        name: 'Binary Linux arm64 (Raspberry Pi)'
+        path: bin/mcsleepingserverstarter-linux-arm64
+    - name: 'Upload Artifact MacOS (Apple Silicon)'
+      uses: actions/upload-artifact@v3
+      with:
+        name: 'Binary MacOS (Apple Silicon)'
+        path: bin/mcsleepingserverstarter-macos-arm64
+    - name: 'Upload Artifact MacOS (Intel)'
+      uses: actions/upload-artifact@v3
+      with:
+        name: 'Binary MacOS (Intel)'
+        path: bin/mcsleepingserverstarter-macos-x64

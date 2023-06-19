@@ -1,0 +1,10 @@
+# This file contains the messages that are sent using the discord webhook if it's enabled
+# You can either change the content of the message. You can add {PlayerName}
+# to add the name of a player that has started the server. Example:
+# onPlayerLogin: "{PlayerName} woke up the server!"
+
+# Sent whenever someone wakeups up the server
+# onPlayerLogin: ""
+
+# Sent when the server shuts down
+# onServerStop: ""

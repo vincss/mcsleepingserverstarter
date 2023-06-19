@@ -1,0 +1,143 @@
+{
+  "$note": "windows is not officially supported by pufferpanel so this template only works on linux",
+  "name": "minecraft-paper-sleep",
+  "display": "Paper - SleepingServerStarter - Minecraft",
+  "type": "minecraft-java",
+  "install": [
+    {
+      "files": [
+        "https://papermc.io/api/v2/projects/paper/versions/${version}/builds/${build}/downloads/paper-${version}-${build}.jar"
+      ],
+      "type": "download"
+    },
+    {
+      "source": "paper-*.jar",
+      "target": "paper.jar",
+      "type": "move"
+    },
+    {
+      "target": "server.properties",
+      "text": "server-ip=${ip}\nserver-port=${port}\nmotd=${motd}\n",
+      "type": "writefile"
+    },
+    {
+      "target": "eula.txt",
+      "text": "eula=${eula}",
+      "type": "writefile"
+    },
+    {
+      "files": [
+        "https://github.com/vincss/mcsleepingserverstarter/releases/latest/download/mcsleepingserverstarter-linux-x64",
+        "https://github.com/vincss/mcEmptyServerStopper/releases/download/v1.0.1/mcEmptyServerStopper-1.0.1.jar"
+      ],
+      "type": "download"
+    },
+    {
+      "target": "plugins",
+      "type": "mkdir"
+    },
+    {
+      "source": "mcEmptyServerStopper-1.0.1.jar",
+      "target": "plugins/mcEmptyServerStopper-1.0.1.jar",
+      "type": "move"
+    },
+    {
+      "commands": ["chmod +x ./mcsleepingserverstarter-linux-x64"],
+      "type": "command"
+    },
+    {
+      "target": "plugins/EmptyServerStopper",
+      "type": "mkdir"
+    },
+    {
+      "target": "plugins/EmptyServerStopper/config.yml",
+      "text": "ShutdownTime: 60\nShutdownAtStart: true",
+      "type": "writefile"
+    },
+    {
+      "target": "sleepingSettings.yml",
+      "text": "serverName: Server offline, join to start...\nserverPort: ${port}\nbedrockPort: 0\nmaxPlayers: 20\nloginMessage: Server is starting, rejoin in a few seconds...\nserverOnlineMode: true\nwebPort: 0\nstartMinecraft: 1\nminecraftCommand: ${java} -Xms${memory}M -Xmx${memory}M -Dterminal.jline=false -Dterminal.ansi=true -Djline.terminal=jline.UnsupportedTerminal -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true -jar paper.jar\n version: ${version}",
+      "type": "writefile"
+    }
+  ],
+  "run": {
+    "stop": "stop",
+    "command": "./mcsleepingserverstarter-linux-x64",
+    "workingDirectory": "",
+    "pre": [],
+    "post": [],
+    "environmentVars": {}
+  },
+  "data": {
+    "build": {
+      "type": "string",
+      "desc": "Build of Paper to install (<a href='https://papermc.io/downloads'>Paper version build</a>). Must be specified as a build number, e.g. 484",
+      "display": "build",
+      "required": true,
+      "value": "397"
+    },
+    "eula": {
+      "type": "boolean",
+      "desc": "Do you agree to the Minecraft EULA?",
+      "display": "EULA Agreement (true/false)",
+      "required": true,
+      "value": "false"
+    },
+    "ip": {
+      "type": "string",
+      "desc": "What IP to bind the server to",
+      "display": "IP",
+      "required": true,
+      "value": "0.0.0.0"
+    },
+    "java": {
+      "type": "string",
+      "desc": "\"java\" for system standard, else direct path to java",
+      "display": "path to java executable",
+      "required": true,
+      "value": "java",
+      "userEdit": true
+    },
+    "memory": {
+      "type": "integer",
+      "desc": "How much memory in MB to allocate to the Java Heap",
+      "display": "Memory (MB)",
+      "required": true,
+      "value": "1024"
+    },
+    "motd": {
+      "type": "string",
+      "desc": "This is the message that is displayed in the server list of the client, below the name. The MOTD does support <a href='https://minecraft.gamepedia.com/Formatting_codes' target='_blank'>color and formatting codes</a>.",
+      "display": "MOTD message of the day",
+      "required": true,
+      "value": "A Minecraft Server\\n\\u00A79 hosted on PufferPanel"
+    },
+    "port": {
+      "type": "integer",
+      "desc": "What port to bind the server to",
+      "display": "Port",
+      "required": true,
+      "value": "25565"
+    },
+    "version": {
+      "type": "string",
+      "desc": "Version of Minecraft to install (<a href='https://papermc.io/downloads'>Paper maintained versions</a>). Must be specified as a release number, e.g. 1.16.5",
+      "display": "Version",
+      "required": true,
+      "value": "1.17.1"
+    }
+  },
+  "environment": {
+    "image": "openjdk:16",
+    "type": "docker"
+  },
+  "supportedEnvironments": [
+    {
+      "type": "standard"
+    },
+    {
+      "image": "openjdk:16",
+      "type": "docker"
+    }
+  ]
+}
