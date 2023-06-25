@@ -150,6 +150,8 @@ Give a ⭐️ if you like the project!
 
 ## 📜 ChangeLog
 
+- 1.5.12 - 1.20.1 :
+  - update minecraft-protocol: 1.43.0 ( minecraft 1.20.1 )
 - 1.5.11 - 1.19.4 :
   - update minecraft-protocol: 1.42.0 ( minecraft 1.19.4 )
 - 1.5.10 - 1.19.3 :
