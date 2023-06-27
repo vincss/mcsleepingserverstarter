@@ -8,7 +8,11 @@
     "name": "Paper (mcsleepingserverstarter)",
     "author": "kevin@boredkevin.com",
     "description": "High performance Spigot fork that aims to fix gameplay and mechanics inconsistencies.\r\nPut your minecraft server to rest, while SleepingServerStarter is watching !",
-    "features": null,
+    "features": [
+	"eula",
+	"java_version",
+	"pid_limit"
+	],
     "docker_images": {
         "Java 17": "ghcr.io\/pterodactyl\/yolks:java_17",
         "Java 16": "ghcr.io\/pterodactyl\/yolks:java_16",
