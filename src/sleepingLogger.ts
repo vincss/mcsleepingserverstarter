@@ -22,15 +22,14 @@ export const getLogger = () => {
       return logger;
     }
 
-    if (!existsSync(logFolder)) {
-      mkdirSync(logFolder);
-    }
-
     const loggers: transport[] = [new transports.Console()];
     if (
       !process.env.disableFileLogs ||
       process.env.disableFileLogs !== "true"
     ) {
+      if (!existsSync(logFolder)) {
+        mkdirSync(logFolder);
+      }
       loggers.push(
         new transports.File({
           filename: `${logFolder}sleepingServer.log`,
