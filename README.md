@@ -13,7 +13,7 @@
 
 ## ✅ Compatible versions
 
-- Minecraft Java: up to 1.20.1 [node-minecraft-protocol](https://github.com/PrismarineJS/node-minecraft-protocol)    
+- Minecraft Java: up to 1.20.1 [node-minecraft-protocol](https://github.com/PrismarineJS/node-minecraft-protocol)
 - Bedrock: Waiting for third party compatibility ( you can use the web-gui as a workarround ) [JSPrismarine](https://github.com/JSPrismarine/JSPrismarine)
 
 ## 🧰 Features
@@ -149,8 +149,9 @@ Give a ⭐️ if you like the project!
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog
+
 - 1.5.13 - 1.20.1 :
-  - add environement variable disableFileLogs to disable file logs
+  - add environement variable DISABLE_FILE_LOGS to disable file logs
 - 1.5.12 - 1.20.1 :
   - update minecraft-protocol: 1.43.0 ( minecraft 1.20.1 )
 - 1.5.11 - 1.19.4 :

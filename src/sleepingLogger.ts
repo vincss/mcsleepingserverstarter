@@ -24,8 +24,8 @@ export const getLogger = () => {
 
     const loggers: transport[] = [new transports.Console()];
     if (
-      !process.env.disableFileLogs ||
-      process.env.disableFileLogs !== "true"
+      !process.env.DISABLE_FILE_LOGS ||
+      process.env.DISABLE_FILE_LOGS !== "true"
     ) {
       if (!existsSync(logFolder)) {
         mkdirSync(logFolder);
