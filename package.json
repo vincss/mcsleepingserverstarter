@@ -7,7 +7,7 @@
   "scripts": {
     "start": "run-s prebuild build:typescript run",
     "run": "node .",
-    "dev": "ts-node ./src/sleepingServerStarter.ts",
+    "dev": "cross-env disableFileLogs=true ts-node ./src/sleepingServerStarter.ts",
     "prebuild": "rimraf ./build/ ./bin/ && cpx-fixed \"views/**/*.*\" build/views",
     "build": "run-s build:typescript build:bin",
     "build:typescript": "tsc",
@@ -36,6 +36,7 @@
     "@types/serve-static": "^1.15.1",
     "@typescript-eslint/eslint-plugin": "^5.57.1",
     "@typescript-eslint/parser": "^5.57.1",
+    "cross-env": "7.0.3",
     "cpx-fixed": "^1.6.0",
     "eslint": "^8.37.0",
     "eslint-config-prettier": "^8.8.0",

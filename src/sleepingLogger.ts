@@ -1,6 +1,5 @@
-// import LoggerBuilder from '@jsprismarine/prismarine/dist/utils/Logger';
 import { existsSync, mkdirSync } from "fs";
-import { createLogger, format, transports } from "winston";
+import { createLogger, format, transports, transport } from "winston";
 
 export const { version } = require("../package.json"); // eslint-disable-line
 
@@ -27,7 +26,19 @@ export const getLogger = () => {
       mkdirSync(logFolder);
     }
 
-    // logger = new LoggerBuilder();
+    const loggers: transport[] = [new transports.Console()];
+    if (
+      !process.env.disableFileLogs ||
+      process.env.disableFileLogs !== "true"
+    ) {
+      loggers.push(
+        new transports.File({
+          filename: `${logFolder}sleepingServer.log`,
+          maxsize: 2 * 1024 * 1024,
+          maxFiles: 3,
+        })
+      );
+    }
 
     logger = createLogger({
       level: "info",
@@ -41,14 +52,7 @@ export const getLogger = () => {
             (info.splat !== undefined ? `${info.splat}` : " ")
         )
       ),
-      transports: [
-        new transports.Console(),
-        new transports.File({
-          filename: `${logFolder}sleepingServer.log`,
-          maxsize: 2 * 1024 * 1024,
-          maxFiles: 3,
-        }),
-      ],
+      transports: loggers,
     });
   } catch (error) {
     logger.error("Failed to initialize logger", error);
