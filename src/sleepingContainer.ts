@@ -6,7 +6,7 @@ import { isPortTaken, ServerStatus } from "./sleepingHelper";
 import { getLogger, LoggerType, version } from "./sleepingLogger";
 import { SleepingMcJava } from "./sleepingMcJava";
 import { ISleepingServer } from "./sleepingServerInterface";
-import { getSettings, getMessages, Settings, MessagesType } from "./sleepingSettings";
+import { getSettings, getMessages, Settings, WebhookMessagesType } from "./sleepingSettings";
 import { PlayerConnectionCallBackType } from "./sleepingTypes";
 import { SleepingWeb } from "./sleepingWeb";
 
@@ -15,7 +15,7 @@ export const MC_TIMEOUT = 5000;
 export class SleepingContainer implements ISleepingServer {
   logger: LoggerType;
   settings: Settings;
-  messages: MessagesType;
+  messages: WebhookMessagesType;
   
   mcServer?: SleepingMcJava;
   mcProcess?: ChildProcess;

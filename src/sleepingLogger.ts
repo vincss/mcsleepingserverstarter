@@ -12,10 +12,9 @@ const DefaultLogger = {
 };
 
 addColors({
-  info: 'blue',
   error: 'red',
   warn: 'yellow'
-})
+});
 
 export type LoggerType = typeof DefaultLogger;
 let logger = DefaultLogger;
@@ -43,22 +42,12 @@ export const getLogger = () => {
       format.simple(),
       format.errors({ stack: true }),
       format.splat(),
-      format.timestamp({ format: "HH:mm:ss" }),
+      format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
       format.printf(info => `[${info.timestamp}] [${info.level}]: ${info.message}`),
-    )
+    );
 
     logger = createLogger({
       level: "info",
-      // format: loggerFormat
-        // loggerFormat.timestamp({
-        //   format: "YYYY-MM-DD HH:mm:ss",
-        // }),
-        // loggerFormat.printf(
-        //   (info) =>
-        //     `${info.timestamp} ${info.level}: ${info.message}` +
-        //     (info.splat !== undefined ? `${info.splat}` : " ")
-        // )
-      // ),
       transports: [
         new transports.Console({ format: loggerFormat }),
         new transports.File({

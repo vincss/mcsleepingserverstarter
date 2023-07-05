@@ -31,7 +31,7 @@ export type Settings = {
   hideIpInLogs?: boolean;
 };
 
-export type MessagesType = {
+export type WebhookMessagesType = {
   onPlayerLogin: string;
   onServerStop: string;
 }
@@ -53,7 +53,7 @@ export const DefaultSettings: Settings = {
   version: false,
 };
 
-export const DefaultMessages: MessagesType = {
+export const DefaultWebhookMessages: WebhookMessagesType = {
   onPlayerLogin: "⏰ {PlayerName} woke up the server!",
   onServerStop: "💤 Server has shut down.",
 }
@@ -100,15 +100,15 @@ export function getSettings(): Settings {
   return settings;
 }
 
-export function getMessages(): MessagesType {
-  let messages = { ...DefaultMessages };
+export function getMessages(): WebhookMessagesType {
+  let messages = { ...DefaultWebhookMessages };
 
   try {
     const read = readFileSync(MessagesFilePath).toString();
-    const MessagesFromFile = load(read) as MessagesType;
-    messages = { ...DefaultMessages, ...MessagesFromFile };
+    const MessagesFromFile = load(read) as WebhookMessagesType;
+    messages = { ...DefaultWebhookMessages, ...MessagesFromFile };
   } catch (error) {
-    logger.error("Failed to load custom webhook messages, using default. ", error)
+    logger.error("Failed to load custom discord webhook messages, using default. ", error)
   }
 
   return messages

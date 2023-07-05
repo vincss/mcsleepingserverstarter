@@ -1,13 +1,13 @@
 import { LoggerType, getLogger } from "./sleepingLogger";
-import { MessagesType, Settings } from "./sleepingSettings";
+import { WebhookMessagesType, Settings } from "./sleepingSettings";
 import { WebhookClient, EmbedBuilder, Colors } from "discord.js";
 
 export class SleepingDiscord {
     logger: LoggerType;
     settings: Settings;
-    messages: MessagesType;
+    messages: WebhookMessagesType;
 
-    constructor(settings: Settings, messages: MessagesType) {
+    constructor(settings: Settings, messages: WebhookMessagesType) {
         this.settings = settings;
         this.messages = messages;
         this.logger = getLogger();
@@ -15,12 +15,6 @@ export class SleepingDiscord {
 
     private sendMessage = (embed: EmbedBuilder, wakingUp: boolean) => {
         if (!this.settings.discordWebhookUrl) return
-        // Same as 
-        // if (woke) {
-        //     this.logger.info(`[Discord] Sending waking up message`);
-        //   } else {
-        //     this.logger.info(`[Discord] Sending closing server message`);
-        //   }
 
         this.logger.info(`[Discord] Sending ${wakingUp ? 'waking up' : 'closing server'} message`)
         // Send message as user-created webhook using discord.js' WebhookClient Class
