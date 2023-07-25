@@ -28,6 +28,7 @@ export type Settings = {
   blackListedAddress?: string[];
   whiteListedNames?: string[];
   hideIpInLogs?: boolean;
+  hideOnConnectionLogs?: boolean;
 };
 
 export const DefaultSettings: Settings = {

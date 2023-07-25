@@ -50,6 +50,7 @@ export class SleepingMcJava implements ISleepingServer {
     );
 
     this.server.on("connection", (client: Client) => {
+      !this.settings.hideOnConnectionLogs &&
       this.logger.info(
         `A Prince has taken a quick peek. [${client.version}${this.getIp(
           client

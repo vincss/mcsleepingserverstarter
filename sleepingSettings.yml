@@ -9,7 +9,7 @@ serverOnlineMode: true # like in the server.properties, to check the licence of 
 maxPlayers: 20
 
 webPort: 0 # 0 to disable web hosting, on a positive number a web page it will serve
-webStopOnStart: false 
+webStopOnStart: false
 # webServeDynmap: true # true or false to enable, by default it will serve ./plugins/dynmap/web/. You can specify an absolute path to serve instead or an url to redirect to.
 
 startMinecraft: true # false to disable
@@ -28,6 +28,7 @@ minecraftCommand: "java -jar paper.jar nogui" # or paper.jar or whatever flavor 
 # version: false # Force compatibility with a specific minecraft version. If set to false, it should handle any compatible version
 
 # hideIpInLogs: true
+# hideOnConnectionLogs: true
 
 # /!\ Edit this setting only if you know what you are doing
 # minecraftWorkingDirectory: "" # Set a custom working directory (path to minecraft server folder)

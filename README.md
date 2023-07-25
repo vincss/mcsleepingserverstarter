@@ -98,6 +98,7 @@ via [Unofficial pterodactyl-installer](https://github.com/vilhelmprytz/pterodact
 | `blackListedAddress`        | Prevent connections from thoses addresses to wake up the server                                                                                                                                                                          | ["127.0.0.1"]                                   |
 | `whiteListedNames`          | Only allow people with their name on the white list to wake the server up                                                                                                                                                                | ["vincss"]                                      |
 | `hideIpInLogs`              | Hide the ip from the remote player in the logs                                                                                                                                                                                           | false                                           |
+| `hideOnConnectionLogs`              | Hide 'A Prince has taken a quick peek' the logs                                                                                                                                                                                           | false                                           |
 
 > Note: if you need to shutdown the program, simply input a `ctrl + c`, the program will shut down normally afterwards
 
@@ -149,7 +150,9 @@ Give a ⭐️ if you like the project!
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog
-
+- 1.6.0 - 1.20.1 :
+  - add hideOnConnectionLogs parameter
+  - update minecraft-protocol: 1.43.2 ( minecraft 1.20.1 )
 - 1.5.13 - 1.20.1 :
   - add environement variable DISABLE_FILE_LOGS to disable file logs
 - 1.5.12 - 1.20.1 :
