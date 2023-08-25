@@ -1,13 +1,13 @@
 {
   "name": "mcsleepingserverstarter",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "Sleeps until someone connects",
   "main": "build/sleepingServerStarter.js",
   "bin": "build/sleepingServerStarter.js",
   "scripts": {
     "start": "run-s prebuild build:typescript run",
     "run": "node .",
-    "dev": "cross-env disableFileLogs=true ts-node ./src/sleepingServerStarter.ts",
+    "dev": "cross-env disableFileLogs=true node --inspect=7000 -r ts-node/register ./src/sleepingServerStarter.ts ",
     "prebuild": "rimraf ./build/ ./bin/ && cpx-fixed \"views/**/*.*\" build/views",
     "build": "run-s build:typescript build:bin",
     "build:typescript": "tsc",
