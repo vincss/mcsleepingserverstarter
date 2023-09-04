@@ -53,19 +53,26 @@ export const getFavIcon = (settings: Settings): string => {
 
 export const getMOTD = (
   settings: Settings,
-  outputType: "json" | "html" | "plain"
+  outputType: "json" | "html" | "plain",
+  forceServerName?: boolean
 ): string | object => {
+  forceServerName = forceServerName ? true : false;
+  const motd =
+    forceServerName || !settings.serverMOTD
+      ? settings.serverName
+      : settings.serverMOTD;
+
   if (outputType === "plain") {
-    return cleanTags(settings.serverName);
+    return cleanTags(motd);
   }
 
   if (outputType === "html") {
     // This automatically escapes any tags in the serverName to prevent XSS
-    return autoToHtml(settings.serverName);
+    return autoToHtml(motd);
   }
 
   return ChatMessage(settings.version || LATEST_MINECRAFT_VERSION)
-    .MessageBuilder.fromString(settings.serverName, { colorSeparator: "§" })
+    .MessageBuilder.fromString(motd, { colorSeparator: "§" })
     .toJSON();
 };
 
