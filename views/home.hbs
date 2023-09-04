@@ -33,13 +33,16 @@
             .done(
                 (value) => {
                     console.log(`${new Date().toISOString()} - getStatus`, value);
-                    const { status, dynmap } = value;
+                    const { status, dynmap, settings } = value;
                     const { emoji, buttonText } = getTexts(status)
                     $('#server-status').text(`${emoji} ${status} ${emoji}`);
+                    
+                    const displayWakeBtn = (settings.preventStop && status === "Running") ? 'none' : 'unset';
                     $('#wakeup-button').text(buttonText);
+                    $('#wakeup-button').css('display', displayWakeBtn);
 
-                    const display = dynmap ? 'unset' : 'none';
-                    $('#dynmap-button').css('display', display);
+                    const displayDynmap = dynmap ? 'unset' : 'none';
+                    $('#dynmap-button').css('display', displayDynmap);
                     dynmapLink = typeof dynmap === 'string' && dynmap.includes("http") ? dynmap : './dynmap';
                 })
             .fail(
