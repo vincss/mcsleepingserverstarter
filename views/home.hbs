@@ -38,7 +38,6 @@
                     $('#server-status').text(`${emoji} ${status} ${emoji}`);
                     
                     const displayWakeBtn = (settings.preventStop && status === "Running") ? 'none' : 'unset';
-                    console.log(displayWakeBtn);
                     $('#wakeup-button').text(buttonText);
                     $('#wakeup-button').css('display', displayWakeBtn);
 
