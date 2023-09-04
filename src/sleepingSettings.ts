@@ -8,6 +8,7 @@ const SettingFilePath = "sleepingSettings.yml";
 
 export type Settings = {
   serverName: string;
+  serverMOTD?: string;
   serverPort: number;
   bedrockPort?: number;
   maxPlayers: number;

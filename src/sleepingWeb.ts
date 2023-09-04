@@ -52,10 +52,10 @@ export class SleepingWeb implements ISleepingServer {
         extname: ".hbs",
         helpers: {
           title: () => {
-            return getMOTD(this.settings, "plain");
+            return getMOTD(this.settings, "plain", true);
           },
           motd: () => {
-            return getMOTD(this.settings, "html");
+            return getMOTD(this.settings, "html", true);
           },
           favIcon: () => {
             return getFavIcon(this.settings);

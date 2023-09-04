@@ -1,6 +1,7 @@
 # settings for SleepingServerStarter
 
 serverName: "SleepingServer, waiting for his prince..."
+# serverMOTD: "SleepingServer, waiting for his prince... [MOTD]" # The server name to display in Minecraft, defaults to serverName if not set
 
 serverPort: 25565
 # bedrockPort: 19132
