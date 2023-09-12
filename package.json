@@ -1,6 +1,6 @@
 {
   "name": "mcsleepingserverstarter",
-  "version": "1.6.1",
+  "version": "1.7.0",
   "description": "Sleeps until someone connects",
   "main": "build/sleepingServerStarter.js",
   "bin": "build/sleepingServerStarter.js",
@@ -17,8 +17,8 @@
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
   },
   "dependencies": {
-    "@jsprismarine/prismarine": "^0.1.0-rc.49",
-    "@jsprismarine/raknet": "^0.1.0-rc.49",
+    "@jsprismarine/prismarine": "0.1.0-rc.49",
+    "@jsprismarine/raknet": "0.1.0-rc.49",
     "@sfirew/minecraft-motd-parser": "^1.1.1",
     "express": "^4.18.2",
     "express-handlebars": "^7.0.4",

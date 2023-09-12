@@ -151,6 +151,9 @@ Give a ⭐️ if you like the project!
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog
+- 1.7.0 - 1.20.1 :
+  - [Feature] Added serverMOTD setting ( thanks to gavinhsmith )
+  - [UX] Made the Sleep button disappear while server is online when "preventStop" is true ( thanks to gavinhsmith )
 - 1.6.0 - 1.20.1 :
   - add hideOnConnectionLogs parameter
   - update minecraft-protocol: 1.43.2 ( minecraft 1.20.1 )
