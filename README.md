@@ -31,7 +31,7 @@ stops your server after a definied amount of time**
 
 There are multiple ways to run SleepingServerStarter:
 
-### Download the binaries
+### 📦 Download the binaries (easiest)
 
 1. [Download binaries](https://github.com/vincss/mcsleepingserverstarter) corresponding to your OS
 2. Place the executable in the same folder as your server file (`spigot.jar`, `paper.jar`, etc...)
@@ -39,7 +39,7 @@ There are multiple ways to run SleepingServerStarter:
 4. Run the executable
    - On Linux, try `chmod +x mcsleepingserverstarter-linux-x64` if you can't run the executable
 
-### Manually install and compile
+### 📜 Manually install and compile
 
 0. Requires [NodeJS](https://nodejs.org/en/) v16+
 1. Clone the repo or download the project as Zip
