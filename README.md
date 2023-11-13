@@ -44,7 +44,7 @@ There are multiple ways to run SleepingServerStarter:
 0. Requires [NodeJS](https://nodejs.org/en/) v16+
 1. Clone the repo or download the project as Zip
 2. Unzip or clone it **in the same folder as your minecraft server**
-3. Launch `npm install`
+3. Launch `npm ci`
 4. Start the project with `npm start`
 
 ### 🐋 Docker
