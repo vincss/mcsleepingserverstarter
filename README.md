@@ -88,6 +88,7 @@ via [Unofficial pterodactyl-installer](https://github.com/vilhelmprytz/pterodact
 | `webStopOnStart`            | Stop the web-server when minecraft starts                                                                                                                                                                                                | false                                           |
 | `webServeDynmap`            | true or an absolute path to enable it, by default it will serve './plugins/dynmap/web/'. You can specify an absolute path to serve instead or an url to redirect to. [How use with dynamp](./wiki/Use-internal-SSS-WebServer-for-dynmap) | false                                           |
 | `webSubPath`                | Set the path to the Web-GUI if serving from behind a reverse proxy                                                                                                                                                                       | ""                                              |
+| `webAllowRestart`                | Add a button in the web-ui to restart the minecraft server proxy                                                                                                                                                                       | false                                              |
 | `startMinecraft`            | Start the Minecraft Server (false to disable)                                                                                                                                                                                            | true                                            |
 | `minecraftCommand`          | The command used to start the server                                                                                                                                                                                                     | "java -jar paper.jar nogui"                     |
 | `preventStop`               | Prevent the user to stop the server (trought web-server or cli).                                                                                                                                                                         | false                                           |
@@ -151,6 +152,8 @@ Give a ⭐️ if you like the project!
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog
+- 1.8.0 - 1.20.1 :
+  - add webAllowRestart parameter
 - 1.7.1 - 1.20.1 :
   - Run mcsleeperstarter as a non-root user within the docker container
 - 1.7.0 - 1.20.1 :

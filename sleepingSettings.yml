@@ -10,9 +10,9 @@ serverOnlineMode: true # like in the server.properties, to check the licence of 
 maxPlayers: 20
 
 webPort: 8080 # 0 to disable web hosting, on a positive number a web page it will serve
-webStopOnStart: true
+# webStopOnStart: true 
 # webServeDynmap: true # true or false to enable, by default it will serve ./plugins/dynmap/web/. You can specify an absolute path to serve instead or an url to redirect to.
-webAllowRestart: true
+# webAllowRestart: true
 
 startMinecraft: true # false to disable
 minecraftCommand: "java -jar paper.jar nogui" # or paper.jar or whatever flavor you like
@@ -21,7 +21,7 @@ minecraftCommand: "java -jar paper.jar nogui" # or paper.jar or whatever flavor 
 
 # discordWebhookUrl: "https://discord.com/api/webhooks/REPLACE_ME"
 
-# blackListedAddress: ["149.102.143.151", "132.145.71.44", "193.35.18.165"]
+# blackListedAddress: ["149.102.143.151", "132.145.71.44", "45.128.232.206", "193.35.18."]
 # whiteListedNames: ["vincss"]
 
 # Use a custom icon 64x64 png converted using https://www.base64-image.de/

@@ -24,6 +24,7 @@ export class SleepingContainer implements ISleepingServer {
   discord?: SleepingDiscord;
 
   isClosing = false;
+  restartAsked?: boolean = false;
 
   constructor(callBack: (settings: Settings) => void) {
     this.logger = getLogger();
@@ -33,7 +34,7 @@ export class SleepingContainer implements ISleepingServer {
 
   init = async (isThisTheBeginning = false) => {
     if (isThisTheBeginning || this.settings.webStopOnStart) {
-      if (this.settings.webPort > 0) {
+      if (this.settings.webPort) {
         this.webServer = new SleepingWeb(
           this.settings,
           this.playerConnectionCallBack,
@@ -69,7 +70,7 @@ export class SleepingContainer implements ISleepingServer {
       `----------- [v${version}] Starting Minecraft : ${this.settings.minecraftCommand} ----------- `
     );
 
-    if (this.settings.webPort > 0 && !this.settings.webStopOnStart) {
+    if (this.settings.webPort && !this.settings.webStopOnStart) {
       const cmdArgs = this.settings.minecraftCommand.split(" ");
       const exec = cmdArgs.splice(0, 1)[0];
 
@@ -96,7 +97,7 @@ export class SleepingContainer implements ISleepingServer {
     }
   };
 
-  killMinecraft = () => {
+  killMinecraft = (restartAsked?:boolean) => {
     if (this.settings.preventStop) {
       this.logger.info(`[Container] killMinecraft: preventStop is set.`);
       return;
@@ -104,6 +105,7 @@ export class SleepingContainer implements ISleepingServer {
 
     if (platform() !== "win32") {
       this.mcProcess?.kill();
+      this.restartAsked = restartAsked;      
     } else {
       this.logger.info(
         `[Container] Not killing server:${platform()}, signals are not working well on Windows`
@@ -164,11 +166,22 @@ export class SleepingContainer implements ISleepingServer {
             MC_TIMEOUT / 1000
           } secs)...`
         );
+
         setTimeout(async () => {
+
+          if(this.restartAsked) {
+            this.restartAsked = false;
+            this.logger.info(
+              `[Container] Restart asked. Launching MC...`
+            );            
+            this.startMinecraft(onMcClosed);
+            return;
+          }
+
           this.reloadSettings();
           this.logger.info("[Container] ...Too late !...");
           await this.init();
-        }, MC_TIMEOUT); // restart server
+        }, MC_TIMEOUT); // restart sss server
       };
 
       this.startMinecraft(onMcClosed);

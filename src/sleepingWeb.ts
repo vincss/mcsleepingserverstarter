@@ -134,7 +134,7 @@ export class SleepingWeb implements ISleepingServer {
         )} Restart server`
       );
 
-      this.sleepingContainer.killMinecraft();
+      this.sleepingContainer.killMinecraft(true);
     })
 
     this.app.get(`${this.webPath}/status`, async (req, res) => {

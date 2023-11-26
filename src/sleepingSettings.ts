@@ -14,8 +14,8 @@ export type Settings = {
   maxPlayers: number;
   loginMessage: string;
   serverOnlineMode: boolean;
-  webPort: number;
-  webStopOnStart: boolean;
+  webPort?: number;
+  webStopOnStart?: boolean;
   webServeDynmap?: boolean | string;
   webSubPath?: string;
   webAllowRestart?: boolean;
@@ -41,9 +41,6 @@ export const DefaultSettings: Settings = {
 
   loginMessage: "...Waking server up, come back in a minute...",
   serverOnlineMode: true,
-
-  webPort: 0, // 0 to disable web hosting
-  webStopOnStart: false,
 
   startMinecraft: true, // false to disable
   minecraftCommand: "java -jar paper.jar nogui",
