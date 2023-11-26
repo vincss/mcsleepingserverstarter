@@ -9,9 +9,10 @@ loginMessage: "...Waking server up, come back in a minute..."
 serverOnlineMode: true # like in the server.properties, to check the licence of player or not.
 maxPlayers: 20
 
-webPort: 0 # 0 to disable web hosting, on a positive number a web page it will serve
-webStopOnStart: false
+webPort: 8080 # 0 to disable web hosting, on a positive number a web page it will serve
+webStopOnStart: true
 # webServeDynmap: true # true or false to enable, by default it will serve ./plugins/dynmap/web/. You can specify an absolute path to serve instead or an url to redirect to.
+webAllowRestart: true
 
 startMinecraft: true # false to disable
 minecraftCommand: "java -jar paper.jar nogui" # or paper.jar or whatever flavor you like

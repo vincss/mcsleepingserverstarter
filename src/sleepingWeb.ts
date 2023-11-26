@@ -19,7 +19,6 @@ export class SleepingWeb implements ISleepingServer {
   app: Express;
   server?: http.Server;
   webPath = "";
-  preventStop = false;
 
   constructor(
     settings: Settings,
@@ -30,11 +29,9 @@ export class SleepingWeb implements ISleepingServer {
     if (this.settings.webSubPath) {
       this.webPath = this.settings.webSubPath;
     }
-    if (this.settings.preventStop) {
-      this.preventStop = this.settings.preventStop;
-    }
     this.playerConnectionCallBack = playerConnectionCallBack;
     this.sleepingContainer = sleepingContainer;
+
     this.logger = getLogger();
     this.app = express();
   }
@@ -128,12 +125,27 @@ export class SleepingWeb implements ISleepingServer {
       }
     });
 
+    this.app.post(`${this.webPath}/restart`, async (req, res) => {
+      res.send("received");
+
+      this.logger.info(
+        `[WebServer]${this.getIp(
+          req.socket
+        )} Restart server`
+      );
+
+      this.sleepingContainer.killMinecraft();
+    })
+
     this.app.get(`${this.webPath}/status`, async (req, res) => {
       const status = await this.sleepingContainer.getStatus();
       res.json({
         status,
         dynmap: this.settings.webServeDynmap,
-        settings: { preventStop: this.preventStop },
+        settings: {
+          preventStop: this.settings.preventStop,
+          webAllowRestart: this.settings.webAllowRestart,
+        },
       });
     });
 

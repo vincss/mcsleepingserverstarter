@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "configurations": [
+    {
+      "name": "ts-node",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/ts-node",
+      "runtimeArgs": ["--transpile-only"],
+      // "program": "src/script.ts",
+      "program": "src/sleepingServerStarter.ts",
+      "cwd": "${workspaceRoot}",
+      "internalConsoleOptions": "openOnSessionStart",
+      "skipFiles": ["<node_internals>/**", "node_modules/**"],
+      "env": {
+        "DEFAULT_LOGGER": "true"
+      }
+    }
+  ]
+}
