@@ -58,8 +58,16 @@ const close = async () => {
 const main = async () => {
   process.stdin.resume();
   process.stdin.setEncoding("utf8");
+  const startInstantly = process.argv.includes('-s');
 
   const mainCallBack = (settings: Settings) => {
+    if (startInstantly) {
+      setTimeout(() => {
+        logger.info("[Main] Starting up instantly.");
+        sleepingContainer.playerConnectionCallBack("The Automatic Startup");
+      }, 1);
+    }
+
     if (!settings.preventStop) {
       logger.info(`[Main] Waiting for 'quit' in CLI.`);
       process.stdin.on("data", (text) => {
