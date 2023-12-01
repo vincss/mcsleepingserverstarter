@@ -92,6 +92,7 @@ via [Unofficial pterodactyl-installer](https://github.com/vilhelmprytz/pterodact
 | `startMinecraft`            | Start the Minecraft Server (false to disable)                                                                                                                                                                                            | true                                            |
 | `minecraftCommand`          | The command used to start the server                                                                                                                                                                                                     | "java -jar paper.jar nogui"                     |
 | `minecraftAutostart`          | Automatically start the real server instead of the sleeping one                                                                                                                                                                                                     | false                    |
+| `restartDelay`               | Customise the delay between when the minecraft server stops and the sleeping server restarts ( to ensure conection are closed ) ( in milliseconds )                                                                                                                                              | 5000                                           |
 | `preventStop`               | Prevent the user to stop the server (trought web-server or cli).                                                                                                                                                                         | false                                           |
 | `minecraftWorkingDirectory` | Set a custom Working Directory for the server **EDIT ONLY IF YOU KNOW WHAT YOU'RE DOING** (should be the path to the server's directory, absolute path is best)                                                                          | ""                                              |
 | `version`                   | Force compatibility with a specific Minecraft. If set to false, it should handle any compatible version                                                                                                                                  | ""                                              |
@@ -156,6 +157,7 @@ Give a ⭐️ if you like the project!
 - 1.8.0 - 1.20.1 :
   - add webAllowRestart parameter
   - add minecraftAutostart parameter
+  - add restartDelay parameter
 - 1.7.1 - 1.20.1 :
   - Run mcsleeperstarter as a non-root user within the docker container
 - 1.7.0 - 1.20.1 :

@@ -23,6 +23,7 @@ export type Settings = {
   minecraftAutostart?: boolean;
   minecraftCommand: string;
   minecraftWorkingDirectory?: string;
+  restartDelay: number;
   preventStop?: boolean;
   version?: string | false;
   favIcon?: string;
@@ -45,6 +46,7 @@ export const DefaultSettings: Settings = {
 
   startMinecraft: true, // false to disable
   minecraftCommand: "java -jar paper.jar nogui",
+  restartDelay: 5000,
   version: false,
 };
 

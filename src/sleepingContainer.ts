@@ -10,8 +10,6 @@ import { getSettings, Settings } from "./sleepingSettings";
 import { PlayerConnectionCallBackType } from "./sleepingTypes";
 import { SleepingWeb } from "./sleepingWeb";
 
-export const MC_TIMEOUT = 5000;
-
 export class SleepingContainer implements ISleepingServer {
   logger: LoggerType;
   settings: Settings;
@@ -68,6 +66,10 @@ export class SleepingContainer implements ISleepingServer {
       this.discord = new SleepingDiscord(this.settings);
     }
   };
+
+  getSettings = () => {
+    return this.settings;
+  }
 
   launchMinecraftProcess = async (onProcessClosed: () => void) => {
     this.logger.info(
@@ -166,7 +168,7 @@ export class SleepingContainer implements ISleepingServer {
 
       this.logger.info(
         `[Container] ...Time to kill me if you want (${
-          MC_TIMEOUT / 1000
+          this.settings.restartDelay / 1000
         } secs)...`
       );
 
@@ -181,7 +183,7 @@ export class SleepingContainer implements ISleepingServer {
         this.reloadSettings();
         this.logger.info("[Container] ...Too late !...");
         await this.init();
-      }, MC_TIMEOUT); // restart sss server
+      }, this.settings.restartDelay); // restart sss server
     };
 
     this.launchMinecraftProcess(onMcClosed);
