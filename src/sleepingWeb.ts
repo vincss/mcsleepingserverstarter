@@ -143,7 +143,7 @@ export class SleepingWeb implements ISleepingServer {
         status,
         dynmap: this.settings.webServeDynmap,
         settings: {
-          preventStop: this.settings.preventStop,
+          preventStop: this.settings.preventStop ?? false,
           webAllowRestart: this.settings.webAllowRestart,
         },
       });

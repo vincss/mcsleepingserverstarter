@@ -20,12 +20,13 @@ export type Settings = {
   webSubPath?: string;
   webAllowRestart?: boolean;
   startMinecraft: boolean;
+  minecraftAutostart?: boolean;
   minecraftCommand: string;
+  minecraftWorkingDirectory?: string;
   preventStop?: boolean;
   version?: string | false;
   favIcon?: string;
   favIconPath?: string;
-  minecraftWorkingDirectory?: string;
   discordWebhookUrl?: string;
   blackListedAddress?: string[];
   whiteListedNames?: string[];

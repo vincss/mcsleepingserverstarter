@@ -16,6 +16,7 @@ maxPlayers: 20
 
 startMinecraft: true # false to disable
 minecraftCommand: "java -jar paper.jar nogui" # or paper.jar or whatever flavor you like
+# minecraftAutostart: true
 
 # preventStop: true # Prevent the user to stop the server (trought web-server or cli).
 

@@ -91,6 +91,7 @@ via [Unofficial pterodactyl-installer](https://github.com/vilhelmprytz/pterodact
 | `webAllowRestart`                | Add a button in the web-ui to restart the minecraft server proxy                                                                                                                                                                       | false                                              |
 | `startMinecraft`            | Start the Minecraft Server (false to disable)                                                                                                                                                                                            | true                                            |
 | `minecraftCommand`          | The command used to start the server                                                                                                                                                                                                     | "java -jar paper.jar nogui"                     |
+| `minecraftAutostart`          | Automatically start the real server instead of the sleeping one                                                                                                                                                                                                     | false                    |
 | `preventStop`               | Prevent the user to stop the server (trought web-server or cli).                                                                                                                                                                         | false                                           |
 | `minecraftWorkingDirectory` | Set a custom Working Directory for the server **EDIT ONLY IF YOU KNOW WHAT YOU'RE DOING** (should be the path to the server's directory, absolute path is best)                                                                          | ""                                              |
 | `version`                   | Force compatibility with a specific Minecraft. If set to false, it should handle any compatible version                                                                                                                                  | ""                                              |
@@ -154,6 +155,7 @@ Give a ⭐️ if you like the project!
 ## 📜 ChangeLog
 - 1.8.0 - 1.20.1 :
   - add webAllowRestart parameter
+  - add minecraftAutostart parameter
 - 1.7.1 - 1.20.1 :
   - Run mcsleeperstarter as a non-root user within the docker container
 - 1.7.0 - 1.20.1 :

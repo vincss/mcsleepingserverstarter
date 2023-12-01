@@ -16,7 +16,7 @@ export class SleepingContainer implements ISleepingServer {
   logger: LoggerType;
   settings: Settings;
 
-  mcServer?: SleepingMcJava;
+  sleepingMcServer?: SleepingMcJava;
   mcProcess?: ChildProcess;
   brServer?: SleepingBedrock;
   webServer?: SleepingWeb;
@@ -45,11 +45,15 @@ export class SleepingContainer implements ISleepingServer {
     }
 
     if (this.settings.serverPort > 0) {
-      this.mcServer = new SleepingMcJava(
+      this.sleepingMcServer = new SleepingMcJava(
         this.settings,
         this.playerConnectionCallBack
       );
-      await this.mcServer?.init();
+      if (isThisTheBeginning && this.settings.minecraftAutostart) {
+        this.startMinecraft();
+      } else {
+        await this.sleepingMcServer?.init();
+      }
     }
 
     if (this.settings.bedrockPort) {
@@ -65,7 +69,7 @@ export class SleepingContainer implements ISleepingServer {
     }
   };
 
-  startMinecraft = async (onProcessClosed: () => void) => {
+  launchMinecraftProcess = async (onProcessClosed: () => void) => {
     this.logger.info(
       `----------- [v${version}] Starting Minecraft : ${this.settings.minecraftCommand} ----------- `
     );
@@ -97,27 +101,21 @@ export class SleepingContainer implements ISleepingServer {
     }
   };
 
-  killMinecraft = (restartAsked?:boolean) => {
+  killMinecraft = (restartAsked?: boolean) => {
     if (this.settings.preventStop) {
       this.logger.info(`[Container] killMinecraft: preventStop is set.`);
       return;
     }
 
-    if (platform() !== "win32") {
-      this.mcProcess?.kill();
-      this.restartAsked = restartAsked;      
-    } else {
-      this.logger.info(
-        `[Container] Not killing server:${platform()}, signals are not working well on Windows`
-      );
-    }
+    this.mcProcess?.kill();
+    this.restartAsked = restartAsked;
   };
 
   close = async (isThisTheEnd = false) => {
     this.logger.info("[Container] Cleaning up the place.");
 
-    if (this.mcServer) {
-      await this.mcServer.close();
+    if (this.sleepingMcServer) {
+      await this.sleepingMcServer.close();
     }
 
     if (this.brServer) {
@@ -156,36 +154,37 @@ export class SleepingContainer implements ISleepingServer {
     this.isClosing = false;
 
     if (this.settings.startMinecraft) {
-      const onMcClosed = async () => {
-        if (this.settings.discordWebhookUrl && this.discord) {
-          await this.discord.onServerStop();
+      this.startMinecraft();
+    }
+  };
+
+  startMinecraft = () => {
+    const onMcClosed = async () => {
+      if (this.settings.discordWebhookUrl && this.discord) {
+        await this.discord.onServerStop();
+      }
+
+      this.logger.info(
+        `[Container] ...Time to kill me if you want (${
+          MC_TIMEOUT / 1000
+        } secs)...`
+      );
+
+      setTimeout(async () => {
+        if (this.restartAsked) {
+          this.restartAsked = false;
+          this.logger.info(`[Container] Restart asked. Launching MC...`);
+          this.launchMinecraftProcess(onMcClosed);
+          return;
         }
 
-        this.logger.info(
-          `[Container] ...Time to kill me if you want (${
-            MC_TIMEOUT / 1000
-          } secs)...`
-        );
+        this.reloadSettings();
+        this.logger.info("[Container] ...Too late !...");
+        await this.init();
+      }, MC_TIMEOUT); // restart sss server
+    };
 
-        setTimeout(async () => {
-
-          if(this.restartAsked) {
-            this.restartAsked = false;
-            this.logger.info(
-              `[Container] Restart asked. Launching MC...`
-            );            
-            this.startMinecraft(onMcClosed);
-            return;
-          }
-
-          this.reloadSettings();
-          this.logger.info("[Container] ...Too late !...");
-          await this.init();
-        }, MC_TIMEOUT); // restart sss server
-      };
-
-      this.startMinecraft(onMcClosed);
-    }
+    this.launchMinecraftProcess(onMcClosed);
   };
 
   reloadSettings = () => {
@@ -194,8 +193,8 @@ export class SleepingContainer implements ISleepingServer {
 
   getStatus = async () => {
     let status = ServerStatus.Stopped;
-    if (this.mcServer) {
-      status = this.mcServer?.getStatus();
+    if (this.sleepingMcServer) {
+      status = this.sleepingMcServer?.getStatus();
     }
     if (status !== ServerStatus.Sleeping) {
       const portTaken = await isPortTaken(this.settings.serverPort);
