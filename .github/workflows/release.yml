@@ -7,7 +7,7 @@ on:
   push:
     # Sequence of patterns matched against refs/tags
     tags:
-    - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+      - "v*" # Push events to matching v*, i.e. v1.0, v20.15.10
 
 env:
   REGISTRY: ghcr.io
@@ -28,7 +28,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
       - run: npm run build --if-present
-      - run: npm run test --if-present          
+      - run: npm run test --if-present
       - name: Save executables
         uses: actions/upload-artifact@v3
         with:
@@ -46,14 +46,14 @@ jobs:
         with:
           name: bin
           path: ./bin
-      - run:  |
+      - run: |
           set -x
           assets=()
           for asset in ./bin/*; do
             assets+=("-a" "$asset")
           done
           tag_name="${GITHUB_REF##*/}"
-          hub release create "${assets[@]}" -m "$tag_name" "$tag_name"
+          gh release create "$tag_name" -m "$tag_name" "${assets[@]}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
