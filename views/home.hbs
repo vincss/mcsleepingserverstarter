@@ -9,6 +9,13 @@
             .fail((error) => { console.log('WakeUp Error', error); })
     };
 
+    restartClick = () => {
+        console.log('Restart');
+        $.post('./restart', {})
+            .done((sucess) => { console.log('Restart Sucess', sucess); })
+            .fail((error) => { console.log('Restart Error', error); })
+    };
+
     getTexts = (status) => {
         let emoji = '🟥'
         let buttonText = 'Wake Up';
@@ -33,6 +40,7 @@
             .done(
                 (value) => {
                     console.log(`${new Date().toISOString()} - getStatus`, value);
+
                     const { status, dynmap, settings } = value;
                     const { emoji, buttonText } = getTexts(status)
                     $('#server-status').text(`${emoji} ${status} ${emoji}`);
@@ -40,6 +48,9 @@
                     const displayWakeBtn = (settings.preventStop && status === "Running") ? 'none' : 'unset';
                     $('#wakeup-button').text(buttonText);
                     $('#wakeup-button').css('display', displayWakeBtn);
+
+                    const displayRestart = (settings.webAllowRestart && status === "Running") ? 'unset' : 'none';
+                    $('#restart-button').css('display', displayRestart);
 
                     const displayDynmap = dynmap ? 'unset' : 'none';
                     $('#dynmap-button').css('display', displayDynmap);
@@ -82,9 +93,14 @@
         </div>
     </div>
     <div class="buttonContainer">
-        <button class="button secondary actionButton" onclick=" startClick() " id="wakeup-button">Wake Up
+        <button id="wakeup-button" class="button secondary actionButton" onclick=" startClick() ">
+            Wake Up
         </button>
-        <button class="button secondary actionButton" target="_blank" id="dynmap-button"
-            style="display: none;">Dynmap</button>
+        <button id="restart-button" class="button secondary actionButton" style="display: none;" onclick=" restartClick() ">
+            Restart
+        </button>
+        <button id="dynmap-button" class="button secondary actionButton" target="_blank" style="display: none;">
+            Dynmap
+        </button>
     </div>
 </div>

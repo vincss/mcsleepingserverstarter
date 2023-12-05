@@ -1,4 +1,4 @@
-import { MC_TIMEOUT, SleepingContainer } from "./sleepingContainer";
+import { SleepingContainer } from "./sleepingContainer";
 import { getLogger, LoggerType } from "./sleepingLogger";
 import { Settings } from "./sleepingSettings";
 
@@ -41,13 +41,13 @@ process.on("uncaughtException", (err: Error) => {
   }
 
   logger.info(
-    `[Main] ... Restarting the server in (${MC_TIMEOUT / 1000} secs)...`
+    `[Main] ... Restarting the server in (${sleepingContainer.getSettings().restartDelay / 1000} secs)...`
   );
   setTimeout(async () => {
     await sleepingContainer.close(true);
     sleepingContainer.reloadSettings();
     sleepingContainer.init(true);
-  }, MC_TIMEOUT);
+  }, sleepingContainer.getSettings().restartDelay);
 });
 
 const close = async () => {

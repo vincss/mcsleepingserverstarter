@@ -9,18 +9,21 @@ loginMessage: "...Waking server up, come back in a minute..."
 serverOnlineMode: true # like in the server.properties, to check the licence of player or not.
 maxPlayers: 20
 
-webPort: 0 # 0 to disable web hosting, on a positive number a web page it will serve
-webStopOnStart: false
+# webPort: 8080 # a positive number a web page it will serve
+# webStopOnStart: true
 # webServeDynmap: true # true or false to enable, by default it will serve ./plugins/dynmap/web/. You can specify an absolute path to serve instead or an url to redirect to.
+# webAllowRestart: true
 
 startMinecraft: true # false to disable
 minecraftCommand: "java -jar paper.jar nogui" # or paper.jar or whatever flavor you like
+# minecraftAutostart: true
+# restartDelay: 200
 
 # preventStop: true # Prevent the user to stop the server (trought web-server or cli).
 
 # discordWebhookUrl: "https://discord.com/api/webhooks/REPLACE_ME"
 
-# blackListedAddress: ["149.102.143.151", "132.145.71.44", "193.35.18.165"]
+# blackListedAddress: ["149.102.143.151", "132.145.71.44", "45.128.232.206", "193.35.18."]
 # whiteListedNames: ["vincss"]
 
 # Use a custom icon 64x64 png converted using https://www.base64-image.de/

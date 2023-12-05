@@ -4,10 +4,10 @@ import { createLogger, format, transports, transport } from "winston";
 export const { version } = require("../package.json"); // eslint-disable-line
 
 const DefaultLogger = {
-  info: (...params: any) => console.info(params),
-  error: (...params: any) => console.error(params),
-  warn: (...params: any) => console.warn(params),
-  silly: (...params: any) => console.trace(params),
+  info: console.info,
+  error: console.error,
+  warn: console.warn,
+  silly: console.trace,
 };
 
 export type LoggerType = typeof DefaultLogger;
@@ -19,6 +19,12 @@ const logFolder = "logs/";
 export const getLogger = () => {
   try {
     if (initialized) {
+      return logger;
+    }
+
+    if (process.env.DEFAULT_LOGGER) {
+      initialized = true;
+      logger.info("... Default Logger ...");
       return logger;
     }
 
