@@ -8,7 +8,7 @@ import { getFavIcon, getMOTD, ServerStatus } from "./sleepingHelper";
 import { getLogger, LoggerType } from "./sleepingLogger";
 import { ISleepingServer } from "./sleepingServerInterface";
 import { Settings } from "./sleepingSettings";
-import { PlayerConnectionCallBackType } from "./sleepingTypes";
+import { Player, PlayerConnectionCallBackType } from "./sleepingTypes";
 import { Socket } from "node:net";
 
 export class SleepingWeb implements ISleepingServer {
@@ -95,7 +95,7 @@ export class SleepingWeb implements ISleepingServer {
                 req.socket
               )} Wake up server was ${currentStatus}`
             );
-            this.playerConnectionCallBack("A WebUser");
+            this.playerConnectionCallBack(Player.web());
           }
           break;
         case ServerStatus.Running:

@@ -15,7 +15,7 @@ import { getMOTD } from "./sleepingHelper";
 import { getLogger, LoggerType } from "./sleepingLogger";
 import { ISleepingServer } from "./sleepingServerInterface";
 import { Settings } from "./sleepingSettings";
-import { PlayerConnectionCallBackType } from "./sleepingTypes";
+import { Player, PlayerConnectionCallBackType } from "./sleepingTypes";
 
 const Address = "0.0.0.0";
 const Version = "1.17.41";
@@ -102,7 +102,7 @@ export class SleepingBedrock implements ISleepingServer {
     connection.disconnect(this.settings.loginMessage);
     await connection.close();
     await this.close();
-    this.playerConnectionCallBack("A BedRock Player");
+    this.playerConnectionCallBack(Player.bedrock());
   };
 
   private handleEncapsulated = async (

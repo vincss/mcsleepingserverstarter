@@ -2,17 +2,18 @@ import { ChildProcess, execSync, spawn } from "child_process";
 import { platform } from "os";
 import { SleepingBedrock } from "./sleepingBedrock";
 import { SleepingDiscord } from "./sleepingDiscord";
-import { isPortTaken, ServerStatus } from "./sleepingHelper";
+import { isPortTaken, isWhitelisted, ServerStatus } from "./sleepingHelper";
 import { getLogger, LoggerType, version } from "./sleepingLogger";
 import { SleepingMcJava } from "./sleepingMcJava";
 import { ISleepingServer } from "./sleepingServerInterface";
-import { getSettings, Settings } from "./sleepingSettings";
-import { PlayerConnectionCallBackType } from "./sleepingTypes";
+import { getSettings, getWhitelistEntries, Settings, WhitelistEntry } from "./sleepingSettings";
+import { Player, PlayerConnectionCallBackType } from "./sleepingTypes";
 import { SleepingWeb } from "./sleepingWeb";
 
 export class SleepingContainer implements ISleepingServer {
   logger: LoggerType;
   settings: Settings;
+  whitelistEntries?: WhitelistEntry[];
 
   sleepingMcServer?: SleepingMcJava;
   mcProcess?: ChildProcess;
@@ -27,6 +28,7 @@ export class SleepingContainer implements ISleepingServer {
   constructor(callBack: (settings: Settings) => void) {
     this.logger = getLogger();
     this.settings = getSettings();
+    this.whitelistEntries = getWhitelistEntries()
     callBack(this.settings);
   }
 
@@ -44,8 +46,9 @@ export class SleepingContainer implements ISleepingServer {
 
     if (this.settings.serverPort > 0) {
       this.sleepingMcServer = new SleepingMcJava(
-        this.settings,
-        this.playerConnectionCallBack
+          this.playerConnectionCallBack,
+          this.settings,
+          this.whitelistEntries
       );
       if (isThisTheBeginning && this.settings.minecraftAutostart) {
         this.startMinecraft();
@@ -132,24 +135,22 @@ export class SleepingContainer implements ISleepingServer {
   };
 
   playerConnectionCallBack: PlayerConnectionCallBackType = async (
-    playerName: string
+    player: Player
   ) => {
-    if (
-      this.settings.whiteListedNames &&
-      !this.settings.whiteListedNames.includes(playerName)
-    ) {
-      this.logger.info(`[Container] ${playerName}: not on the guess list.`);
+
+    if (!isWhitelisted(player, this.settings, this.whitelistEntries)) {
+      this.logger.info(`[Container] ${player}: not on the guess list.`);
       return;
     }
 
     if (this.isClosing) {
-      this.logger.info(`[Container] ${playerName}: Server is already closing.`);
+      this.logger.info(`[Container] ${player}: Server is already closing.`);
       return;
     }
     this.isClosing = true;
 
     if (this.settings.discordWebhookUrl && this.discord) {
-      await this.discord.onPlayerLogging(playerName);
+      await this.discord.onPlayerLogging(player.playerName);
     }
 
     await this.close();
@@ -191,6 +192,7 @@ export class SleepingContainer implements ISleepingServer {
 
   reloadSettings = () => {
     this.settings = getSettings();
+    this.whitelistEntries = getWhitelistEntries()
   };
 
   getStatus = async () => {

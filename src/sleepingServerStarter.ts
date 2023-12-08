@@ -1,6 +1,7 @@
 import { SleepingContainer } from "./sleepingContainer";
 import { getLogger, LoggerType } from "./sleepingLogger";
 import { Settings } from "./sleepingSettings";
+import { Player } from "./sleepingTypes";
 
 const logger: LoggerType = getLogger();
 
@@ -64,7 +65,7 @@ const main = async () => {
       logger.info(`[Main] Waiting for 'quit' in CLI.`);
       process.stdin.on("data", (text) => {
         if (text.indexOf("quit") > -1) {
-          sleepingContainer.playerConnectionCallBack("A CliUser");
+          sleepingContainer.playerConnectionCallBack(Player.cli());
         }
       });
     }
