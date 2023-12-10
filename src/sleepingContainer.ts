@@ -1,8 +1,7 @@
 import { ChildProcess, execSync, spawn } from "child_process";
-import { platform } from "os";
 import { SleepingBedrock } from "./sleepingBedrock";
 import { SleepingDiscord } from "./sleepingDiscord";
-import { isPortTaken, isWhitelisted, ServerStatus } from "./sleepingHelper";
+import { getMinecraftDirectory, isPortTaken, isWhitelisted, ServerStatus } from "./sleepingHelper";
 import { getLogger, LoggerType, version } from "./sleepingLogger";
 import { SleepingMcJava } from "./sleepingMcJava";
 import { ISleepingServer } from "./sleepingServerInterface";
@@ -28,7 +27,7 @@ export class SleepingContainer implements ISleepingServer {
   constructor(callBack: (settings: Settings) => void) {
     this.logger = getLogger();
     this.settings = getSettings();
-    this.whitelistEntries = getWhitelistEntries()
+    this.whitelistEntries = getWhitelistEntries(this.settings)
     callBack(this.settings);
   }
 
@@ -85,7 +84,7 @@ export class SleepingContainer implements ISleepingServer {
 
       this.mcProcess = spawn(exec, cmdArgs, {
         stdio: "inherit",
-        cwd: this.settings.minecraftWorkingDirectory ?? process.cwd(),
+        cwd: getMinecraftDirectory(this.settings),
       });
 
       this.mcProcess.on("close", (code) => {
@@ -97,7 +96,7 @@ export class SleepingContainer implements ISleepingServer {
     } else {
       execSync(this.settings.minecraftCommand, {
         stdio: "inherit",
-        cwd: this.settings.minecraftWorkingDirectory ?? process.cwd(),
+        cwd: getMinecraftDirectory(this.settings),
       });
       this.logger.info(
         `----------- [v${version}] Minecraft stopped -----------`
@@ -192,7 +191,7 @@ export class SleepingContainer implements ISleepingServer {
 
   reloadSettings = () => {
     this.settings = getSettings();
-    this.whitelistEntries = getWhitelistEntries()
+    this.whitelistEntries = getWhitelistEntries(this.settings)
   };
 
   getStatus = async () => {

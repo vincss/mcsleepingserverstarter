@@ -39,8 +39,7 @@ export const getFavIcon = (settings: Settings): string => {
   }
 
   if (!path.isAbsolute(favIconPath)) {
-    const directory = settings.minecraftWorkingDirectory ?? process.cwd();
-    favIconPath = path.join(directory, favIconPath);
+    favIconPath = path.join(getMinecraftDirectory(settings), favIconPath);
   }
   if (fs.existsSync(favIconPath)) {
     const fileData = fs.readFileSync(favIconPath, { encoding: "base64" });
@@ -76,6 +75,12 @@ export const getMOTD = (
     .MessageBuilder.fromString(motd, { colorSeparator: "§" })
     .toJSON();
 };
+
+export const getMinecraftDirectory = (
+    settings: Settings
+): string => {
+  return settings.minecraftWorkingDirectory ?? process.cwd();
+}
 
 export const isWhitelisted = (
     player: Player,

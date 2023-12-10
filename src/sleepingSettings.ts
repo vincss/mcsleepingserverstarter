@@ -1,6 +1,8 @@
 import { writeFileSync, readFileSync } from "fs";
 import { dump, load } from "js-yaml";
 import { getLogger } from "./sleepingLogger";
+import path from "path";
+import { getMinecraftDirectory } from "./sleepingHelper";
 
 const logger = getLogger();
 
@@ -100,10 +102,11 @@ export function getSettings(): Settings {
   return settings;
 }
 
-export function getWhitelistEntries(): WhitelistEntry[] | undefined {
+export function getWhitelistEntries(settings: Settings): WhitelistEntry[] | undefined {
   let whitelistEntries: WhitelistEntry[];
   try {
-    const read = readFileSync(WhitelistFilePath).toString();
+    const fullPath = path.join(getMinecraftDirectory(settings), WhitelistFilePath);
+    const read = readFileSync(fullPath).toString();
     whitelistEntries = load(read) as WhitelistEntry[];
     logger.info(
         `Retrieved whitelist entries:${JSON.stringify(whitelistEntries)}`
