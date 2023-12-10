@@ -1,13 +1,13 @@
-import fs, {readFileSync} from "fs";
+import fs, { readFileSync } from "fs";
 import path from "path";
 import { createConnection } from "net";
 import { autoToHtml, cleanTags } from "@sfirew/minecraft-motd-parser";
 import ChatMessage from "prismarine-chat";
 import { LATEST_MINECRAFT_VERSION } from "./version";
 import { getLogger } from "./sleepingLogger";
-import { AccessFileSettings, Settings, WhitelistEntry} from "./sleepingSettings";
-import {AccessStatus, Player} from "./sleepingTypes";
-import {load} from "js-yaml";
+import { AccessFileSettings, Settings } from "./sleepingSettings";
+import { AccessStatus, Player } from "./sleepingTypes";
+import { load } from "js-yaml";
 
 export const isInDev = () => {
   if (process.env.NODE_ENV === "development") {

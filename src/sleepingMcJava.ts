@@ -2,7 +2,7 @@ import { Client, createServer, Server } from "minecraft-protocol";
 import { getFavIcon, getMOTD, isAccessAllowed, ServerStatus } from "./sleepingHelper";
 import { getLogger, LoggerType } from "./sleepingLogger";
 import { ISleepingServer } from "./sleepingServerInterface";
-import {AccessFileSettings, Settings, WhitelistEntry} from "./sleepingSettings";
+import { AccessFileSettings, Settings } from "./sleepingSettings";
 import { Player, PlayerConnectionCallBackType } from "./sleepingTypes";
 
 export class SleepingMcJava implements ISleepingServer {
