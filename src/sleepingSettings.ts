@@ -1,8 +1,10 @@
 import { writeFileSync, readFileSync } from "fs";
 import { dump, load } from "js-yaml";
 import { getLogger } from "./sleepingLogger";
+import { getMinecraftDirectory, loadFile } from "./sleepingHelper";
 import path from "path";
-import {getMinecraftDirectory, loadFile} from "./sleepingHelper";
+
+import PropertiesReader = require('properties-reader');
 
 const logger = getLogger();
 
@@ -10,6 +12,7 @@ const SettingFilePath = "sleepingSettings.yml";
 const WhitelistFilePath = "whitelist.json";
 const BannedIpsFilePath = "banned-ips.json";
 const BannedPlayersFilePath = "banned-players.json";
+const NativePropertiesFilePath = "server.properties";
 
 export type Settings = {
   serverName: string;
@@ -38,6 +41,7 @@ export type Settings = {
   whiteListedNames?: string[];
   useWhitelistFile: boolean;
   useBlacklistFiles: boolean;
+  useNativeFiles: boolean;
   hideIpInLogs?: boolean;
   hideOnConnectionLogs?: boolean;
 };
@@ -56,7 +60,8 @@ export const DefaultSettings: Settings = {
   restartDelay: 5000,
   version: false,
   useWhitelistFile: false,
-  useBlacklistFiles: false
+  useBlacklistFiles: false,
+  useNativeFiles: false
 };
 
 export type AccessFileSettings = {
@@ -89,6 +94,7 @@ export type BannedPlayerEntry = {
 
 function saveDefault() {
   try {
+    logger.info(`Saving default settings to ${SettingFilePath}`)
     const yamlToWrite = dump(DefaultSettings);
     writeFileSync(SettingFilePath, yamlToWrite);
   } catch (error: any) {
@@ -102,6 +108,13 @@ export function getSettings(): Settings {
     const read = readFileSync(SettingFilePath).toString();
     const settingsFromFiles = load(read) as Settings;
     settings = { ...DefaultSettings, ...settingsFromFiles };
+    if (settings.useNativeFiles) {
+      try {
+        applyNativeProperties(settings);
+      } catch (error: any) {
+        logger.error(`useNativeFiles is specified, but wasn't able to read ${NativePropertiesFilePath}.`, error)
+      }
+    }
   } catch (error: any) {
     logger.error("Failed to load setting, using default.", error);
 
@@ -147,4 +160,28 @@ export function getBannerIpEntries(settings: Settings): BannedIpEntry[] | undefi
 
 export function getBannerPlayerEntries(settings: Settings): BannedPlayerEntry[] | undefined {
   return loadFile(BannedPlayersFilePath, "banned players", settings)
+}
+
+export function applyNativeProperties(settings: Settings) {
+  const properties = PropertiesReader(path.join(getMinecraftDirectory(settings), NativePropertiesFilePath));
+
+  logger.info(`Loaded server.properties: ${JSON.stringify(properties)}`)
+
+  const portProperty = properties.get("query.port");
+  const maxPlayersProperty = properties.get("max-players");
+  const serverOnlineModeProperty = properties.get("online-mode");
+  const useWhitelistFileProperty = properties.get("white-list");
+  if (portProperty) {
+    settings.serverPort = portProperty.valueOf() as number;
+  }
+  if (maxPlayersProperty) {
+    settings.maxPlayers = maxPlayersProperty.valueOf() as number;
+  }
+  if (serverOnlineModeProperty) {
+    settings.serverOnlineMode = serverOnlineModeProperty.valueOf() as boolean;
+  }
+  if (useWhitelistFileProperty) {
+    settings.useWhitelistFile = useWhitelistFileProperty.valueOf() as boolean;
+  }
+  settings.useBlacklistFiles = true;
 }

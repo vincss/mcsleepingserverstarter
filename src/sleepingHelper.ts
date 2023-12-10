@@ -136,12 +136,13 @@ export const isAccessAllowed = (
 export const loadFile = (
     filePath: string,
     description: string,
-    settings: Settings,
+    settings?: Settings,
     onFail?: any
 ): any => {
   let result;
   try {
-    const fullPath = path.join(getMinecraftDirectory(settings), filePath);
+    const fullPath = settings ? path.join(getMinecraftDirectory(settings), filePath) : filePath;
+    getLogger().info(`Retrieving ${description} from ${fullPath}`)
     const read = readFileSync(fullPath).toString();
     result = load(read);
     getLogger().info(
@@ -151,7 +152,7 @@ export const loadFile = (
   } catch (error: any) {
     getLogger().error(`Failed to load ${description}.`, error);
     if (onFail) {
-      onFail()
+      onFail(error)
     }
   }
 }

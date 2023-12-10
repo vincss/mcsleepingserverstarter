@@ -8,6 +8,7 @@ serverPort: 25565
 loginMessage: "...Waking server up, come back in a minute..."
 serverOnlineMode: true # like in the server.properties, to check the licence of player or not.
 maxPlayers: 20
+# useNativeFiles: true
 
 # webPort: 8080 # a positive number a web page it will serve
 # webStopOnStart: true
