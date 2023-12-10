@@ -156,7 +156,7 @@ Give a ⭐️ if you like the project!
 
 ## 📜 ChangeLog
 - 1.9.0 - 1.20.1 :
-  - Support for whitelist.json instead of whiteListedNames (thanks to spanasiuk)
+  - add useWhitelistFile paramater to switch to whitelist.json instead of whiteListedNames (thanks to spanasiuk)
 - 1.8.0 - 1.20.1 :
   - add webAllowRestart parameter
   - add minecraftAutostart parameter
