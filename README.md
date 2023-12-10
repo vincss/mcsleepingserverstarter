@@ -155,6 +155,8 @@ Give a ⭐️ if you like the project!
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog
+- 1.9.0 - 1.20.1 :
+  - Support for whitelist.json instead of whiteListedNames (thanks to spanasiuk)
 - 1.8.0 - 1.20.1 :
   - add webAllowRestart parameter
   - add minecraftAutostart parameter
