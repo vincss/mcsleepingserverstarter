@@ -2,12 +2,14 @@ import { writeFileSync, readFileSync } from "fs";
 import { dump, load } from "js-yaml";
 import { getLogger } from "./sleepingLogger";
 import path from "path";
-import { getMinecraftDirectory } from "./sleepingHelper";
+import {getMinecraftDirectory, loadFile} from "./sleepingHelper";
 
 const logger = getLogger();
 
 const SettingFilePath = "sleepingSettings.yml";
 const WhitelistFilePath = "whitelist.json";
+const BannedIpsFilePath = "banned-ips.json";
+const BannedPlayersFilePath = "banned-players.json";
 
 export type Settings = {
   serverName: string;
@@ -35,6 +37,7 @@ export type Settings = {
   blackListedAddress?: string[];
   whiteListedNames?: string[];
   useWhitelistFile: boolean;
+  useBlacklistFiles: boolean;
   hideIpInLogs?: boolean;
   hideOnConnectionLogs?: boolean;
 };
@@ -53,11 +56,35 @@ export const DefaultSettings: Settings = {
   restartDelay: 5000,
   version: false,
   useWhitelistFile: false,
+  useBlacklistFiles: false
 };
+
+export type AccessFileSettings = {
+  whitelistEntries?: WhitelistEntry[],
+  bannedIpEntries?: BannedIpEntry[],
+  bannedPlayerEntries?: BannedPlayerEntry[]
+}
 
 export type WhitelistEntry = {
   name: string;
   uuid: string;
+};
+
+export type BannedIpEntry = {
+  ip: string;
+  created: string;
+  source: string;
+  expires: string;
+  reason: string;
+};
+
+export type BannedPlayerEntry = {
+  uuid: string;
+  name: string;
+  created: string;
+  source: string;
+  expires: string;
+  reason: string;
 };
 
 function saveDefault() {
@@ -102,17 +129,22 @@ export function getSettings(): Settings {
   return settings;
 }
 
-export function getWhitelistEntries(settings: Settings): WhitelistEntry[] | undefined {
-  let whitelistEntries: WhitelistEntry[];
-  try {
-    const fullPath = path.join(getMinecraftDirectory(settings), WhitelistFilePath);
-    const read = readFileSync(fullPath).toString();
-    whitelistEntries = load(read) as WhitelistEntry[];
-    logger.info(
-        `Retrieved whitelist entries:${JSON.stringify(whitelistEntries)}`
-    );
-    return whitelistEntries;
-  } catch (error: any) {
-    logger.error("Failed to load whitelist entries.", error);
+export function getAccessSettings(settings: Settings): AccessFileSettings {
+  return {
+    whitelistEntries: getWhitelistEntries(settings),
+    bannedIpEntries: getBannerIpEntries(settings),
+    bannedPlayerEntries: getBannerPlayerEntries(settings)
   }
+}
+
+export function getWhitelistEntries(settings: Settings): WhitelistEntry[] | undefined {
+  return loadFile(WhitelistFilePath, "whitelist entries", settings)
+}
+
+export function getBannerIpEntries(settings: Settings): BannedIpEntry[] | undefined {
+  return loadFile(BannedIpsFilePath, "banned ips", settings)
+}
+
+export function getBannerPlayerEntries(settings: Settings): BannedPlayerEntry[] | undefined {
+  return loadFile(BannedPlayersFilePath, "banned players", settings)
 }

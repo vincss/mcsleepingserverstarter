@@ -1,18 +1,18 @@
 import { ChildProcess, execSync, spawn } from "child_process";
 import { SleepingBedrock } from "./sleepingBedrock";
 import { SleepingDiscord } from "./sleepingDiscord";
-import { getMinecraftDirectory, isPortTaken, isWhitelisted, ServerStatus } from "./sleepingHelper";
+import { getMinecraftDirectory, isPortTaken, isAccessAllowed, ServerStatus } from "./sleepingHelper";
 import { getLogger, LoggerType, version } from "./sleepingLogger";
 import { SleepingMcJava } from "./sleepingMcJava";
 import { ISleepingServer } from "./sleepingServerInterface";
-import { getSettings, getWhitelistEntries, Settings, WhitelistEntry } from "./sleepingSettings";
+import { getSettings, getAccessSettings, Settings, AccessFileSettings } from "./sleepingSettings";
 import { Player, PlayerConnectionCallBackType } from "./sleepingTypes";
 import { SleepingWeb } from "./sleepingWeb";
 
 export class SleepingContainer implements ISleepingServer {
   logger: LoggerType;
   settings: Settings;
-  whitelistEntries?: WhitelistEntry[];
+  accessSettings: AccessFileSettings;
 
   sleepingMcServer?: SleepingMcJava;
   mcProcess?: ChildProcess;
@@ -27,7 +27,7 @@ export class SleepingContainer implements ISleepingServer {
   constructor(callBack: (settings: Settings) => void) {
     this.logger = getLogger();
     this.settings = getSettings();
-    this.whitelistEntries = getWhitelistEntries(this.settings)
+    this.accessSettings = getAccessSettings(this.settings)
     callBack(this.settings);
   }
 
@@ -47,7 +47,7 @@ export class SleepingContainer implements ISleepingServer {
       this.sleepingMcServer = new SleepingMcJava(
           this.playerConnectionCallBack,
           this.settings,
-          this.whitelistEntries
+          this.accessSettings
       );
       if (isThisTheBeginning && this.settings.minecraftAutostart) {
         this.startMinecraft();
@@ -137,8 +137,9 @@ export class SleepingContainer implements ISleepingServer {
     player: Player
   ) => {
 
-    if (!isWhitelisted(player, this.settings, this.whitelistEntries)) {
-      this.logger.info(`[Container] ${player}: not on the guess list.`);
+    const accessStatus = isAccessAllowed(player, this.settings, this.accessSettings);
+    if (!accessStatus.allowed) {
+      this.logger.info(`[Container] ${player}: ${accessStatus.reason}.`);
       return;
     }
 
@@ -191,7 +192,7 @@ export class SleepingContainer implements ISleepingServer {
 
   reloadSettings = () => {
     this.settings = getSettings();
-    this.whitelistEntries = getWhitelistEntries(this.settings)
+    this.accessSettings = getAccessSettings(this.settings)
   };
 
   getStatus = async () => {

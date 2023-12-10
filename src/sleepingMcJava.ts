@@ -1,15 +1,15 @@
 import { Client, createServer, Server } from "minecraft-protocol";
-import { getFavIcon, getMOTD, isWhitelisted, ServerStatus } from "./sleepingHelper";
+import { getFavIcon, getMOTD, isAccessAllowed, ServerStatus } from "./sleepingHelper";
 import { getLogger, LoggerType } from "./sleepingLogger";
 import { ISleepingServer } from "./sleepingServerInterface";
-import { Settings, WhitelistEntry } from "./sleepingSettings";
+import {AccessFileSettings, Settings, WhitelistEntry} from "./sleepingSettings";
 import { Player, PlayerConnectionCallBackType } from "./sleepingTypes";
 
 export class SleepingMcJava implements ISleepingServer {
   server?: Server;
 
   settings: Settings;
-  whitelistEntries?: WhitelistEntry[];
+  accessSettings: AccessFileSettings;
   logger: LoggerType;
   playerConnectionCallBack: PlayerConnectionCallBackType;
 
@@ -18,10 +18,10 @@ export class SleepingMcJava implements ISleepingServer {
   constructor(
       playerConnectionCallBack: PlayerConnectionCallBackType,
       settings: Settings,
-      whitelistEntries?: WhitelistEntry[]
+      accessSettings: AccessFileSettings
   ) {
     this.settings = settings;
-    this.whitelistEntries = whitelistEntries;
+    this.accessSettings = accessSettings;
     this.playerConnectionCallBack = playerConnectionCallBack;
     this.logger = getLogger();
   }
@@ -69,21 +69,10 @@ export class SleepingMcJava implements ISleepingServer {
       const userName = client.username;
       const player = Player.fromClient(client);
 
-      if (
-        this.settings.blackListedAddress?.some((address) =>
-          client.socket.remoteAddress?.includes(address)
-        )
-      ) {
+      const accessStatus = isAccessAllowed(player, this.settings, this.accessSettings);
+      if (!accessStatus.allowed) {
         this.logger.info(
-          `${userName}.${client.state}:[${client.socket.remoteAddress}], rejected: blacklisted.`
-        );
-        client.end("Connection rejected : blacklisted.");
-        return;
-      }
-
-      if (!isWhitelisted(player, this.settings, this.whitelistEntries)) {
-        this.logger.info(
-          `${player}.${client.state}:[${client.socket.remoteAddress}], rejected: not on the guest list.`
+          `${player}.${client.state}:[${client.socket.remoteAddress}], rejected: ${accessStatus.reason}.`
         );
         client.end("You are not on the guest list.");
         return;

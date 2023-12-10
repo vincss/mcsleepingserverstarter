@@ -1,12 +1,13 @@
-import fs from "fs";
+import fs, {readFileSync} from "fs";
 import path from "path";
 import { createConnection } from "net";
 import { autoToHtml, cleanTags } from "@sfirew/minecraft-motd-parser";
 import ChatMessage from "prismarine-chat";
 import { LATEST_MINECRAFT_VERSION } from "./version";
 import { getLogger } from "./sleepingLogger";
-import { Settings, WhitelistEntry } from "./sleepingSettings";
-import { Player } from "./sleepingTypes";
+import { AccessFileSettings, Settings, WhitelistEntry} from "./sleepingSettings";
+import {AccessStatus, Player} from "./sleepingTypes";
+import {load} from "js-yaml";
 
 export const isInDev = () => {
   if (process.env.NODE_ENV === "development") {
@@ -82,24 +83,76 @@ export const getMinecraftDirectory = (
   return settings.minecraftWorkingDirectory ?? process.cwd();
 }
 
-export const isWhitelisted = (
+export const isAccessAllowed = (
     player: Player,
     settings: Settings,
-    whitelistEntries?: WhitelistEntry[]
-): boolean => {
+    accessSettings: AccessFileSettings
+): AccessStatus => {
   const username = player.playerName;
   const uuid = player.uuid;
+  const ip = player.ip;
 
   if (!player.realUser){
-    return true;
+    return new AccessStatus(true, "Not real user");
+  }
+
+  if (settings.useBlacklistFiles) {
+    const isBannedIp = accessSettings.bannedIpEntries?.some(ipEntry =>
+        ip?.includes(ipEntry.ip)
+    );
+    if (isBannedIp) {
+      return new AccessStatus(false, "IP is banned on the server");
+    }
+
+    const isBannedPlayer = accessSettings.bannedPlayerEntries?.some(playerEntry =>
+        playerEntry.name == username && playerEntry.uuid == uuid
+    );
+    if (isBannedPlayer) {
+      return new AccessStatus(false, "Player is banned on the server");
+    }
+  }
+
+  if (ip && settings.blackListedAddress?.some((address) =>
+      ip.includes(address)
+  )) {
+    return new AccessStatus(false, "IP is in the blackListedAddress")
   }
 
   if (settings.useWhitelistFile){
-    return Boolean(whitelistEntries &&
-        whitelistEntries.find(user => user.name == username && user.uuid == uuid))
-  } else {
-    return !settings.whiteListedNames ||
-        settings.whiteListedNames.includes(username);
+    if (
+      accessSettings.whitelistEntries &&
+      !accessSettings.whitelistEntries?.some(whitelistEntry =>
+          whitelistEntry.name == username && whitelistEntry.uuid == uuid
+      )) {
+      return new AccessStatus(false, "Player is not in the server whitelist");
+    }
+  } else if (settings.whiteListedNames && !settings.whiteListedNames.includes(username)) {
+    return new AccessStatus(false, "Player name is not in the whiteListedNames");
+  }
+
+  return new AccessStatus(true);
+}
+
+export const loadFile = (
+    filePath: string,
+    description: string,
+    settings: Settings,
+    onFail?: any
+): any => {
+  let result;
+  try {
+    const fullPath = path.join(getMinecraftDirectory(settings), filePath);
+    const read = readFileSync(fullPath).toString();
+    result = load(read);
+    getLogger().info(
+        `Retrieved ${description}:${JSON.stringify(result)}`
+    );
+    return result;
+  } catch (error: any) {
+    getLogger().error(`Failed to load ${description}.`, error);
+    if (onFail) {
+      onFail()
+    }
   }
 }
 
