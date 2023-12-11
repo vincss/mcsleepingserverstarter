@@ -5,7 +5,8 @@ import { autoToHtml, cleanTags } from "@sfirew/minecraft-motd-parser";
 import ChatMessage from "prismarine-chat";
 import { LATEST_MINECRAFT_VERSION } from "./version";
 import { getLogger } from "./sleepingLogger";
-import { Settings } from "./sleepingSettings";
+import { Settings, WhitelistEntry } from "./sleepingSettings";
+import { Player } from "./sleepingTypes";
 
 export const isInDev = () => {
   if (process.env.NODE_ENV === "development") {
@@ -38,8 +39,7 @@ export const getFavIcon = (settings: Settings): string => {
   }
 
   if (!path.isAbsolute(favIconPath)) {
-    const directory = settings.minecraftWorkingDirectory ?? process.cwd();
-    favIconPath = path.join(directory, favIconPath);
+    favIconPath = path.join(getMinecraftDirectory(settings), favIconPath);
   }
   if (fs.existsSync(favIconPath)) {
     const fileData = fs.readFileSync(favIconPath, { encoding: "base64" });
@@ -75,6 +75,33 @@ export const getMOTD = (
     .MessageBuilder.fromString(motd, { colorSeparator: "§" })
     .toJSON();
 };
+
+export const getMinecraftDirectory = (
+    settings: Settings
+): string => {
+  return settings.minecraftWorkingDirectory ?? process.cwd();
+}
+
+export const isWhitelisted = (
+    player: Player,
+    settings: Settings,
+    whitelistEntries?: WhitelistEntry[]
+): boolean => {
+  const username = player.playerName;
+  const uuid = player.uuid;
+
+  if (!player.realUser){
+    return true;
+  }
+
+  if (settings.useWhitelistFile){
+    return Boolean(whitelistEntries &&
+        whitelistEntries.find(user => user.name == username && user.uuid == uuid))
+  } else {
+    return !settings.whiteListedNames ||
+        settings.whiteListedNames.includes(username);
+  }
+}
 
 export enum ServerStatus {
   Sleeping = "Sleeping",

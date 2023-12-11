@@ -1,10 +1,13 @@
 import { writeFileSync, readFileSync } from "fs";
 import { dump, load } from "js-yaml";
 import { getLogger } from "./sleepingLogger";
+import path from "path";
+import { getMinecraftDirectory } from "./sleepingHelper";
 
 const logger = getLogger();
 
 const SettingFilePath = "sleepingSettings.yml";
+const WhitelistFilePath = "whitelist.json";
 
 export type Settings = {
   serverName: string;
@@ -31,6 +34,7 @@ export type Settings = {
   discordWebhookUrl?: string;
   blackListedAddress?: string[];
   whiteListedNames?: string[];
+  useWhitelistFile: boolean;
   hideIpInLogs?: boolean;
   hideOnConnectionLogs?: boolean;
 };
@@ -48,6 +52,12 @@ export const DefaultSettings: Settings = {
   minecraftCommand: "java -jar paper.jar nogui",
   restartDelay: 5000,
   version: false,
+  useWhitelistFile: false,
+};
+
+export type WhitelistEntry = {
+  name: string;
+  uuid: string;
 };
 
 function saveDefault() {
@@ -90,4 +100,19 @@ export function getSettings(): Settings {
     })}`
   );
   return settings;
+}
+
+export function getWhitelistEntries(settings: Settings): WhitelistEntry[] | undefined {
+  let whitelistEntries: WhitelistEntry[];
+  try {
+    const fullPath = path.join(getMinecraftDirectory(settings), WhitelistFilePath);
+    const read = readFileSync(fullPath).toString();
+    whitelistEntries = load(read) as WhitelistEntry[];
+    logger.info(
+        `Retrieved whitelist entries:${JSON.stringify(whitelistEntries)}`
+    );
+    return whitelistEntries;
+  } catch (error: any) {
+    logger.error("Failed to load whitelist entries.", error);
+  }
 }
