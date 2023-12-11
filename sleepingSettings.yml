@@ -10,15 +10,15 @@ serverOnlineMode: true # like in the server.properties, to check the licence of 
 maxPlayers: 20
 # useNativeFiles: true
 
-# webPort: 8080 # a positive number a web page it will serve
+webPort: 8080 # a positive number a web page it will serve
 # webStopOnStart: true
 # webServeDynmap: true # true or false to enable, by default it will serve ./plugins/dynmap/web/. You can specify an absolute path to serve instead or an url to redirect to.
 # webAllowRestart: true
 
 startMinecraft: true # false to disable
 minecraftCommand: "java -jar paper.jar nogui" # or paper.jar or whatever flavor you like
-# minecraftAutostart: true
-# restartDelay: 200
+minecraftAutostart: true
+restartDelay: 200
 
 # preventStop: true # Prevent the user to stop the server (trought web-server or cli).
 

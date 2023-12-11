@@ -1,13 +1,21 @@
 import { ChildProcess, execSync, spawn } from "child_process";
+import { type } from "os";
 import { SleepingBedrock } from "./sleepingBedrock";
 import { SleepingDiscord } from "./sleepingDiscord";
-import { getMinecraftDirectory, isPortTaken, isAccessAllowed, ServerStatus } from "./sleepingHelper";
+import {
+  getMinecraftDirectory,
+  isPortTaken,
+  isAccessAllowed,
+  ServerStatus,
+} from "./sleepingHelper";
 import { getLogger, LoggerType, version } from "./sleepingLogger";
 import { SleepingMcJava } from "./sleepingMcJava";
 import { ISleepingServer } from "./sleepingServerInterface";
 import { getSettings, getAccessSettings, Settings, AccessFileSettings } from "./sleepingSettings";
 import { Player, PlayerConnectionCallBackType } from "./sleepingTypes";
 import { SleepingWeb } from "./sleepingWeb";
+
+const isWindows = type().includes("Windows");
 
 export class SleepingContainer implements ISleepingServer {
   logger: LoggerType;
@@ -27,7 +35,7 @@ export class SleepingContainer implements ISleepingServer {
   constructor(callBack: (settings: Settings) => void) {
     this.logger = getLogger();
     this.settings = getSettings();
-    this.accessSettings = getAccessSettings(this.settings)
+    this.accessSettings = getAccessSettings(this.settings);
     callBack(this.settings);
   }
 
@@ -45,9 +53,9 @@ export class SleepingContainer implements ISleepingServer {
 
     if (this.settings.serverPort > 0) {
       this.sleepingMcServer = new SleepingMcJava(
-          this.playerConnectionCallBack,
-          this.settings,
-          this.accessSettings
+        this.playerConnectionCallBack,
+        this.settings,
+        this.accessSettings
       );
       if (isThisTheBeginning && this.settings.minecraftAutostart) {
         this.startMinecraft();
@@ -71,7 +79,7 @@ export class SleepingContainer implements ISleepingServer {
 
   getSettings = () => {
     return this.settings;
-  }
+  };
 
   launchMinecraftProcess = async (onProcessClosed: () => void) => {
     this.logger.info(
@@ -83,7 +91,8 @@ export class SleepingContainer implements ISleepingServer {
       const exec = cmdArgs.splice(0, 1)[0];
 
       this.mcProcess = spawn(exec, cmdArgs, {
-        stdio: "inherit",
+        // To receive stop from kill on Windows
+        stdio: isWindows ? ["overlapped", "inherit", "inherit"] : "inherit",
         cwd: getMinecraftDirectory(this.settings),
       });
 
@@ -111,7 +120,12 @@ export class SleepingContainer implements ISleepingServer {
       return;
     }
 
-    this.mcProcess?.kill();
+    if (isWindows) {
+      const result = this.mcProcess?.stdin?.write("stop\n");
+      this.logger.info(`[Container] killMinecraft`, result);
+    } else {
+      this.mcProcess?.kill();
+    }
     this.restartAsked = restartAsked;
   };
 
@@ -136,7 +150,6 @@ export class SleepingContainer implements ISleepingServer {
   playerConnectionCallBack: PlayerConnectionCallBackType = async (
     player: Player
   ) => {
-
     const accessStatus = isAccessAllowed(player, this.settings, this.accessSettings);
     if (!accessStatus.allowed) {
       this.logger.info(`[Container] ${player}: ${accessStatus.reason}.`);
@@ -192,7 +205,7 @@ export class SleepingContainer implements ISleepingServer {
 
   reloadSettings = () => {
     this.settings = getSettings();
-    this.accessSettings = getAccessSettings(this.settings)
+    this.accessSettings = getAccessSettings(this.settings);
   };
 
   getStatus = async () => {
