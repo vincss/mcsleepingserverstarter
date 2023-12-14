@@ -161,6 +161,7 @@ Give a ⭐️ if you like the project!
   - add useWhitelistFile parameter to switch to whitelist.json instead of whiteListedNames (thanks to spanasiuk)
   - add useBlacklistFiles parameter to use banned-ips.json and banned-players.json (thanks to spanasiuk)
   - add useNativeFiles parameter to use server.properties for getting serverPort, maxPlayers, serverOnlineMode, useWhitelistFile, and useBlacklistFiles properties (thanks to spanasiuk)
+  - change stdio streams on Windows when web-gui is used.
 - 1.8.0 - 1.20.1 :
   - add webAllowRestart parameter
   - add minecraftAutostart parameter
