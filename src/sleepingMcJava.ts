@@ -1,9 +1,9 @@
 import { Client, createServer, Server } from "minecraft-protocol";
-import { getFavIcon, getMOTD, isAccessAllowed, ServerStatus } from "./sleepingHelper";
-import { getLogger, LoggerType } from "./sleepingLogger";
-import { ISleepingServer } from "./sleepingServerInterface";
-import { AccessFileSettings, Settings } from "./sleepingSettings";
-import { Player, PlayerConnectionCallBackType } from "./sleepingTypes";
+import { getFavIcon, getMOTD, isAccessAllowed, ServerStatus } from "./sleepingHelper.js";
+import { getLogger, LoggerType } from "./sleepingLogger.js";
+import { ISleepingServer } from "./sleepingServerInterface.js";
+import { AccessFileSettings, Settings } from "./sleepingSettings.js";
+import { Player, PlayerConnectionCallBackType } from "./sleepingTypes.js";
 
 export class SleepingMcJava implements ISleepingServer {
   server?: Server;

@@ -1,12 +1,12 @@
-import fs, { readFileSync } from "fs";
-import path from "path";
-import { createConnection } from "net";
+import fs, { readFileSync } from "node:fs";
+import path from "node:path";
+import { createConnection } from "node:net";
 import { autoToHtml, cleanTags } from "@sfirew/minecraft-motd-parser";
 import ChatMessage from "prismarine-chat";
-import { LATEST_MINECRAFT_VERSION } from "./version";
-import { getLogger } from "./sleepingLogger";
-import { AccessFileSettings, Settings } from "./sleepingSettings";
-import { AccessStatus, Player } from "./sleepingTypes";
+import { LATEST_MINECRAFT_VERSION } from "./version.js";
+import { getLogger } from "./sleepingLogger.js";
+import { AccessFileSettings, Settings } from "./sleepingSettings.js";
+import { AccessStatus, Player } from "./sleepingTypes.js";
 import { load } from "js-yaml";
 
 export const isInDev = () => {
