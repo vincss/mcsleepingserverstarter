@@ -1,7 +1,8 @@
-import { existsSync, mkdirSync } from "fs";
+import { existsSync, mkdirSync } from "node:fs";
 import { createLogger, format, transports, transport } from "winston";
 
-export const { version } = require("../package.json"); // eslint-disable-line
+const version = 'test';
+export { version };
 
 const DefaultLogger = {
   info: console.info,

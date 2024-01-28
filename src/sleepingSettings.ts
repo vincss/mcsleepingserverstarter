@@ -1,10 +1,9 @@
-import { writeFileSync, readFileSync } from "fs";
+import { writeFileSync, readFileSync } from "node:fs";
 import { dump, load } from "js-yaml";
-import { getLogger } from "./sleepingLogger";
-import { getMinecraftDirectory, loadFile } from "./sleepingHelper";
-import path from "path";
-
-import PropertiesReader = require('properties-reader');
+import { getLogger } from "./sleepingLogger.js";
+import { getMinecraftDirectory, loadFile } from "./sleepingHelper.js";
+import path from "node:path";
+import PropertiesReader from 'properties-reader';
 
 const logger = getLogger();
 

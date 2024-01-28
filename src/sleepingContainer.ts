@@ -1,19 +1,19 @@
-import { ChildProcess, execSync, spawn } from "child_process";
-import { type } from "os";
-import { SleepingBedrock } from "./sleepingBedrock";
-import { SleepingDiscord } from "./sleepingDiscord";
+import { ChildProcess, execSync, spawn } from "node:child_process";
+import { type } from "node:os";
+import { SleepingBedrock } from "./sleepingBedrock.js";
+import { SleepingDiscord } from "./sleepingDiscord.js";
 import {
   getMinecraftDirectory,
   isPortTaken,
   isAccessAllowed,
   ServerStatus,
-} from "./sleepingHelper";
-import { getLogger, LoggerType, version } from "./sleepingLogger";
-import { SleepingMcJava } from "./sleepingMcJava";
-import { ISleepingServer } from "./sleepingServerInterface";
-import { getSettings, getAccessSettings, Settings, AccessFileSettings } from "./sleepingSettings";
-import { Player, PlayerConnectionCallBackType } from "./sleepingTypes";
-import { SleepingWeb } from "./sleepingWeb";
+} from "./sleepingHelper.js";
+import { getLogger, LoggerType, version } from "./sleepingLogger.js";
+import { SleepingMcJava } from "./sleepingMcJava.js";
+import { ISleepingServer } from "./sleepingServerInterface.js";
+import { getSettings, getAccessSettings, Settings, AccessFileSettings } from "./sleepingSettings.js";
+import { Player, PlayerConnectionCallBackType } from "./sleepingTypes.js";
+import { SleepingWeb } from "./sleepingWeb.js";
 
 const isWindows = type().includes("Windows");
 

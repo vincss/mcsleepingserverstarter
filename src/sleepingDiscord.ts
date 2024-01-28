@@ -1,5 +1,5 @@
-import { getLogger, LoggerType } from "./sleepingLogger";
-import { Settings } from "./sleepingSettings";
+import { getLogger, LoggerType } from "./sleepingLogger.js";
+import { Settings } from "./sleepingSettings.js";
 
 type DiscordContent = {
   content: null;

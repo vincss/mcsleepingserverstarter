@@ -1,14 +1,14 @@
 import express, { Express } from "express";
-import { existsSync } from "fs";
+import { existsSync } from "node:fs";
 import { engine } from "express-handlebars";
-import * as http from "http";
-import path from "path";
-import { SleepingContainer } from "./sleepingContainer";
-import { getFavIcon, getMOTD, getMinecraftDirectory, ServerStatus } from "./sleepingHelper";
-import { getLogger, LoggerType } from "./sleepingLogger";
-import { ISleepingServer } from "./sleepingServerInterface";
-import { Settings } from "./sleepingSettings";
-import { Player, PlayerConnectionCallBackType } from "./sleepingTypes";
+import * as http from "node:http";
+import path from "node:path";
+import { SleepingContainer } from "./sleepingContainer.js";
+import { getFavIcon, getMOTD, getMinecraftDirectory, ServerStatus } from "./sleepingHelper.js";
+import { getLogger, LoggerType } from "./sleepingLogger.js";
+import { ISleepingServer } from "./sleepingServerInterface.js";
+import { Settings } from "./sleepingSettings.js";
+import { Player, PlayerConnectionCallBackType } from "./sleepingTypes.js";
 import { Socket } from "node:net";
 
 export class SleepingWeb implements ISleepingServer {
