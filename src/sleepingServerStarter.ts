@@ -42,7 +42,9 @@ process.on("uncaughtException", (err: Error) => {
   }
 
   logger.info(
-    `[Main] ... Restarting the server in (${sleepingContainer.getSettings().restartDelay / 1000} secs)...`
+    `[Main] ... Restarting the server in (${
+      sleepingContainer.getSettings().restartDelay / 1000
+    } secs)...`
   );
   setTimeout(async () => {
     await sleepingContainer.close(true);

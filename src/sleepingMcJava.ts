@@ -1,5 +1,10 @@
-import { Client, createServer, Server } from "minecraft-protocol";
-import { getFavIcon, getMOTD, isAccessAllowed, ServerStatus } from "./sleepingHelper";
+import { Client, createServer, Server, ServerClient } from "minecraft-protocol";
+import {
+  getFavIcon,
+  getMOTD,
+  isAccessAllowed,
+  ServerStatus,
+} from "./sleepingHelper";
 import { getLogger, LoggerType } from "./sleepingLogger";
 import { ISleepingServer } from "./sleepingServerInterface";
 import { AccessFileSettings, Settings } from "./sleepingSettings";
@@ -16,9 +21,9 @@ export class SleepingMcJava implements ISleepingServer {
   isClosing = false;
 
   constructor(
-      playerConnectionCallBack: PlayerConnectionCallBackType,
-      settings: Settings,
-      accessSettings: AccessFileSettings
+    playerConnectionCallBack: PlayerConnectionCallBackType,
+    settings: Settings,
+    accessSettings: AccessFileSettings
   ) {
     this.settings = settings;
     this.accessSettings = accessSettings;
@@ -54,22 +59,38 @@ export class SleepingMcJava implements ISleepingServer {
 
     this.server.on("connection", (client: Client) => {
       !this.settings.hideOnConnectionLogs &&
-      this.logger.info(
-        `A Prince has taken a quick peek. [${client.version}${this.getIp(
-          client
-        )}]`
-      );
+        this.logger.info(
+          `A Prince has taken a quick peek. [${client.version}${this.getIp(
+            client
+          )}]`
+        );
     });
 
     this.server.on("listening", () => {
       this.logger.info("[McJava] Ready for battle");
     });
 
-    this.server.on("login", (client) => {
+    if (this.settings.useLegacyLogin) {
+      this.server.on("login", this.onLogin);
+    } else {
+      this.server.on("playerJoin", this.onLogin);
+    }
+
+    this.server.on("error", (error) => {
+      this.logger.error(`Something went wrong in wonderland ${error.message}`);
+    });
+  };
+
+  onLogin = (client: ServerClient) => {
+    {
       const userName = client.username;
       const player = Player.fromClient(client);
 
-      const accessStatus = isAccessAllowed(player, this.settings, this.accessSettings);
+      const accessStatus = isAccessAllowed(
+        player,
+        this.settings,
+        this.accessSettings
+      );
       if (!accessStatus.allowed) {
         this.logger.info(
           `${player}.${client.state}:[${client.socket.remoteAddress}], rejected: ${accessStatus.reason}.`
@@ -102,11 +123,7 @@ export class SleepingMcJava implements ISleepingServer {
       });
       this.logger.info(`Sending best regards ${this.settings.loginMessage}`);
       client.end(this.settings.loginMessage);
-    });
-
-    this.server.on("error", (error) => {
-      this.logger.error(`Something went wrong in wonderland ${error.message}`);
-    });
+    }
   };
 
   close = async () => {

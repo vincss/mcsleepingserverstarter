@@ -4,7 +4,12 @@ import { engine } from "express-handlebars";
 import * as http from "http";
 import path from "path";
 import { SleepingContainer } from "./sleepingContainer";
-import { getFavIcon, getMOTD, getMinecraftDirectory, ServerStatus } from "./sleepingHelper";
+import {
+  getFavIcon,
+  getMOTD,
+  getMinecraftDirectory,
+  ServerStatus,
+} from "./sleepingHelper";
 import { getLogger, LoggerType } from "./sleepingLogger";
 import { ISleepingServer } from "./sleepingServerInterface";
 import { Settings } from "./sleepingSettings";
@@ -128,14 +133,10 @@ export class SleepingWeb implements ISleepingServer {
     this.app.post(`${this.webPath}/restart`, async (req, res) => {
       res.send("received");
 
-      this.logger.info(
-        `[WebServer]${this.getIp(
-          req.socket
-        )} Restart server`
-      );
+      this.logger.info(`[WebServer]${this.getIp(req.socket)} Restart server`);
 
       this.sleepingContainer.killMinecraft(true);
-    })
+    });
 
     this.app.get(`${this.webPath}/status`, async (req, res) => {
       const status = await this.sleepingContainer.getStatus();
@@ -165,7 +166,10 @@ export class SleepingWeb implements ISleepingServer {
           return;
         }
       } else {
-        dynmapPath = path.join(getMinecraftDirectory(this.settings), "plugins/dynmap/web");
+        dynmapPath = path.join(
+          getMinecraftDirectory(this.settings),
+          "plugins/dynmap/web"
+        );
       }
       this.logger.info(`[WebServer] Serving dynmap: ${dynmapPath}`);
       if (existsSync(dynmapPath)) {

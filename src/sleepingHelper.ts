@@ -77,85 +77,92 @@ export const getMOTD = (
     .toJSON();
 };
 
-export const getMinecraftDirectory = (
-    settings: Settings
-): string => {
+export const getMinecraftDirectory = (settings: Settings): string => {
   return settings.minecraftWorkingDirectory ?? process.cwd();
-}
+};
 
 export const isAccessAllowed = (
-    player: Player,
-    settings: Settings,
-    accessSettings: AccessFileSettings
+  player: Player,
+  settings: Settings,
+  accessSettings: AccessFileSettings
 ): AccessStatus => {
   const username = player.playerName;
   const uuid = player.uuid;
   const ip = player.ip;
 
-  if (!player.realUser){
+  if (!player.realUser) {
     return new AccessStatus(true, "Not real user");
   }
 
   if (settings.useBlacklistFiles) {
-    const isBannedIp = accessSettings.bannedIpEntries?.some(ipEntry =>
-        ip?.includes(ipEntry.ip)
+    const isBannedIp = accessSettings.bannedIpEntries?.some((ipEntry) =>
+      ip?.includes(ipEntry.ip)
     );
     if (isBannedIp) {
       return new AccessStatus(false, "IP is banned on the server");
     }
 
-    const isBannedPlayer = accessSettings.bannedPlayerEntries?.some(playerEntry =>
-        playerEntry.name == username && playerEntry.uuid == uuid
+    const isBannedPlayer = accessSettings.bannedPlayerEntries?.some(
+      (playerEntry) => playerEntry.name == username && playerEntry.uuid == uuid
     );
     if (isBannedPlayer) {
       return new AccessStatus(false, "Player is banned on the server");
     }
   }
 
-  if (ip && settings.blackListedAddress?.some((address) =>
-      ip.includes(address)
-  )) {
-    return new AccessStatus(false, "IP is in the blackListedAddress")
+  if (
+    ip &&
+    settings.blackListedAddress?.some((address) => ip.includes(address))
+  ) {
+    return new AccessStatus(false, "IP is in the blackListedAddress");
   }
 
-  if (settings.useWhitelistFile){
+  if (settings.useWhitelistFile) {
     if (
       accessSettings.whitelistEntries &&
-      !accessSettings.whitelistEntries?.some(whitelistEntry =>
+      !accessSettings.whitelistEntries?.some(
+        (whitelistEntry) =>
           whitelistEntry.name == username && whitelistEntry.uuid == uuid
-      )) {
+      )
+    ) {
       return new AccessStatus(false, "Player is not in the server whitelist");
     }
-  } else if (settings.whiteListedNames && !settings.whiteListedNames.includes(username)) {
-    return new AccessStatus(false, "Player name is not in the whiteListedNames");
+  } else if (
+    settings.whiteListedNames &&
+    !settings.whiteListedNames.includes(username)
+  ) {
+    return new AccessStatus(
+      false,
+      "Player name is not in the whiteListedNames"
+    );
   }
 
   return new AccessStatus(true);
-}
+};
 
 export const loadFile = (
-    filePath: string,
-    description: string,
-    settings?: Settings,
-    onFail?: any
+  filePath: string,
+  description: string,
+  settings?: Settings,
+  onFail?: any
 ): any => {
   let result;
   try {
-    const fullPath = settings ? path.join(getMinecraftDirectory(settings), filePath) : filePath;
-    getLogger().info(`Retrieving ${description} from ${fullPath}`)
+    const fullPath = settings
+      ? path.join(getMinecraftDirectory(settings), filePath)
+      : filePath;
+    getLogger().info(`Retrieving ${description} from ${fullPath}`);
     const read = readFileSync(fullPath).toString();
     result = load(read);
-    getLogger().info(
-        `Retrieved ${description}:${JSON.stringify(result)}`
-    );
+    getLogger().info(`Retrieved ${description}:${JSON.stringify(result)}`);
     return result;
   } catch (error: any) {
     getLogger().error(`Failed to load ${description}.`, error);
     if (onFail) {
-      onFail(error)
+      onFail(error);
     }
   }
-}
+};
 
 export enum ServerStatus {
   Sleeping = "Sleeping",

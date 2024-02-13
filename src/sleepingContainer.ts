@@ -11,7 +11,12 @@ import {
 import { getLogger, LoggerType, version } from "./sleepingLogger";
 import { SleepingMcJava } from "./sleepingMcJava";
 import { ISleepingServer } from "./sleepingServerInterface";
-import { getSettings, getAccessSettings, Settings, AccessFileSettings } from "./sleepingSettings";
+import {
+  getSettings,
+  getAccessSettings,
+  Settings,
+  AccessFileSettings,
+} from "./sleepingSettings";
 import { Player, PlayerConnectionCallBackType } from "./sleepingTypes";
 import { SleepingWeb } from "./sleepingWeb";
 
@@ -150,7 +155,11 @@ export class SleepingContainer implements ISleepingServer {
   playerConnectionCallBack: PlayerConnectionCallBackType = async (
     player: Player
   ) => {
-    const accessStatus = isAccessAllowed(player, this.settings, this.accessSettings);
+    const accessStatus = isAccessAllowed(
+      player,
+      this.settings,
+      this.accessSettings
+    );
     if (!accessStatus.allowed) {
       this.logger.info(`[Container] ${player}: ${accessStatus.reason}.`);
       return;

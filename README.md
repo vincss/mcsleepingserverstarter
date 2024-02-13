@@ -13,18 +13,21 @@
 
 ## ✅ Compatible versions
 
-- Minecraft Java: up to 1.20.1 [node-minecraft-protocol](https://github.com/PrismarineJS/node-minecraft-protocol)
-- Bedrock: Waiting for third party compatibility ( you can use the web-gui as a workarround ) [JSPrismarine](https://github.com/JSPrismarine/JSPrismarine)
+- Minecraft Java: up to
+  1.20.2 [node-minecraft-protocol](https://github.com/PrismarineJS/node-minecraft-protocol)
+- Bedrock: Waiting for third party compatibility ( you can use the web-gui as a
+  workarround ) [JSPrismarine](https://github.com/JSPrismarine/JSPrismarine)
 
 ## 🧰 Features
 
 - Listen on the same port as your minecraft server.
-  - Option to connect from BedRock _(Portable version of Minecraft)_
-  - Web-gui, to turn on or off your server from anywhere
+    - Option to connect from BedRock _(Portable version of Minecraft)_
+    - Web-gui, to turn on or off your server from anywhere
 - When someone connects, immediately launch your minecraft server.
-  - You can also type 'quit' in your console to start minecraft's server.
+    - You can also type 'quit' in your console to start minecraft's server.
 
-**Works better with [EmptyServerStopper](https://github.com/vincss/mcEmptyServerStopper), a plugin that automatically
+**Works better with [EmptyServerStopper](https://github.com/vincss/mcEmptyServerStopper), a plugin
+that automatically
 stops your server after a definied amount of time**
 
 ## 📀 Install
@@ -37,7 +40,7 @@ There are multiple ways to run SleepingServerStarter:
 2. Place the executable in the same folder as your server file (`spigot.jar`, `paper.jar`, etc...)
 3. Make sure your server is stopped
 4. Run the executable
-   - On Linux, try `chmod +x mcsleepingserverstarter-linux-x64` if you can't run the executable
+    - On Linux, try `chmod +x mcsleepingserverstarter-linux-x64` if you can't run the executable
 
 ### 📜 Manually install and compile
 
@@ -49,22 +52,27 @@ There are multiple ways to run SleepingServerStarter:
 
 ### 🐋 Docker
 
-SleepingServerStarter is available as a Docker image: [ghcr.io/vincss/mcsleepingserverstarter](https://github.com/vincss/mcsleepingserverstarter/pkgs/container/mcsleepingserverstarter)
+SleepingServerStarter is available as a Docker
+image: [ghcr.io/vincss/mcsleepingserverstarter](https://github.com/vincss/mcsleepingserverstarter/pkgs/container/mcsleepingserverstarter)
 
 It supports both x64 and arm64 host system architectures.
 
-For detailed examples and instructions for setup via Docker, [see the wiki page here](https://github.com/vincss/mcsleepingserverstarter/wiki/Docker-Configuration).
+For detailed examples and instructions for setup via
+Docker, [see the wiki page here](https://github.com/vincss/mcsleepingserverstarter/wiki/Docker-Configuration).
 
 ### 🐡 PufferPanel
 
-If you're using PufferPanel, you can import [this template](./docs/pufferpanel.json) as JSON to use Paper Spigot with
+If you're using PufferPanel, you can import [this template](./docs/pufferpanel.json) as JSON to use
+Paper Spigot with
 Sleeping Server Starter via PufferPanel
 
 ### 🐦 Pterodactyl
 
-If you're using Pterodactyl, you can import [this egg](./docs/egg-paper-mcsleepingserverstarter.json) as JSON to use
+If you're using Pterodactyl, you can
+import [this egg](./docs/egg-paper-mcsleepingserverstarter.json) as JSON to use
 Paper Spigot with Sleeping Server Starter OR you can also
-import [this egg](./docs/egg-vanilla-minecraft-mcsleepingserverstarter.json) as JSON to use Vanilla Minecraft with
+import [this egg](./docs/egg-vanilla-minecraft-mcsleepingserverstarter.json) as JSON to use Vanilla
+Minecraft with
 Sleeping Server Starter on Pterodactyl
 
 Pterodactyl can be installed
@@ -72,7 +80,8 @@ via [Unofficial pterodactyl-installer](https://github.com/vilhelmprytz/pterodact
 
 ## ⚙️ Settings
 
-> Note: If running from binaries, the settings file will be created after the first execution in the same folder as the
+> Note: If running from binaries, the settings file will be created after the first execution in the
+> same folder as the
 > executable
 
 | Setting                     | Description                                                                                                                                                                                                                              | Default value                                   |
@@ -106,8 +115,10 @@ via [Unofficial pterodactyl-installer](https://github.com/vilhelmprytz/pterodact
 | `useBlacklistFiles`         | Use Minecraft `banned-ips.json` and `banned-players.json` to prevent players from waking up the server. Can be used together with `blackListedAddress` property                                                                          | false                                           |
 | `hideIpInLogs`              | Hide the ip from the remote player in the logs                                                                                                                                                                                           | false                                           |
 | `hideOnConnectionLogs`      | Hide 'A Prince has taken a quick peek' the logs                                                                                                                                                                                          | false                                           |
+| `useLegacyLogin`            | use legacy "login" method from [minecraft-protocol](https://github.com/PrismarineJS/node-minecraft-protocol/issues/1279#issuecomment-1878866611)                                                                                         | false                                           |
 
-> Note: if you need to shutdown the program, simply input a `ctrl + c`, the program will shut down normally afterwards
+> Note: if you need to shutdown the program, simply input a `ctrl + c`, the program will shut down
+> normally afterwards
 
 ---
 
@@ -122,23 +133,28 @@ via [Unofficial pterodactyl-installer](https://github.com/vilhelmprytz/pterodact
 
 ## 🕸 Bungeecord
 
-While SleepingServerStarter is made to run on a single server, it can be integrated to a Bungeecord network. **But
-please note that you'll need to install and configure SleepingServerStarter on every servers you want to be affected by
+While SleepingServerStarter is made to run on a single server, it can be integrated to a Bungeecord
+network. **But
+please note that you'll need to install and configure SleepingServerStarter on every servers you
+want to be affected by
 the program.**
 
 Installing SleepingServerStarter only on your proxy server <u>**will NOT work**</u>
 
 For each server you're installing SleepingServerStarter on :
 
-- the `serverPort` should be the port of the server you're installing the program on, not the proxy's port
-- make sure `serverOnlineMode` is set to `false` to avoid any problems with Bungee when switching between servers
+- the `serverPort` should be the port of the server you're installing the program on, not the
+  proxy's port
+- make sure `serverOnlineMode` is set to `false` to avoid any problems with Bungee when switching
+  between servers
 
 We know this can be a little bit time consuming, but this solution is working great
 
 #### In action :
 
 When trying to join a sleeping server, you get this kind of message by Bungee<br/>
-Basically, it keeps kicking the player with `loginMessage` as reason, telling the player the server is being started
+Basically, it keeps kicking the player with `loginMessage` as reason, telling the player the server
+is being started
 
 ![](./docs/bungeeStartingExample.png)
 
@@ -148,7 +164,8 @@ Basically, it keeps kicking the player with `loginMessage` as reason, telling th
 
 ## 🤝 Contributing
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](./issues)
+Contributions, issues and feature requests are welcome!<br />Feel free to
+check [issues page](./issues)
 
 ## 🙌 Show your support
 
@@ -157,110 +174,118 @@ Give a ⭐️ if you like the project!
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog
+
+- 1.9.1 - 1.20.2 :
+    - add useLegacyLogin parameter, to use old login internally
 - 1.9.0 - 1.20.1 :
-  - add useWhitelistFile parameter to switch to whitelist.json instead of whiteListedNames (thanks to spanasiuk)
-  - add useBlacklistFiles parameter to use banned-ips.json and banned-players.json (thanks to spanasiuk)
-  - add useNativeFiles parameter to use server.properties for getting serverPort, maxPlayers, serverOnlineMode, useWhitelistFile, and useBlacklistFiles properties (thanks to spanasiuk)
-  - change stdio streams on Windows when web-gui is used.
+    - add useWhitelistFile parameter to switch to whitelist.json instead of whiteListedNames (thanks
+      to spanasiuk)
+    - add useBlacklistFiles parameter to use banned-ips.json and banned-players.json (thanks to
+      spanasiuk)
+    - add useNativeFiles parameter to use server.properties for getting serverPort, maxPlayers,
+      serverOnlineMode, useWhitelistFile, and useBlacklistFiles properties (thanks to spanasiuk)
+    - change stdio streams on Windows when web-gui is used.
 - 1.8.0 - 1.20.1 :
-  - add webAllowRestart parameter
-  - add minecraftAutostart parameter
-  - add restartDelay parameter
+    - add webAllowRestart parameter
+    - add minecraftAutostart parameter
+    - add restartDelay parameter
 - 1.7.1 - 1.20.1 :
-  - Run mcsleeperstarter as a non-root user within the docker container
+    - Run mcsleeperstarter as a non-root user within the docker container
 - 1.7.0 - 1.20.1 :
-  - [Feature] Added serverMOTD setting ( thanks to gavinhsmith )
-  - [UX] Made the Sleep button disappear while server is online when "preventStop" is true ( thanks to gavinhsmith )
+    - [Feature] Added serverMOTD setting ( thanks to gavinhsmith )
+    - [UX] Made the Sleep button disappear while server is online when "preventStop" is true (
+      thanks to gavinhsmith )
 - 1.6.0 - 1.20.1 :
-  - add hideOnConnectionLogs parameter
-  - update minecraft-protocol: 1.43.2 ( minecraft 1.20.1 )
+    - add hideOnConnectionLogs parameter
+    - update minecraft-protocol: 1.43.2 ( minecraft 1.20.1 )
 - 1.5.13 - 1.20.1 :
-  - add environement variable DISABLE_FILE_LOGS to disable file logs
+    - add environement variable DISABLE_FILE_LOGS to disable file logs
 - 1.5.12 - 1.20.1 :
-  - update minecraft-protocol: 1.43.0 ( minecraft 1.20.1 )
+    - update minecraft-protocol: 1.43.0 ( minecraft 1.20.1 )
 - 1.5.11 - 1.19.4 :
-  - update minecraft-protocol: 1.42.0 ( minecraft 1.19.4 )
+    - update minecraft-protocol: 1.42.0 ( minecraft 1.19.4 )
 - 1.5.10 - 1.19.3 :
-  - webServeDynmap setting can be set to an url
+    - webServeDynmap setting can be set to an url
 - 1.5.9 - 1.19.3 :
-  - backup config file before setting to default
+    - backup config file before setting to default
 - 1.5.8 - 1.19.3 :
-  - reload settings on restart
+    - reload settings on restart
 - 1.5.7 - 1.19.3 :
-  - restart on 'uncaughtException'
+    - restart on 'uncaughtException'
 - 1.5.6 - 1.19.3 :
-  - do not exit on 'uncaughtException'
+    - do not exit on 'uncaughtException'
 - 1.5.5 - 1.19.3 :
-  - add hideIpInLogs parameter
+    - add hideIpInLogs parameter
 - 1.5.4 - 1.19.3 :
-  - add version number in start/stop minecraft
+    - add version number in start/stop minecraft
 - 1.5.3 - 1.19.3 :
-  - docker: copy only needed binary
+    - docker: copy only needed binary
 - 1.5.2 - 1.19.3 :
-  - docker: base image eclipse-temurin:17-jre-jammy
+    - docker: base image eclipse-temurin:17-jre-jammy
 - 1.5.1 - 1.19.3 :
-  - add docker generation (@markmetcalfe)
-  - fix minecraftDirectory not being used as base path when serving dynmap via web GUI (@markmetcalfe)
+    - add docker generation (@markmetcalfe)
+    - fix minecraftDirectory not being used as base path when serving dynmap via web GUI (
+      @markmetcalfe)
 - 1.5.0 - 1.19.3 :
-  - add setting webSubPath
-  - add more architectures builds
-  - add setting favIconPath to use a png as icon.
-  - handle motd in serverName
-  - Thanks to markmetcalfe for thoses improvements
-  - update minecraft-protocol: 1.41.2
+    - add setting webSubPath
+    - add more architectures builds
+    - add setting favIconPath to use a png as icon.
+    - handle motd in serverName
+    - Thanks to markmetcalfe for thoses improvements
+    - update minecraft-protocol: 1.41.2
 - 1.4.1 - 1.19.3 :
-  - update minecraft-protocol: 1.41.1
-  - disable bedrock by default
-  - add whiteListedNames
+    - update minecraft-protocol: 1.41.1
+    - disable bedrock by default
+    - add whiteListedNames
 - 1.4.0 - 1.19.3 :
-  - set option 'version' to false by default (it should handle any compatible version).
+    - set option 'version' to false by default (it should handle any compatible version).
 - 1.3.1 - 1.19.3 :
-  - update minecraft-protocol: 1.41.0
+    - update minecraft-protocol: 1.41.0
 - 1.3.0 - 1.19.3 :
-  - add blackListedAddress parameters
-  - add dynmap
-  - add preventStop
-  - update minecraft-protocol: 1.40.3
+    - add blackListedAddress parameters
+    - add dynmap
+    - add preventStop
+    - update minecraft-protocol: 1.40.3
 - 1.2.6 - 1.19.3 :
-  - update third-parties
+    - update third-parties
 - 1.2.5 - 1.19.3 :
-  - update minecraft-protocol for MC 1.19.3
+    - update minecraft-protocol for MC 1.19.3
 - 1.2.4 - 1.19.2 :
-  - update minecraft-protocol for MC 1.19.2 (no 1.19.3 yet)
+    - update minecraft-protocol for MC 1.19.2 (no 1.19.3 yet)
 - 1.2.3 - 1.19 :
-  - update to Node18
+    - update to Node18
 - 1.2.2 - 1.19 :
-  - add arm64 builds (Raspberry Pi)
+    - add arm64 builds (Raspberry Pi)
 - 1.2.1 - 1.19 :
-  - update node-minecraft-protocol for MC 1.19 (no 1.19.1 & 1.19.2 yet)
+    - update node-minecraft-protocol for MC 1.19 (no 1.19.1 & 1.19.2 yet)
 - 1.2.0 - 1.18.2 :
-  - Add settings webStopOnStart
-  - Change settings startMinecraft to boolean
+    - Add settings webStopOnStart
+    - Change settings startMinecraft to boolean
 - 1.1.5 - 1.18.2 :
-  - Add more logs when it fails to retreive settings
-  - update node-minecraft-protocol ^1.34.0
+    - Add more logs when it fails to retreive settings
+    - update node-minecraft-protocol ^1.34.0
 - 1.1.4 - 1.18.2 :
-  - update node-minecraft-protocol ^1.32.0
+    - update node-minecraft-protocol ^1.32.0
 - 1.1.3 - 1.18.1 :
-  - Fixed concurent wake up : ./issues/68
-  - update node-minecraft-protocol ^1.30.0
+    - Fixed concurent wake up : ./issues/68
+    - update node-minecraft-protocol ^1.30.0
 - 1.1.2 - 1.18.1 :
-  - Compress binaries ( GZip )
+    - Compress binaries ( GZip )
 - 1.1.1 - 1.18.1 :
-  - update node-minecraft-protocol ^1.29.0 -> 1.18.1
+    - update node-minecraft-protocol ^1.29.0 -> 1.18.1
 - 1.1.0 - 1.17.1 :
-  - **Feature** Add Discord Notification
-  - Update dependencies (node16, npm8, typescript,...)
+    - **Feature** Add Discord Notification
+    - Update dependencies (node16, npm8, typescript,...)
 - 1.0.4 - 1.17.1 :
-  - update node-minecraft-protocol ^1.26.1
+    - update node-minecraft-protocol ^1.26.1
 - 1.0.3 - 1.16.5 :
-  - update security
+    - update security
 - 1.0.2 - 1.16.5 :
-  - add maxPlayers in settings
+    - add maxPlayers in settings
 - 1.0.1 - 1.16.5 :
-  - Include version in log.
+    - Include version in log.
 - 1.0.0 - 1.16.5 :
-  - **Feature** Add web-gui
+    - **Feature** Add web-gui
 - 1.16.4 :
-  - Add bedrock support.
+    - Add bedrock support.
 - ...
