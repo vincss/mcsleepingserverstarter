@@ -37,6 +37,8 @@ export type Settings = {
   favIcon?: string;
   favIconPath?: string;
   discordWebhookUrl?: string;
+  discordWebhookName?: string;
+  discordWebhookAvatarUrl?: string;
   blackListedAddress?: string[];
   whiteListedNames?: string[];
   useWhitelistFile: boolean;
