@@ -27,8 +27,8 @@ export class SleepingDiscord {
       this.logger.info(`[Discord] Sending closing server message`);
     }
 
-    if (this.settings.discordWebhookUrl) {
-      const response = await fetch(this.settings.discordWebhookUrl, {
+    if (this.settings.discordWebhook?.url) {
+      const response = await fetch(this.settings.discordWebhook?.url, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -50,9 +50,9 @@ export class SleepingDiscord {
           color: 25344,
         },
       ],
-      username: this.settings.discordWebhookName || "SleepingServerStarter",
+      username: this.settings.discordWebhook?.name || "SleepingServerStarter",
       avatar_url:
-        this.settings.discordWebhookAvatarUrl ||
+        this.settings.discordWebhook?.avatar ||
         "https://raw.githubusercontent.com/vincss/mcsleepingserverstarter/feature/discord_notification/docs/sleepingLogo.png",
     };
     await this.sendMessage(content, true);
@@ -67,9 +67,9 @@ export class SleepingDiscord {
           color: 25344,
         },
       ],
-      username: this.settings.discordWebhookName || "SleepingServerStarter",
+      username: this.settings.discordWebhook?.name || "SleepingServerStarter",
       avatar_url:
-        this.settings.discordWebhookAvatarUrl ||
+        this.settings.discordWebhook?.avatar ||
         "https://raw.githubusercontent.com/vincss/mcsleepingserverstarter/feature/discord_notification/docs/sleepingLogo.png",
     };
     await this.sendMessage(content, false);
