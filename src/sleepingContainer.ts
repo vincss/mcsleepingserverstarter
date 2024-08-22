@@ -171,7 +171,7 @@ export class SleepingContainer implements ISleepingServer {
     }
     this.isClosing = true;
 
-    if (this.settings.discordWebhookUrl && this.discord) {
+    if (this.settings.discordWebhook && this.discord) {
       await this.discord.onPlayerLogging(player.playerName);
     }
 
@@ -185,7 +185,7 @@ export class SleepingContainer implements ISleepingServer {
 
   startMinecraft = () => {
     const onMcClosed = async () => {
-      if (this.settings.discordWebhookUrl && this.discord) {
+      if (this.settings.discordWebhook && this.discord) {
         await this.discord.onServerStop();
       }
 
