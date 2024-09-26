@@ -23,7 +23,7 @@
     "express": "^4.18.2",
     "express-handlebars": "^7.0.4",
     "js-yaml": "^4.1.0",
-    "minecraft-protocol": "^1.46.0",
+    "minecraft-protocol": "^1.47.0",
     "prismarine-chat": "^1.8.0",
     "properties-reader": "^2.3.0",
     "winston": "^3.8.2"
