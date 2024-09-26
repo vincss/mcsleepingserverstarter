@@ -17,7 +17,7 @@
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
   },
   "dependencies": {
-    "@jsprismarine/prismarine": "0.1.0-rc.49",
+    "@jsprismarine/prismarine": "0.1.1",
     "@jsprismarine/raknet": "0.1.0-rc.49",
     "@sfirew/minecraft-motd-parser": "^1.1.1",
     "express": "^4.18.2",
