@@ -20,36 +20,36 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: npm run build --if-present
     - run: npm run test --if-present    
     - name: 'Upload Artifact Windows'
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: 'Binary Windows'
         path: bin/mcsleepingserverstarter-win-x64.exe
     - name: 'Upload Artifact Linux'
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: 'Binary Linux'
         path: bin/mcsleepingserverstarter-linux-x64
     - name: 'Upload Artifact Linux arm64'
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: 'Binary Linux arm64 (Raspberry Pi)'
         path: bin/mcsleepingserverstarter-linux-arm64
     - name: 'Upload Artifact MacOS (Apple Silicon)'
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: 'Binary MacOS (Apple Silicon)'
         path: bin/mcsleepingserverstarter-macos-arm64
     - name: 'Upload Artifact MacOS (Intel)'
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: 'Binary MacOS (Intel)'
         path: bin/mcsleepingserverstarter-macos-x64
