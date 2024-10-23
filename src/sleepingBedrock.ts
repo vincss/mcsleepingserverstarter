@@ -39,7 +39,13 @@ export class SleepingBedrock implements ISleepingServer {
 
     init  = async ()=> {
       console.log('DEBUG SleepingBedrock.init : (): ');
-      await this.server.bootstrap('0.0.0.0', this.settings.bedrockPort);
+      try {
+        this.logger.info("[BedRock] Starting on", this.settings.bedrockPort);
+        await this.server.bootstrap('0.0.0.0', this.settings.bedrockPort);
+
+      }catch(err) {
+       this.logger.error(err);
+      }
       console.log('DEBUG SleepingBedrock.init : AFTER ');
 
     }
