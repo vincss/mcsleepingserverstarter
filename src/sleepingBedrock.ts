@@ -1,3 +1,28 @@
+import {ISleepingServer} from "./sleepingServerInterface";
+import {PlayerConnectionCallBackType} from "./sleepingTypes";
+import {Settings} from "./sleepingSettings";
+
+
+export class SleepingBedrock implements ISleepingServer {
+  private settings: Settings;
+  private playerConnectionCallBack: PlayerConnectionCallBackType;
+
+  constructor(
+      settings: Settings,
+      playerConnectionCallBack: PlayerConnectionCallBackType
+  ) {
+    this.settings = settings;
+    this.playerConnectionCallBack = playerConnectionCallBack;
+  }
+
+    init  = async ()=> {
+      console.log('DEBUG SleepingBedrock.init : (): ');
+    }
+    close= async() => {
+      console.log('DEBUG SleepingBedrock.close : (): ', );
+    }
+}
+/*
 import Config from "@jsprismarine/prismarine/dist/config/Config";
 import { EventManager } from "@jsprismarine/prismarine/dist/events/EventManager";
 import {
@@ -137,3 +162,4 @@ export class SleepingBedrock implements ISleepingServer {
     }
   };
 }
+*/
