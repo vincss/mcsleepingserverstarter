@@ -11,24 +11,24 @@ const DefaultLogger = {
 };
 
 export type LoggerType = typeof DefaultLogger;
-let logger = DefaultLogger;
-let initialized = false;
+let _logger = DefaultLogger;
+let _transports  : transport[] =  [new transports.Console()];
+let _initialized = false;
 
 const logFolder = "logs/";
 
 export const getLogger = () => {
   try {
-    if (initialized) {
-      return logger;
+    if (_initialized) {
+      return _logger;
     }
 
     if (process.env.DEFAULT_LOGGER) {
-      initialized = true;
-      logger.info("... Default Logger ...");
-      return logger;
+      _initialized = true;
+      _logger.info("... Default Logger ...");
+      return _logger;
     }
 
-    const loggers: transport[] = [new transports.Console()];
     if (
       !process.env.DISABLE_FILE_LOGS ||
       process.env.DISABLE_FILE_LOGS !== "true"
@@ -36,7 +36,7 @@ export const getLogger = () => {
       if (!existsSync(logFolder)) {
         mkdirSync(logFolder);
       }
-      loggers.push(
+      _transports.push(
         new transports.File({
           filename: `${logFolder}sleepingServer.log`,
           maxsize: 2 * 1024 * 1024,
@@ -45,7 +45,7 @@ export const getLogger = () => {
       );
     }
 
-    logger = createLogger({
+    _logger = createLogger({
       level: "info",
       format: format.combine(
         format.timestamp({
@@ -57,17 +57,21 @@ export const getLogger = () => {
             (info.splat !== undefined ? `${info.splat}` : " ")
         )
       ),
-      transports: loggers,
+      transports: _transports,
     });
   } catch (error) {
-    logger.error("Failed to initialize logger", error);
-    logger = DefaultLogger;
+    _logger.error("Failed to initialize logger", error);
+    _logger = DefaultLogger;
   }
-  initialized = true;
+  _initialized = true;
   const msg = `... A new story begin v${version} ...`;
   const separator = msg.replace(/./g, ".");
-  logger.info(separator);
-  logger.info(msg);
-  logger.info(separator);
-  return logger;
+  _logger.info(separator);
+  _logger.info(msg);
+  _logger.info(separator);
+  return _logger;
 };
+
+export const getTransports = () => {
+  return _transports;
+}

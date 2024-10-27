@@ -2,7 +2,8 @@ import {ISleepingServer} from "./sleepingServerInterface";
 import {PlayerConnectionCallBackType} from "./sleepingTypes";
 import {Settings} from "./sleepingSettings";
 import { Config, Server } from '@jsprismarine/prismarine';
-import {getLogger, LoggerType} from "./sleepingLogger";
+import { Logger as PrismarineLogger } from '@jsprismarine/logger';
+import {getLogger, LoggerType, getTransports} from "./sleepingLogger";
 
 
 
@@ -21,7 +22,10 @@ export class SleepingBedrock implements ISleepingServer {
     this.playerConnectionCallBack = playerConnectionCallBack;
 
     const config = new Config();
-    this.server = new Server({config, logger: this.logger });
+    const prismarineLogger = new PrismarineLogger('info', getTransports());
+    // (prismarineLogger as any).logger = this.logger;
+
+    this.server = new Server({config, logger: prismarineLogger });
     this.server.on("playerConnect", (evt) => {
       console.log('DEBUG SleepingBedrock.playerConnect : (): ', evt);
     });
@@ -40,7 +44,7 @@ export class SleepingBedrock implements ISleepingServer {
     init  = async ()=> {
       console.log('DEBUG SleepingBedrock.init : (): ');
       try {
-        this.logger.info("[BedRock] Starting on", this.settings.bedrockPort);
+        this.logger.info(`[BedRock] Starting on ${this.settings.bedrockPort}` );
         await this.server.bootstrap('0.0.0.0', this.settings.bedrockPort);
 
       }catch(err) {
