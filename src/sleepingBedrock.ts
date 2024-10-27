@@ -1,11 +1,9 @@
-import {ISleepingServer} from "./sleepingServerInterface";
-import {PlayerConnectionCallBackType} from "./sleepingTypes";
-import {Settings} from "./sleepingSettings";
-import { Config, Server } from '@jsprismarine/prismarine';
-import { Logger as PrismarineLogger } from '@jsprismarine/logger';
-import {getLogger, LoggerType, getTransports} from "./sleepingLogger";
-
-
+import { ISleepingServer } from "./sleepingServerInterface";
+import { Player, PlayerConnectionCallBackType } from "./sleepingTypes";
+import { Settings } from "./sleepingSettings";
+import { Config, Server } from "@jsprismarine/prismarine";
+import { Logger as PrismarineLogger } from "@jsprismarine/logger";
+import { getLogger, LoggerType, getTransports } from "./sleepingLogger";
 
 export class SleepingBedrock implements ISleepingServer {
   private settings: Settings;
@@ -14,49 +12,49 @@ export class SleepingBedrock implements ISleepingServer {
   private server: Server;
 
   constructor(
-      settings: Settings,
-      playerConnectionCallBack: PlayerConnectionCallBackType
+    settings: Settings,
+    playerConnectionCallBack: PlayerConnectionCallBackType
   ) {
     this.logger = getLogger();
     this.settings = settings;
     this.playerConnectionCallBack = playerConnectionCallBack;
 
     const config = new Config();
-    const prismarineLogger = new PrismarineLogger('info', getTransports());
-    // (prismarineLogger as any).logger = this.logger;
+    const prismarineLogger = new PrismarineLogger("info");
+    (prismarineLogger as any).logger = this.logger;
 
-    this.server = new Server({config, logger: prismarineLogger });
+    this.server = new Server({ config, logger: prismarineLogger });
     this.server.on("playerConnect", (evt) => {
-      console.log('DEBUG SleepingBedrock.playerConnect : (): ', evt);
+      console.log("DEBUG SleepingBedrock.playerConnect : (): ", evt);
     });
     this.server.on("raknetConnect", (evt) => {
-      console.log('DEBUG SleepingBedrock.raknetConnect : evt(): ', evt);
+      console.log("DEBUG SleepingBedrock.raknetConnect : evt(): ", evt);
+      evt.getRakNetSession().disconnect(this.settings.loginMessage);
+      evt.getRakNetSession().close();
+      this.playerConnectionCallBack(Player.bedrock());
     });
     this.server.on("playerDisconnect", (evt) => {
-      console.log('DEBUG SleepingBedrock.playerDisconnect : evt(): ', evt);
+      console.log("DEBUG SleepingBedrock.playerDisconnect : evt(): ", evt);
     });
     this.server.on("raknetDisconnect", (evt) => {
-      console.log('DEBUG SleepingBedrock.constructor : (): ', evt);
-    })
-
+      console.log("DEBUG SleepingBedrock.constructor : (): ", evt);
+    });
   }
 
-    init  = async ()=> {
-      console.log('DEBUG SleepingBedrock.init : (): ');
-      try {
-        this.logger.info(`[BedRock] Starting on ${this.settings.bedrockPort}` );
-        await this.server.bootstrap('0.0.0.0', this.settings.bedrockPort);
-
-      }catch(err) {
-       this.logger.error(err);
-      }
-      console.log('DEBUG SleepingBedrock.init : AFTER ');
-
+  init = async () => {
+    console.log("DEBUG SleepingBedrock.init : (): ");
+    try {
+      this.logger.info(`[BedRock] Starting on ${this.settings.bedrockPort}`);
+      await this.server.bootstrap("0.0.0.0", this.settings.bedrockPort);
+    } catch (err) {
+      this.logger.error(err);
     }
-    close= async() => {
-      console.log('DEBUG SleepingBedrock.close : (): ');
-      await this.server.shutdown();
-    }
+    console.log("DEBUG SleepingBedrock.init : AFTER ");
+  };
+  close = async () => {
+    console.log("DEBUG SleepingBedrock.close : (): ");
+    await this.server.shutdown();
+  };
 }
 /*
 import Config from "@jsprismarine/prismarine/dist/config/Config";
