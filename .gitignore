@@ -47,6 +47,7 @@ whitelist.json
 bukkit.yml
 commands.yml
 permissions.yml
+permissions.json
 help.yml
 spigot.yml
 server.properties
