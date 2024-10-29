@@ -10,6 +10,7 @@ export class SleepingBedrock implements ISleepingServer {
   private playerConnectionCallBack: PlayerConnectionCallBackType;
   private logger: LoggerType;
   private server: Server;
+  prismarineLogger: PrismarineLogger;
 
   constructor(
     settings: Settings,
@@ -20,10 +21,12 @@ export class SleepingBedrock implements ISleepingServer {
     this.playerConnectionCallBack = playerConnectionCallBack;
 
     const config = new Config();
-    const prismarineLogger = new PrismarineLogger("info");
-    (prismarineLogger as any).logger = this.logger;
+    this.prismarineLogger = new PrismarineLogger("info");
 
-    this.server = new Server({ config, logger: prismarineLogger });
+    (this.prismarineLogger as any).disable = async () => {}; // do not close the logger
+    (this.prismarineLogger as any).logger = this.logger;
+
+    this.server = new Server({ config, logger: this.prismarineLogger });
     this.server.on("playerConnect", (evt) => {
       console.log("DEBUG SleepingBedrock.playerConnect : (): ", evt);
     });
@@ -51,11 +54,18 @@ export class SleepingBedrock implements ISleepingServer {
     }
     console.log("DEBUG SleepingBedrock.init : AFTER ");
   };
+
   close = async () => {
-    console.log("DEBUG SleepingBedrock.close : (): ");
+    console.log("DEBUG SleepingBedrock.close : (): BEGIN");
+
+    const saveExit = process.exit;
+    (process.exit as any) = (code?: number) => {};
     await this.server.shutdown();
+    process.exit = saveExit;
+    console.log("DEBUG SleepingBedrock.close : (): END");
   };
 }
+
 /*
 import Config from "@jsprismarine/prismarine/dist/config/Config";
 import { EventManager } from "@jsprismarine/prismarine/dist/events/EventManager";
