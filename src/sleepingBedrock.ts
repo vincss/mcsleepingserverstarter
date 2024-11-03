@@ -21,12 +21,13 @@ export class SleepingBedrock implements ISleepingServer {
     this.playerConnectionCallBack = playerConnectionCallBack;
 
     const config = new Config();
+    
     this.prismarineLogger = new PrismarineLogger("info");
 
     (this.prismarineLogger as any).disable = async () => {}; // do not close the logger
     (this.prismarineLogger as any).logger = this.logger;
 
-    this.server = new Server({ config, logger: this.prismarineLogger });
+    this.server = new Server({ config, logger: this.prismarineLogger, headless: true });
     this.server.on("playerConnect", (evt) => {
       console.log("DEBUG SleepingBedrock.playerConnect : (): ", evt);
     });
@@ -58,10 +59,10 @@ export class SleepingBedrock implements ISleepingServer {
   close = async () => {
     console.log("DEBUG SleepingBedrock.close : (): BEGIN");
 
-    const saveExit = process.exit;
-    (process.exit as any) = (code?: number) => {};
-    await this.server.shutdown();
-    process.exit = saveExit;
+    // const saveExit = process.exit;
+    // (process.exit as any) = (code?: number) => {};
+    await this.server.shutdown({stayAlive: true});
+    // process.exit = saveExit;
     console.log("DEBUG SleepingBedrock.close : (): END");
   };
 }
