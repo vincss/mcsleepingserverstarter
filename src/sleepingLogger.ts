@@ -12,7 +12,7 @@ const DefaultLogger = {
 
 export type LoggerType = typeof DefaultLogger;
 let _logger = DefaultLogger;
-let _transports  : transport[] =  [new transports.Console()];
+const _transports  : transport[] =  [new transports.Console()];
 let _initialized = false;
 
 const logFolder = "logs/";
