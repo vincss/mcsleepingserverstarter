@@ -176,6 +176,9 @@ Give a ⭐️ if you like the project!
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog
+- 1.11.1 - MC 1.21.x / Bedrock 1.21.40 :
+  - update for node22
+  - switch to @yao-pkg/pkg
 - 1.11.0 - MC 1.21.x / Bedrock 1.21.40 :
   - change discord settings
   - change default useLegacyLogin & serverOnlineMode as a workarround
