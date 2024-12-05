@@ -14,7 +14,7 @@
 ## ✅ Compatible versions
 
 - Minecraft Java: up to
-  1.20.2 [node-minecraft-protocol](https://github.com/PrismarineJS/node-minecraft-protocol)
+  1.20.2 (partial 1.21.3) [node-minecraft-protocol](https://github.com/PrismarineJS/node-minecraft-protocol)
 - Bedrock: 1.21.40 [JSPrismarine](https://github.com/JSPrismarine/JSPrismarine)
 
 ## 🧰 Features
