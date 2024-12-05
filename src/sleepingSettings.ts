@@ -36,7 +36,11 @@ export type Settings = {
   version?: string | false;
   favIcon?: string;
   favIconPath?: string;
-  discordWebhookUrl?: string;
+  discordWebhook?: {
+    url: string;
+    name?: string;
+    avatar?: string;
+  };
   blackListedAddress?: string[];
   whiteListedNames?: string[];
   useWhitelistFile: boolean;
@@ -54,7 +58,8 @@ export const DefaultSettings: Settings = {
   maxPlayers: 20,
 
   loginMessage: "...Waking server up, come back in a minute...",
-  serverOnlineMode: true,
+  serverOnlineMode: false,
+  useLegacyLogin: true,
 
   startMinecraft: true, // false to disable
   minecraftCommand: "java -jar paper.jar nogui",
