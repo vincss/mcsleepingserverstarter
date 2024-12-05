@@ -6,7 +6,8 @@ serverName: "SleepingServer, waiting for his prince..."
 serverPort: 25565
 # bedrockPort: 19132
 loginMessage: "...Waking server up, come back in a minute..."
-serverOnlineMode: true # like in the server.properties, to check the licence of player or not.
+serverOnlineMode: false # like in the server.properties, to check the licence of player or not.
+useLegacyLogin: true
 maxPlayers: 20
 # useNativeFiles: true
 

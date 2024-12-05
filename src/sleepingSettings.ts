@@ -58,7 +58,8 @@ export const DefaultSettings: Settings = {
   maxPlayers: 20,
 
   loginMessage: "...Waking server up, come back in a minute...",
-  serverOnlineMode: true,
+  serverOnlineMode: false,
+  useLegacyLogin: true,
 
   startMinecraft: true, // false to disable
   minecraftCommand: "java -jar paper.jar nogui",

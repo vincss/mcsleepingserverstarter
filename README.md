@@ -176,8 +176,10 @@ Give a ⭐️ if you like the project!
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog
-- To be released
+- 1.11.0 - MC 1.21.x / Bedrock 1.21.40 :
   - change discord settings
+  - change default useLegacyLogin & serverOnlineMode as a workarround
+  - update minecraft-protocol: 1.51.0
 - 1.10.0 - MC 1.20.2 / Bedrock 1.21.40 :
   - update @jsprismarine/prismarine : 0.12.0 ( bedrock 1.21.40 )
 - 1.9.1 - 1.20.2 :
