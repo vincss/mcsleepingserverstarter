@@ -21,7 +21,7 @@
     "@jsprismarine/brigadier": "^0.12.0",
     "@jsprismarine/prismarine": "^0.12.0",
     "@sfirew/minecraft-motd-parser": "^1.1.1",
-    "express": "^4.18.2",
+    "express": "^4.21.1",
     "express-handlebars": "^7.0.4",
     "js-yaml": "^4.1.0",
     "minecraft-protocol": "^1.51.0",
