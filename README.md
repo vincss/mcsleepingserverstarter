@@ -176,6 +176,8 @@ Give a ⭐️ if you like the project!
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog
+- 1.11.2 - MC 1.21.x / Bedrock 1.21.40 :
+  - Add alpine arm64 binary
 - 1.11.1 - MC 1.21.x / Bedrock 1.21.40 :
   - update for node22
   - switch to @yao-pkg/pkg

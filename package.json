@@ -1,6 +1,6 @@
 {
   "name": "mcsleepingserverstarter",
-  "version": "1.11.1",
+  "version": "1.11.2",
   "description": "Sleeps until someone connects",
   "main": "build/sleepingServerStarter.js",
   "bin": "build/sleepingServerStarter.js",
