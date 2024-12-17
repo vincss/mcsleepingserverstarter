@@ -53,3 +53,10 @@ jobs:
       with:
         name: 'Binary MacOS (Intel)'
         path: bin/mcsleepingserverstarter-macos-x64
+    - name: 'Upload Artifact Alpine arm64'
+      uses: actions/upload-artifact@v4
+      with:
+        name: 'Binary Alphine arm64'
+        path: bin/mcsleepingserverstarter-alpine-arm64
+
+
