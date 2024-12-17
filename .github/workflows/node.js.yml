@@ -33,5 +33,4 @@ jobs:
       with:
         name: bin
         path: ./bin
-        retention-days: 1
 
