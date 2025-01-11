@@ -59,14 +59,14 @@ Docker, [see the wiki page here](./wiki/Docker-Configuration).
 
 ### 🐡 PufferPanel
 
-If you're using PufferPanel, you can import [this template](./pufferpanel.json) as JSON to use
+If you're using PufferPanel, you can import [this template](./docs/pufferpanel.json) as JSON to use
 Paper Spigot with
 Sleeping Server Starter via PufferPanel
 
 ### 🐦 Pterodactyl
 
 If you're using Pterodactyl, you can
-import [this egg](./docs//egg-paper-mcsleepingserverstarter.json) as JSON to use
+import [this egg](./docs/egg-paper-mcsleepingserverstarter.json) as JSON to use
 Paper Spigot with Sleeping Server Starter OR you can also
 import [this egg](./docs/egg-vanilla-minecraft-mcsleepingserverstarter.json) as JSON to use Vanilla
 Minecraft with
