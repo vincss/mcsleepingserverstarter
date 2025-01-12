@@ -153,27 +153,36 @@ export function getSettings(): Settings {
 
 export function getAccessSettings(settings: Settings): AccessFileSettings {
   return {
-    whitelistEntries: getWhitelistEntries(settings),
-    bannedIpEntries: getBannerIpEntries(settings),
-    bannedPlayerEntries: getBannerPlayerEntries(settings),
+    whitelistEntries: settings.useWhitelistFile ? getWhitelistEntries(settings) : undefined,
+    bannedIpEntries: settings.useBlacklistFiles ? getBannerIpEntries(settings) : undefined,
+    bannedPlayerEntries: settings.useBlacklistFiles ? getBannerPlayerEntries(settings) : undefined,
   };
 }
 
 export function getWhitelistEntries(
   settings: Settings
 ): WhitelistEntry[] | undefined {
+  if (!settings.useWhitelistFile) {
+    return undefined; // Don't attempt to load if not enabled
+  }
   return loadFile(WhitelistFilePath, "whitelist entries", settings);
 }
 
 export function getBannerIpEntries(
   settings: Settings
 ): BannedIpEntry[] | undefined {
+    if (!settings.useBlacklistFiles) {
+        return undefined; // Don't attempt to load if not enabled
+      }
   return loadFile(BannedIpsFilePath, "banned ips", settings);
 }
 
 export function getBannerPlayerEntries(
   settings: Settings
 ): BannedPlayerEntry[] | undefined {
+    if (!settings.useBlacklistFiles) {
+        return undefined; // Don't attempt to load if not enabled
+      }
   return loadFile(BannedPlayersFilePath, "banned players", settings);
 }
 
