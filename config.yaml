@@ -1,0 +1,19 @@
+log-level: info
+# Replaced by sleepingSettings.yml "bedrockPort"
+# port: 19132
+server-ip: 0.0.0.0
+level-name: world
+worlds:
+    world:
+        generator: Flat
+        provider: Filesystem
+        seed: 4673730961276932
+max-players: 20
+gamemode: survival
+motd: Another JSPrismarine server!
+view-distance: 10
+online-mode: false
+packet-compression-level: 7
+enable-query: true
+enable-process-title: true
+enable-ticking: true

@@ -6,9 +6,16 @@
 serverName: "SleepingServer, waiting for his prince..."
 # The server name to display in Minecraft, defaults to serverName if not set
 # serverMOTD: "SleepingServer, waiting for his prince... [MOTD]"
+
+# Use Minecraft `server.properties` to overwrite 
+# `serverPort`, `maxPlayers`, `serverOnlineMode`, `useWhitelistFile`, 
+# and `useBlacklistFiles` properties
+useNativeFiles: false
+
+# The port of your Java Edition server (0 to disable)
 serverPort: 25565
 # The port of your Bedrock Edition server (0 to disable or add `#`) 
-# bedrockPort: 19132
+bedrockPort: 19132
 # Message shown when the server is off and someone is trying to connect
 loginMessage: "...Waking server up, come back in a minute..."
 # Like in the server.properties, to check the licence of player or not.
@@ -19,16 +26,10 @@ serverOnlineMode: false
 # Maximum amount of players
 maxPlayers: 20
 
-# Use Minecraft `server.properties` to overwrite 
-# `serverPort`, `maxPlayers`, `serverOnlineMode`, `useWhitelistFile`, 
-# and `useBlacklistFiles` properties
-useNativeFiles: false
-
 # Web page port
 # webPort: 8080
 # Stop the web-server when minecraft starts 
 # webStopOnStart: true
-
 # You can specify an absolute path to serve instead or an url to redirect to.
 # true or false to enable, by default it will serve ./plugins/dynmap/web/
 # https://github.com/vincss/mcsleepingserverstarter/wiki/Use-internal-SSS-WebServer-for-dynmap
@@ -41,6 +42,11 @@ startMinecraft: true
 # Server start command
 # paper.jar or whatever flavor you like
 minecraftCommand: "java -jar paper.jar --nogui"
+# Set a custom Working Directory for the server (path to minecraft server folder)
+# Edit this setting only if you know what you are doing!
+# If you don't know what, don't to edit it.
+# minecraftWorkingDirectory: ""
+
 # Automatically start the real server instead of the sleeping one
 minecraftAutostart: false
 # Customise the delay between when the minecraft server stops 
@@ -52,25 +58,33 @@ preventStop: false
 
 # Discord WebHook
 # https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks
+# Setup a Discord WebHook to your channel
 # discordWebhookUrl: "https://discord.com/api/webhooks/REPLACE_ME"
+# Avatar of the bot in the Discord WebHook
+# discordWebhookName: "SleepingServerStarter"
+# Avatar of the bot in the Discord WebHook
+# discordWebhookAvatar: "https://raw.githubusercontent.com/vincss/mcsleepingserverstarter/master/docs/sleepingserver.png"
+
+# Only allow these player name on the white list to wake the server up
+# example ["vincss"]
+# whiteListedNames: [""]
+# Use Minecraft `whitelist.json` instead of the `whiteListedNames` property.
+# Checks both username and UUID
+useWhitelistFile: false
 
 # Prevent connections from those addresses to wake up the server
 # example ["149.102.143.151", "132.145.71.44", "45.128.232.206", "193.35.18."]
 # blackListedAddress: [""]
-# Only allow these player name on the white list to wake the server up
-# example ["vincss"]
-# whiteListedNames: [""]
-
-# Use Minecraft `whitelist.json` instead of the `whiteListedNames` property.
-# Checks both username and UUID
-# useWhitelistFile: false
 # Use Minecraft `banned-ips.json` and `banned-players.json` to prevent players from waking up the server.
 # Can be used together with `blackListedAddress` property
-# useBlacklistFiles: false
+useBlacklistFiles: false
 
 # Use a custom icon 64x64 png 
 # converted using https://www.base64-image.de
 # favIcon: data:image/png;base64,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
+# Path to a PNG file to use as the server icon.
+# If this is set to server-icon.png then it will use the same icon as the server.
+# favIconPath: sss.ico
 
 # Force compatibility with a specific minecraft version.
 # If set to false, it should handle any compatible version.
@@ -81,7 +95,3 @@ hideIpInLogs: true
 # Hide pinging logs
 hideOnConnectionLogs: true
 
-# Set a custom Working Directory for the server (path to minecraft server folder)
-# Edit this setting only if you know what you are doing!
-# If you don't know what, don't to edit it.
-# minecraftWorkingDirectory: ""
