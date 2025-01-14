@@ -20,7 +20,7 @@
     "@jsprismarine/bedrock-data": "^0.12.1",
     "@jsprismarine/brigadier": "^0.12.1",
     "@jsprismarine/prismarine": "^0.12.1",
-    "@sfirew/minecraft-motd-parser": "^1.1.1",
+    "@sfirew/minecraft-motd-parser": "^1.1.3",
     "express": "^4.21.1",
     "express-handlebars": "^7.0.4",
     "js-yaml": "^4.1.0",
