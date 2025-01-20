@@ -6,7 +6,7 @@
   "install": [
     {
       "files": [
-        "https://papermc.io/api/v2/projects/paper/versions/${version}/builds/${build}/downloads/paper-${version}-${build}.jar"
+        "https://api.papermc.io/v2/projects/paper/versions/${version}/builds/${build}/downloads/paper-${version}-${build}.jar"
       ],
       "type": "download"
     },
@@ -28,7 +28,7 @@
     {
       "files": [
         "https://github.com/vincss/mcsleepingserverstarter/releases/latest/download/mcsleepingserverstarter-linux-x64",
-        "https://github.com/vincss/mcEmptyServerStopper/releases/download/v1.0.1/mcEmptyServerStopper-1.0.1.jar"
+        "https://github.com/vincss/mcEmptyServerStopper/releases/download/v1.0.1/mcEmptyServerStopper-1.1.0.jar"
       ],
       "type": "download"
     },
@@ -37,12 +37,12 @@
       "type": "mkdir"
     },
     {
-      "source": "mcEmptyServerStopper-1.0.1.jar",
-      "target": "plugins/mcEmptyServerStopper-1.0.1.jar",
+      "source": "mcEmptyServerStopper-1.1.0.jar",
+      "target": "plugins/mcEmptyServerStopper-1.1.0.jar",
       "type": "move"
     },
     {
-      "commands": ["chmod +x ./mcsleepingserverstarter-linux-x64"],
+      "commands": ["chmod +x mcsleepingserverstarter-linux-x64"],
       "type": "command"
     },
     {
@@ -74,7 +74,7 @@
       "desc": "Build of Paper to install (<a href='https://papermc.io/downloads'>Paper version build</a>). Must be specified as a build number, e.g. 484",
       "display": "build",
       "required": true,
-      "value": "397"
+      "value": "118"
     },
     "eula": {
       "type": "boolean",
@@ -124,20 +124,16 @@
       "desc": "Version of Minecraft to install (<a href='https://papermc.io/downloads'>Paper maintained versions</a>). Must be specified as a release number, e.g. 1.16.5",
       "display": "Version",
       "required": true,
-      "value": "1.17.1"
+      "value": "1.21.4"
     }
   },
   "environment": {
-    "image": "openjdk:16",
+    "image": "openjdk:21",
     "type": "docker"
   },
   "supportedEnvironments": [
     {
       "type": "standard"
-    },
-    {
-      "image": "openjdk:16",
-      "type": "docker"
     }
   ]
 }
