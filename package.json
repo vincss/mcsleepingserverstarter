@@ -1,6 +1,6 @@
 {
   "name": "mcsleepingserverstarter",
-  "version": "1.11.2",
+  "version": "1.11.3",
   "description": "Sleeps until someone connects",
   "main": "build/sleepingServerStarter.js",
   "bin": "build/sleepingServerStarter.js",
@@ -24,7 +24,7 @@
     "express": "^4.21.1",
     "express-handlebars": "^7.0.4",
     "js-yaml": "^4.1.0",
-    "minecraft-protocol": "^1.53.0",
+    "minecraft-protocol": "^1.54.0",
     "prismarine-chat": "^1.8.0",
     "properties-reader": "^2.3.0",
     "winston": "^3.8.2"

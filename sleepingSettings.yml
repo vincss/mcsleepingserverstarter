@@ -4,57 +4,70 @@
 # The name of your server.
 # You can specify (https://motd.gg) by using the `§` prefix.
 serverName: "SleepingServer, waiting for his prince..."
+
 # The server name to display in Minecraft, defaults to serverName if not set
 # serverMOTD: "SleepingServer, waiting for his prince... [MOTD]"
 
 # Use Minecraft `server.properties` to overwrite 
 # `serverPort`, `maxPlayers`, `serverOnlineMode`, `useWhitelistFile`, 
 # and `useBlacklistFiles` properties
-useNativeFiles: false
+#useNativeFiles: false
 
 # The port of your Java Edition server (0 to disable)
 serverPort: 25565
+
 # The port of your Bedrock Edition server (0 to disable or add `#`) 
-bedrockPort: 19132
+#bedrockPort: 19132
+
 # Message shown when the server is off and someone is trying to connect
 loginMessage: "...Waking server up, come back in a minute..."
+
 # Like in the server.properties, to check the licence of player or not.
 serverOnlineMode: false
+
 # Use legacy "login" method
 # https://github.com/PrismarineJS/node-minecraft-protocol/issues/1279#issuecomment-1878866611
-# useLegacyLogin: false
+#useLegacyLogin: false
+
 # Maximum amount of players
 maxPlayers: 20
 
 # Web page port
-# webPort: 8080
+#webPort: 8080
+
 # Stop the web-server when minecraft starts 
-# webStopOnStart: true
+#webStopOnStart: true
+
 # You can specify an absolute path to serve instead or an url to redirect to.
 # true or false to enable, by default it will serve ./plugins/dynmap/web/
 # https://github.com/vincss/mcsleepingserverstarter/wiki/Use-internal-SSS-WebServer-for-dynmap
-# webServeDynmap: false
+#webServeDynmap: false
+
 # Add a button in the web-ui to restart the minecraft server proxy
-# webAllowRestart: false
+#webAllowRestart: false
 
 # Start the Minecraft Server
 startMinecraft: true
+
 # Server start command
 # paper.jar or whatever flavor you like
 minecraftCommand: "java -jar paper.jar --nogui"
+
 # Set a custom Working Directory for the server (path to minecraft server folder)
 # Edit this setting only if you know what you are doing!
 # If you don't know what, don't to edit it.
-# minecraftWorkingDirectory: ""
+#minecraftWorkingDirectory: ""
 
 # Automatically start the real server instead of the sleeping one
-minecraftAutostart: false
+#minecraftAutostart: false
+
 # Customise the delay between when the minecraft server stops 
 # and the sleeping server restarts (to ensure conection are closed)
 # in milliseconds
 restartDelay: 5000
+
 # Prevent the user to stop the server (trought web-server or cli).
-preventStop: false
+#preventStop: false
 
 # Discord WebHook
 # https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks
@@ -67,14 +80,16 @@ preventStop: false
 
 # Only allow these player name on the white list to wake the server up
 # example ["vincss"]
-# whiteListedNames: [""]
+#whiteListedNames: [""]
+
 # Use Minecraft `whitelist.json` instead of the `whiteListedNames` property.
 # Checks both username and UUID
 useWhitelistFile: false
 
 # Prevent connections from those addresses to wake up the server
 # example ["149.102.143.151", "132.145.71.44", "45.128.232.206", "193.35.18."]
-# blackListedAddress: [""]
+#blackListedAddress: [""]
+
 # Use Minecraft `banned-ips.json` and `banned-players.json` to prevent players from waking up the server.
 # Can be used together with `blackListedAddress` property
 useBlacklistFiles: false
@@ -91,7 +106,8 @@ useBlacklistFiles: false
 # version: false
 
 # Hide the ip from the remote player in the logs
-hideIpInLogs: true
+#hideIpInLogs: true
+
 # Hide pinging logs
-hideOnConnectionLogs: true
+#hideOnConnectionLogs: true
 

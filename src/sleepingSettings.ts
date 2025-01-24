@@ -62,7 +62,7 @@ export const DefaultSettings: Settings = {
   useLegacyLogin: true,
 
   startMinecraft: true, // false to disable
-  minecraftCommand: "java -jar paper.jar nogui",
+  minecraftCommand: "java -jar paper.jar --nogui",
   restartDelay: 5000,
   version: false,
   useWhitelistFile: false,
