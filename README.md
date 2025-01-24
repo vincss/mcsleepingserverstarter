@@ -1,6 +1,6 @@
 <div align="center">
-    <img src="https://raw.githubusercontent.com/vincss/mcsleepingserverstarter/master/docs/sleepingserver.png">
     <h1>💤 Welcome to SleepingServerStarter 💤</h1>
+    <img src="./docs/sleepingserver.png">
     <p>
     Put your minecraft server to rest, while SleepingServerStarter is watching! Save power, save the world!
     </p>
@@ -13,9 +13,8 @@
 
 ## ✅ Compatible versions
 
-- Minecraft Java: up to
-  1.20.2 (partial 1.21.3) [node-minecraft-protocol](https://github.com/PrismarineJS/node-minecraft-protocol)
-- Bedrock: 1.21.40 [JSPrismarine](https://github.com/JSPrismarine/JSPrismarine)
+- Minecraft Java: up to 1.20.2 (partial 1.21.3) by [node-minecraft-protocol](https://github.com/PrismarineJS/node-minecraft-protocol)
+- Bedrock: 1.21.40 by [JSPrismarine](https://github.com/JSPrismarine/JSPrismarine)
 
 ## 🧰 Features
 
@@ -23,11 +22,9 @@
   - Option to connect from BedRock _(Portable version of Minecraft)_
   - Web-gui, to turn on or off your server from anywhere
 - When someone connects, immediately launch your minecraft server.
-  - You can also type 'quit' in your console to start minecraft's server.
+  - You can also type 'quit' in your console to start minecraft's server
 
-**Works better with [EmptyServerStopper](https://github.com/vincss/mcEmptyServerStopper), a plugin
-that automatically
-stops your server after a definied amount of time**
+**Works better with [EmptyServerStopper](https://github.com/vincss/mcEmptyServerStopper), a plugin that automatically stops your server after a definied amount of time**
 
 ## 📀 Install
 
@@ -36,14 +33,15 @@ There are multiple ways to run SleepingServerStarter:
 ### 📦 Download the binaries (easiest)
 
 1. [Download binaries](https://github.com/vincss/mcsleepingserverstarter) corresponding to your OS
-2. Place the executable in the same folder as your server file (`spigot.jar`, `paper.jar`, etc...)
+2. Place the executable in the same working directory 
+   - same folder as your server file (`spigot.jar`, `paper.jar`, etc)
 3. Make sure your server is stopped
 4. Run the executable
    - On Linux, try `chmod +x mcsleepingserverstarter-linux-x64` if you can't run the executable
 
 ### 📜 Manually install and compile
 
-0. Requires [NodeJS](https://nodejs.org/en/) v16+
+0. Requires [NodeJS](https://nodejs.org) v16+
 1. Clone the repo or download the project as Zip
 2. Unzip or clone it **in the same folder as your minecraft server**
 3. Launch `npm ci`
@@ -57,7 +55,7 @@ image: [ghcr.io/vincss/mcsleepingserverstarter](https://github.com/vincss/mcslee
 It supports both x64 and arm64 host system architectures.
 
 For detailed examples and instructions for setup via
-Docker, [see the wiki page here](https://github.com/vincss/mcsleepingserverstarter/wiki/Docker-Configuration).
+Docker, [see the wiki page here](./wiki/Docker-Configuration).
 
 ### 🐡 PufferPanel
 
@@ -79,19 +77,24 @@ via [Unofficial pterodactyl-installer](https://github.com/vilhelmprytz/pterodact
 
 ## ⚙️ Settings
 
-> Note: If running from binaries, the settings file will be created after the first execution in the
-> same folder as the
-> executable
+SleepingServerStarter configfile: `sleepingSettings.yml`
+JSPrismarine configfile: `config.yaml`
 
+**Change `sleepingSettings.yml` for Java Edition, Change `config.yaml` for Bedrock Edition**
+`sleepingSettings.yml` except `bedrockPort` for Bedrock Edition
+
+> Note: If running from binaries, the settings file will be created after the first execution in the same folder as the executable.
+
+### SleepingServerStarter config
 
 | Setting                     | Description                                                                                                                                                                                                                              | Default value                                   |
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
-| `serverName`                | The name of your server.<br>You can specify [colour codes](https://motd.gg) by using the `§` prefix (Does not work on Bedrock)                                                                                                           | "SleepingServer, waiting for his prince..."     |
-| `serverMOTD`                | The MOTD to display for Minecraft Servers.<br>You can specify colour codes just as you can for `serverName`. Defaults to `serverName` if not set. (Still does not work on Bedrock)                                                       | Same as `serverName`                            |
+| `serverName`                | The name of your server.<br>You can specify [colour codes](https://motd.gg) by using the `§` prefix.                                                                                                           | "SleepingServer, waiting for his prince..."     |
+| `serverMOTD`                | The MOTD to display for Minecraft Servers.<br>You can specify colour codes just as you can for `serverName`. Defaults to `serverName` if not set.                                                       | SleepingServer, waiting for his prince... [MOTD]      |
 | `serverPort`                | The port of your Java Edition server (0 to disable)                                                                                                                                                                                      | 25565                                           |
 | `bedrockPort`               | The port of your Bedrock Edition server (0 to disable)                                                                                                                                                                                   | 19132                                           |
 | `loginMessage`              | Message shown when the server is off and someone is trying to connect                                                                                                                                                                    | "...Waking server up, come back in a minute..." |
-| `serverOnlineMode`          | Check if players has premium accounts                                                                                                                                                                                                    | true                                            |
+| `serverOnlineMode`          | Check if players has premium accounts                                                                                                                                                                                                    | false                                            |
 | `maxPlayers`                | Maximum amount of players                                                                                                                                                                                                                | 20                                              |
 | `useNativeFiles`            | Use Minecraft `server.properties` to overwrite `serverPort`, `maxPlayers`, `serverOnlineMode`, `useWhitelistFile`, and `useBlacklistFiles` properties                                                                                    | false                                           |
 | `webPort`                   | Port for the Web-Gui                                                                                                                                                                                                                     | 0                                               |
@@ -100,12 +103,12 @@ via [Unofficial pterodactyl-installer](https://github.com/vilhelmprytz/pterodact
 | `webSubPath`                | Set the path to the Web-GUI if serving from behind a reverse proxy                                                                                                                                                                       | ""                                              |
 | `webAllowRestart`           | Add a button in the web-ui to restart the minecraft server proxy                                                                                                                                                                         | false                                           |
 | `startMinecraft`            | Start the Minecraft Server (false to disable)                                                                                                                                                                                            | true                                            |
-| `minecraftCommand`          | The command used to start the server                                                                                                                                                                                                     | "java -jar paper.jar nogui"                     |
+| `minecraftCommand`          | The command used to start the server                                                                                                                                                                                                     | "java -jar paper.jar --nogui"                     |
 | `minecraftAutostart`        | Automatically start the real server instead of the sleeping one                                                                                                                                                                          | false                                           |
 | `restartDelay`              | Customise the delay between when the minecraft server stops and the sleeping server restarts ( to ensure conection are closed ) ( in milliseconds )                                                                                      | 5000                                            |
 | `preventStop`               | Prevent the user to stop the server (trought web-server or cli).                                                                                                                                                                         | false                                           |
 | `minecraftWorkingDirectory` | Set a custom Working Directory for the server **EDIT ONLY IF YOU KNOW WHAT YOU'RE DOING** (should be the path to the server's directory, absolute path is best)                                                                          | ""                                              |
-| `version`                   | Force compatibility with a specific Minecraft. If set to false, it should handle any compatible version                                                                                                                                  | ""                                              |
+| `version`                   | Force compatibility with a specific Minecraft. If set to false, it should handle any compatible version                                                                                                                                  | false                                              |
 | `favIconPath`               | Path to a PNG file to use as the server icon.<br>If this is set to `server-icon.png` then it will use the same icon as the server.                                                                                                       | ""                                              |
 | `favIcon`                   | Use a custom server-icon 64x64 png converted using https://www.base64-image.de/ (needs to be encoded in base64)                                                                                                                          | ""                                              |
 | `discordWebhook.url`         | Setup a [Discord WebHook](https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks) to your channel                                                                                                                     | "REPLACE_ME"                                                                                      |
@@ -123,10 +126,9 @@ via [Unofficial pterodactyl-installer](https://github.com/vilhelmprytz/pterodact
 > normally afterwards
 
 ---
+### JSPrismarine config
 
-#### Use WebServer for dynmap
-
-- [How use with dynamp](https://github.com/vincss/mcsleepingserverstarter/wiki/Use-internal-SSS-WebServer-for-dynmap)
+[JSPrismarine Documents](https://jsprismarine.org/docs)
 
 #### Links :
 
@@ -136,12 +138,10 @@ via [Unofficial pterodactyl-installer](https://github.com/vilhelmprytz/pterodact
 ## 🕸 Bungeecord
 
 While SleepingServerStarter is made to run on a single server, it can be integrated to a Bungeecord
-network. **But
-please note that you'll need to install and configure SleepingServerStarter on every servers you
-want to be affected by
-the program.**
+network. 
+**But please note that you'll need to install and configure SleepingServerStarter on every servers you want to be affected by the program.**
 
-Installing SleepingServerStarter only on your proxy server <u>**will NOT work**</u>
+Installing SleepingServerStarter only on your proxy server will <u>**NOT work**</u>
 
 For each server you're installing SleepingServerStarter on :
 
