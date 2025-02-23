@@ -10,6 +10,7 @@
   "description": "High performance Spigot fork that aims to fix gameplay and mechanics inconsistencies.\r\nPut your minecraft server to rest, while SleepingServerStarter is watching !",
   "features": ["eula", "java_version", "pid_limit"],
   "docker_images": {
+    "Java 21": "ghcr.io\/pterodactyl\/yolks:java_21",
     "Java 17": "ghcr.io/pterodactyl/yolks:java_17",
     "Java 16": "ghcr.io/pterodactyl/yolks:java_16",
     "Java 11": "ghcr.io/pterodactyl/yolks:java_11",
