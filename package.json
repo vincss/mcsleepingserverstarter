@@ -24,6 +24,7 @@
     "express-handlebars": "^8.0.3",
     "js-yaml": "^4.1.0",
     "minecraft-protocol": "^1.62.0",
+    "@zardoy/flying-squid": "^0.0.117",
     "prismarine-chat": "^1.12.0",
     "properties-reader": "^2.3.0",
     "winston": "^3.17.0"

@@ -19,6 +19,7 @@ import {
 } from "./sleepingSettings";
 import { Player, PlayerConnectionCallBackType } from "./sleepingTypes";
 import { SleepingWeb } from "./sleepingWeb";
+import {FlyingSquidServer} from "./flyingSquidServer";
 
 const isWindows = type().includes("Windows");
 
@@ -27,7 +28,9 @@ export class SleepingContainer implements ISleepingServer {
   settings: Settings;
   accessSettings: AccessFileSettings;
 
-  sleepingMcServer?: SleepingMcJava;
+  //sleepingMcServer?: SleepingMcJava;
+  sleepingSquid?: ISleepingServer;
+
   mcProcess?: ChildProcess;
   brServer?: SleepingBedrock;
   webServer?: SleepingWeb;
@@ -57,15 +60,17 @@ export class SleepingContainer implements ISleepingServer {
     }
 
     if (this.settings.serverPort > 0) {
-      this.sleepingMcServer = new SleepingMcJava(
+/*      this.sleepingMcServer = new SleepingMcJava(
         this.playerConnectionCallBack,
         this.settings,
         this.accessSettings
-      );
+      ); */
+      this.sleepingSquid = new FlyingSquidServer(this.settings);
       if (isThisTheBeginning && this.settings.minecraftAutostart) {
         this.startMinecraft();
       } else {
-        await this.sleepingMcServer?.init();
+        // await this.sleepingMcServer?.init();
+        await this.sleepingSquid?.init();
       }
     }
 
@@ -137,8 +142,12 @@ export class SleepingContainer implements ISleepingServer {
   close = async (isThisTheEnd = false) => {
     this.logger.info("[Container] Cleaning up the place.");
 
-    if (this.sleepingMcServer) {
+/*    if (this.sleepingMcServer) {
       await this.sleepingMcServer.close();
+    }*/
+
+    if (this.sleepingSquid) {
+      await this.sleepingSquid.close();
     }
 
     if (this.brServer) {
@@ -217,9 +226,9 @@ export class SleepingContainer implements ISleepingServer {
     this.accessSettings = getAccessSettings(this.settings);
   };
 
-  getStatus = async () => {
+  getStatus = async (): Promise<ServerStatus> => {
     let status = ServerStatus.Stopped;
-    if (this.sleepingMcServer) {
+/*    if (this.sleepingMcServer) {
       status = this.sleepingMcServer?.getStatus();
     }
     if (status !== ServerStatus.Sleeping) {
@@ -229,7 +238,7 @@ export class SleepingContainer implements ISleepingServer {
       } else {
         status = ServerStatus.Starting;
       }
-    }
+    }*/
     return status;
   };
 }
