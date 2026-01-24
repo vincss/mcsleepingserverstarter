@@ -24,7 +24,7 @@
 - When someone connects, immediately launch your minecraft server.
   - You can also type 'quit' in your console to start minecraft's server
 
-**Works better with [EmptyServerStopper](https://github.com/vincss/mcEmptyServerStopper), a plugin that automatically stops your server after a definied amount of time**
+**Works better with [EmptyServerStopper](https://github.com/vincss/mcEmptyServerStopper) (1.13-1.19+) or [NoPlayerShutdown](https://www.curseforge.com/minecraft/mc-mods/no-player-shutdown) (1.20.1-1.21+), a plugin that automatically stops your server after a definied amount of time**
 
 ## 📀 Install
 
