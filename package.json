@@ -11,7 +11,7 @@
     "prebuild": "rimraf ./build/ ./bin/ && cpx-fixed \"views/**/*.*\" build/views",
     "build": "run-s build:typescript build:bin",
     "build:typescript": "tsc",
-    "build:bin": "pkg build/sleepingServerStarter.js --config package.json --compress GZip --target node22-win-x64,node22-linux-x64,node22-linux-arm64,node22-macos-x64,node22-macos-arm64,node22-alpine-arm64 --out-path ./bin/",
+    "build:bin": "pkg build/sleepingServerStarter.js --config package.json --compress GZip --target node24-win-x64,node24-linux-x64,node24-linux-arm64,node24-macos-x64,node24-macos-arm64,node24-alpine-arm64 --out-path ./bin/",
     "lint": "eslint . --ext .ts --fix",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
   },
@@ -43,7 +43,7 @@
     "eslint": "^9.28.0",
     "eslint-config-prettier": "^10.1.5",
     "npm-run-all": "^4.1.5",
-    "@yao-pkg/pkg": "^6.5.1",
+    "@yao-pkg/pkg": "^6.10.1",
     "prettier": "^3.5.3",
     "rimraf": "^6.0.1",
     "ts-jest": "^29.3.4",
@@ -68,7 +68,7 @@
   },
   "homepage": "https://github.com/vincss/mcsleepingserverstarter#readme",
   "engines": {
-    "node": ">=22",
+    "node": ">=24",
     "npm": ">=10"
   },
   "pkg": {
