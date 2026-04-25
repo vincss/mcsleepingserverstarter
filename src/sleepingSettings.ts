@@ -44,6 +44,7 @@ export type Settings = {
   blackListedAddress?: string[];
   whiteListedNames?: string[];
   useWhitelistFile: boolean;
+  whitelistFileUsernameOnly?: boolean;
   useBlacklistFiles: boolean;
   useNativeFiles: boolean;
   hideIpInLogs?: boolean;

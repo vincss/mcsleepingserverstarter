@@ -122,7 +122,9 @@ export const isAccessAllowed = (
       accessSettings.whitelistEntries &&
       !accessSettings.whitelistEntries?.some(
         (whitelistEntry) =>
-          whitelistEntry.name == username && whitelistEntry.uuid == uuid
+          (settings.whitelistFileUsernameOnly
+            ? whitelistEntry.name == username
+            : whitelistEntry.name == username && whitelistEntry.uuid == uuid)
       )
     ) {
       return new AccessStatus(false, "Player is not in the server whitelist");

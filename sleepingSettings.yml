@@ -86,6 +86,10 @@ restartDelay: 5000
 # Checks both username and UUID
 useWhitelistFile: false
 
+# Check only the username in the `whitelist.json` file, ignoring the UUID.
+# Useful if you when the server is in online-mode=false and the UUIDs are not consistent.
+whitelistFileUsernameOnly: false
+
 # Prevent connections from those addresses to wake up the server
 # example ["149.102.143.151", "132.145.71.44", "45.128.232.206", "193.35.18."]
 #blackListedAddress: [""]
