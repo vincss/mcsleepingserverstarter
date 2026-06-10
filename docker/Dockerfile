@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17-jre-jammy
+FROM eclipse-temurin:25-jre-jammy
 
 # Will copy either "mcsleepingserverstarter-linux/amd64" or "mcsleepingserverstarter-linux/arm64"
 # depending on what architecture this image is for
