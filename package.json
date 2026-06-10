@@ -18,7 +18,7 @@
   "dependencies": {
     "@jsprismarine/bedrock-data": "0.13.1",
     "@jsprismarine/brigadier": "0.13.1",
-    "@jsprismarine/prismarine": "0.13.1",
+    "@jsprismarine/prismarine": "0.13.5",
     "@sfirew/minecraft-motd-parser": "^1.1.6",
     "express": "^5.1.0",
     "express-handlebars": "^8.0.3",
