@@ -1,4 +1,11 @@
-import { Client, createServer, Server, ServerClient } from "minecraft-protocol";
+import { createServer, Server as NetServer, Socket } from "net";
+import {
+  encodePacket,
+  encodeString,
+  readPacket,
+  readString,
+  readVarInt,
+} from "./sleepingMcJavaProtocol";
 import {
   getFavIcon,
   getMOTD,
@@ -9,9 +16,12 @@ import { getLogger, LoggerType } from "./sleepingLogger";
 import { ISleepingServer } from "./sleepingServerInterface";
 import { AccessFileSettings, Settings } from "./sleepingSettings";
 import { Player, PlayerConnectionCallBackType } from "./sleepingTypes";
+import { LATEST_MINECRAFT_VERSION } from "./version";
+
+const MaxPacketLength = 2 * 1024 * 1024;
 
 export class SleepingMcJava implements ISleepingServer {
-  server?: Server;
+  server?: NetServer;
 
   settings: Settings;
   accessSettings: AccessFileSettings;
@@ -23,7 +33,7 @@ export class SleepingMcJava implements ISleepingServer {
   constructor(
     playerConnectionCallBack: PlayerConnectionCallBackType,
     settings: Settings,
-    accessSettings: AccessFileSettings
+    accessSettings: AccessFileSettings,
   ) {
     this.settings = settings;
     this.accessSettings = accessSettings;
@@ -31,38 +41,22 @@ export class SleepingMcJava implements ISleepingServer {
     this.logger = getLogger();
   }
 
-  getIp = (client: Client) => {
-    return this.settings.hideIpInLogs ? "" : `_${client.socket.remoteAddress}`;
+  getIp = (socket: Socket) => {
+    return this.settings.hideIpInLogs ? "" : `_${socket.remoteAddress}`;
   };
 
   init = async () => {
-    this.server = createServer({
-      "online-mode": this.settings.serverOnlineMode,
-      motdMsg: getMOTD(this.settings, "json"),
-      port: this.settings.serverPort,
-      maxPlayers: this.settings.maxPlayers,
-      version: this.settings.version,
-      beforePing: (reponse) => {
-        reponse.favicon = getFavIcon(this.settings);
-      },
-      validateChannelProtocol: true,
-      errorHandler: (client, error) =>
-        console.warn("SleepingMcJava.errorHandler: ", client, error),
-      enforceSecureProfile: this.settings.serverOnlineMode,
-      // encryption: false,
-      // host: '0.0.0.0',
-    });
+    this.server = createServer((socket) => this.onConnection(socket));
+    this.server.listen(this.settings.serverPort);
 
     this.logger.info(
-      `[McJava] Waiting for a Prince to come. [${this.settings.serverPort}]`
+      `[McJava] Waiting for a Prince to come. [${this.settings.serverPort}]`,
     );
 
-    this.server.on("connection", (client: Client) => {
+    this.server.on("connection", (client: Socket) => {
       !this.settings.hideOnConnectionLogs &&
         this.logger.info(
-          `A Prince has taken a quick peek. [${client.version}${this.getIp(
-            client
-          )}]`
+          `A Prince has taken a quick peek. [${this.getIp(client)}]`,
         );
     });
 
@@ -70,61 +64,147 @@ export class SleepingMcJava implements ISleepingServer {
       this.logger.info("[McJava] Ready for battle");
     });
 
-    if (this.settings.useLegacyLogin) {
-      this.server.on("login", this.onLogin);
-    } else {
-      this.server.on("playerJoin", this.onLogin);
-    }
-
     this.server.on("error", (error) => {
       this.logger.error(`Something went wrong in wonderland ${error.message}`);
     });
   };
 
-  onLogin = (client: ServerClient) => {
-    {
-      const userName = client.username;
-      const player = Player.fromClient(client);
+  onConnection = (socket: Socket) => {
+    let buffer = Buffer.alloc(0);
+    let state: "handshake" | "status" | "login" = "handshake";
+    let protocolVersion = 0;
 
-      const accessStatus = isAccessAllowed(
-        player,
-        this.settings,
-        this.accessSettings
-      );
-      if (!accessStatus.allowed) {
-        this.logger.info(
-          `${player}.${client.state}:[${client.socket.remoteAddress}], rejected: ${accessStatus.reason}.`
-        );
-        client.end("You are not on the guest list.");
+    socket.on("data", (data) => {
+      buffer = Buffer.concat([buffer, data]);
+      if (buffer.length > MaxPacketLength) {
+        socket.destroy();
         return;
       }
 
-      if (this.isClosing) {
-        this.logger.info(
-          `Prince ${userName}.${client.state}, someone came before you...`
-        );
-        client.on("end", (client) => {
-          this.logger.info(`${userName} is gone.`, client);
-        });
-        client.end(this.settings.loginMessage);
-        return;
+      try {
+        while (true) {
+          const packet = readPacket(buffer);
+          if (!packet) {
+            return;
+          }
+          buffer = buffer.subarray(packet.bytesRead);
+
+          if (state === "handshake") {
+            if (packet.id !== 0) {
+              socket.destroy();
+              return;
+            }
+            const version = readVarInt(packet.payload);
+            const host =
+              version && readString(packet.payload, version.bytesRead);
+            if (!version || !host) {
+              socket.destroy();
+              return;
+            }
+            const nextStateOffset = version.bytesRead + host.bytesRead + 2;
+            const nextState = readVarInt(packet.payload, nextStateOffset);
+            if (
+              !nextState ||
+              (nextState.value !== 1 && nextState.value !== 2)
+            ) {
+              socket.destroy();
+              return;
+            }
+            protocolVersion = version.value;
+            state = nextState.value === 1 ? "status" : "login";
+            continue;
+          }
+
+          if (state === "status") {
+            if (packet.id === 0) {
+              socket.write(
+                encodePacket(
+                  0,
+                  encodeString(
+                    JSON.stringify(this.createStatusResponse(protocolVersion)),
+                  ),
+                ),
+              );
+              continue;
+            }
+            if (packet.id === 1 && packet.payload.length === 8) {
+              socket.end(encodePacket(1, packet.payload));
+              return;
+            }
+            socket.destroy();
+            return;
+          }
+
+          if (packet.id === 0) {
+            const username = readString(packet.payload, 0);
+            if (!username || !/^[A-Za-z0-9_]{1,16}$/.test(username.value)) {
+              socket.destroy();
+              return;
+            }
+            this.onLogin(socket, username.value);
+            return;
+          }
+          socket.destroy();
+          return;
+        }
+      } catch {
+        socket.destroy();
       }
-      this.isClosing = true;
+    });
 
-      this.logger.info(
-        `Prince [${userName}.${client.state}${this.getIp(
-          client
-        )}] has come, time to wake up.`
-      );
-
-      client.on("end", (client) => {
-        this.logger.info(`[${player}] The prince is gone, for now`, client);
-        this.playerConnectionCallBack(player);
-      });
-      this.logger.info(`Sending best regards ${this.settings.loginMessage}`);
-      client.end(this.settings.loginMessage);
-    }
+    socket.on("error", () => undefined);
   };
+
+  onLogin = (socket: Socket, userName: string) => {
+    const player = Player.fromConnection(userName, socket.remoteAddress);
+    const accessStatus = isAccessAllowed(
+      player,
+      this.settings,
+      this.accessSettings,
+    );
+    if (!accessStatus.allowed) {
+      this.logger.info(
+        `${player}:[${socket.remoteAddress}], rejected: ${accessStatus.reason}.`,
+      );
+      this.sendLoginDisconnect(socket, "You are not on the guest list.");
+      return;
+    }
+
+    if (this.isClosing) {
+      this.logger.info(`Prince ${userName}, someone came before you...`);
+      this.sendLoginDisconnect(socket, this.settings.loginMessage);
+      return;
+    }
+    this.isClosing = true;
+
+    this.logger.info(
+      `Prince [${userName}${this.getIp(socket)}] has come, time to wake up.`,
+    );
+    this.logger.info(`Sending best regards ${this.settings.loginMessage}`);
+    socket.once("close", () => {
+      this.logger.info(`[${player}] The prince is gone, for now`);
+      this.playerConnectionCallBack(player);
+    });
+    this.sendLoginDisconnect(socket, this.settings.loginMessage);
+  };
+
+  private createStatusResponse(protocolVersion: number) {
+    return {
+      version: {
+        name: this.settings.version || LATEST_MINECRAFT_VERSION,
+        protocol: protocolVersion,
+      },
+      players: { max: this.settings.maxPlayers, online: 0 },
+      description: getMOTD(this.settings, "json"),
+      favicon: getFavIcon(this.settings),
+    };
+  }
+
+  private sendLoginDisconnect(socket: Socket, message: string) {
+    socket.end(
+      encodePacket(0, encodeString(JSON.stringify({ text: message }))),
+    );
+  }
 
   close = async () => {
     this.logger.info("[McJava] Closing");

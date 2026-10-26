@@ -48,7 +48,6 @@ export type Settings = {
   useNativeFiles: boolean;
   hideIpInLogs?: boolean;
   hideOnConnectionLogs?: boolean;
-  useLegacyLogin?: boolean;
 };
 
 export const DefaultSettings: Settings = {
@@ -59,7 +58,6 @@ export const DefaultSettings: Settings = {
 
   loginMessage: "...Waking server up, come back in a minute...",
   serverOnlineMode: false,
-  useLegacyLogin: true,
 
   startMinecraft: true, // false to disable
   minecraftCommand: "java -jar paper.jar --nogui",
