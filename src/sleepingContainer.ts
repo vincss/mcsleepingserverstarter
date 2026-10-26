@@ -1,6 +1,6 @@
 import { ChildProcess, execSync, spawn } from "child_process";
 import { type } from "os";
-import { SleepingBedrock } from "./sleepingBedrock";
+import { SleepingBedrock } from "./bedrock/sleepingBedrock";
 import { SleepingDiscord } from "./sleepingDiscord";
 import {
   getMinecraftDirectory,
@@ -9,7 +9,7 @@ import {
   ServerStatus,
 } from "./sleepingHelper";
 import { getLogger, LoggerType, version } from "./sleepingLogger";
-import { SleepingMcJava } from "./sleepingMcJava";
+import { SleepingMcJava } from "./java/sleepingMcJava";
 import { ISleepingServer } from "./sleepingServerInterface";
 import {
   getSettings,

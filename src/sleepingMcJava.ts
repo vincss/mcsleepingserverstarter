@@ -1,11 +1,12 @@
 import { createServer, Server as NetServer, Socket } from "net";
+import { encodePacket, encodeString } from "./sleepingMcJavaProtocol";
 import {
-  encodePacket,
-  encodeString,
+  isStatusRequest,
+  parseHandshake,
+  parseLoginStart,
+  parseStatusPing,
   readPacket,
-  readString,
-  readVarInt,
-} from "./sleepingMcJavaProtocol";
+} from "./sleepingMcJavaParser";
 import {
   getFavIcon,
   getMOTD,
@@ -90,33 +91,18 @@ export class SleepingMcJava implements ISleepingServer {
           buffer = buffer.subarray(packet.bytesRead);
 
           if (state === "handshake") {
-            if (packet.id !== 0) {
+            const handshake = parseHandshake(packet);
+            if (!handshake) {
               socket.destroy();
               return;
             }
-            const version = readVarInt(packet.payload);
-            const host =
-              version && readString(packet.payload, version.bytesRead);
-            if (!version || !host) {
-              socket.destroy();
-              return;
-            }
-            const nextStateOffset = version.bytesRead + host.bytesRead + 2;
-            const nextState = readVarInt(packet.payload, nextStateOffset);
-            if (
-              !nextState ||
-              (nextState.value !== 1 && nextState.value !== 2)
-            ) {
-              socket.destroy();
-              return;
-            }
-            protocolVersion = version.value;
-            state = nextState.value === 1 ? "status" : "login";
+            protocolVersion = handshake.protocolVersion;
+            state = handshake.nextState;
             continue;
           }
 
           if (state === "status") {
-            if (packet.id === 0) {
+            if (isStatusRequest(packet)) {
               socket.write(
                 encodePacket(
                   0,
@@ -127,21 +113,18 @@ export class SleepingMcJava implements ISleepingServer {
               );
               continue;
             }
-            if (packet.id === 1 && packet.payload.length === 8) {
-              socket.end(encodePacket(1, packet.payload));
+            const ping = parseStatusPing(packet);
+            if (ping) {
+              socket.end(encodePacket(1, ping));
               return;
             }
             socket.destroy();
             return;
           }
 
-          if (packet.id === 0) {
-            const username = readString(packet.payload, 0);
-            if (!username || !/^[A-Za-z0-9_]{1,16}$/.test(username.value)) {
-              socket.destroy();
-              return;
-            }
-            this.onLogin(socket, username.value);
+          const username = parseLoginStart(packet);
+          if (username) {
+            this.onLogin(socket, username);
             return;
           }
           socket.destroy();

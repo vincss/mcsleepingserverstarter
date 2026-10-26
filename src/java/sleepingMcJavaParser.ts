@@ -4,14 +4,9 @@ export type DecodedPacket = {
   bytesRead: number;
 };
 
-export const encodeVarInt = (value: number): Buffer => {
-  const bytes: number[] = [];
-  while ((value & 0xffffff80) !== 0) {
-    bytes.push((value & 0x7f) | 0x80);
-    value >>>= 7;
-  }
-  bytes.push(value & 0x7f);
-  return Buffer.from(bytes);
+export type JavaHandshake = {
+  protocolVersion: number;
+  nextState: "status" | "login";
 };
 
 export const readVarInt = (
@@ -32,11 +27,6 @@ export const readVarInt = (
     }
   }
   return undefined;
-};
-
-export const encodeString = (value: string): Buffer => {
-  const text = Buffer.from(value, "utf8");
-  return Buffer.concat([encodeVarInt(text.length), text]);
 };
 
 export const readString = (
@@ -61,11 +51,6 @@ export const readString = (
   };
 };
 
-export const encodePacket = (id: number, payload: Buffer): Buffer => {
-  const packet = Buffer.concat([encodeVarInt(id), payload]);
-  return Buffer.concat([encodeVarInt(packet.length), packet]);
-};
-
 export const readPacket = (buffer: Buffer): DecodedPacket | undefined => {
   const length = readVarInt(buffer);
   if (!length) {
@@ -88,4 +73,47 @@ export const readPacket = (buffer: Buffer): DecodedPacket | undefined => {
     payload: buffer.subarray(payloadStart, packetEnd),
     bytesRead: packetEnd,
   };
+};
+
+export const parseHandshake = (
+  packet: DecodedPacket,
+): JavaHandshake | undefined => {
+  if (packet.id !== 0) {
+    return undefined;
+  }
+
+  const protocol = readVarInt(packet.payload);
+  const host = protocol && readString(packet.payload, protocol.bytesRead);
+  if (!protocol || !host) {
+    return undefined;
+  }
+
+  const nextState = readVarInt(
+    packet.payload,
+    protocol.bytesRead + host.bytesRead + 2,
+  );
+  if (!nextState || (nextState.value !== 1 && nextState.value !== 2)) {
+    return undefined;
+  }
+
+  return {
+    protocolVersion: protocol.value,
+    nextState: nextState.value === 1 ? "status" : "login",
+  };
+};
+
+export const isStatusRequest = (packet: DecodedPacket) =>
+  packet.id === 0 && packet.payload.length === 0;
+
+export const parseStatusPing = (packet: DecodedPacket) =>
+  packet.id === 1 && packet.payload.length === 8 ? packet.payload : undefined;
+
+export const parseLoginStart = (packet: DecodedPacket) => {
+  if (packet.id !== 0) {
+    return undefined;
+  }
+  const username = readString(packet.payload, 0)?.value;
+  return username && /^[A-Za-z0-9_]{1,16}$/.test(username)
+    ? username
+    : undefined;
 };

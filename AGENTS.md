@@ -11,8 +11,8 @@ SleepingServerStarter is a Node.js and TypeScript service that starts a Minecraf
 
 ## Protocol Scope
 
-- The Java listener in `src/sleepingMcJava.ts` implements only TCP handshake, server status and ping, and login-start handling. It disconnects clients to prompt server startup; it is not a Minecraft world server and does not authenticate accounts.
-- The Bedrock listener in `src/sleepingBedrock.ts` implements RakNet discovery and the connection handshake, then disconnects at `NEW_INCOMING_CONNECTION`. It does not implement Bedrock world login or gameplay.
+- Java protocol code and tests live in `src/java/`. The listener implements only TCP handshake, server status and ping, and login-start handling. It disconnects clients to prompt server startup; it is not a Minecraft world server and does not authenticate accounts.
+- Bedrock protocol code and tests live in `src/bedrock/`. The listener implements RakNet discovery and the connection handshake, then disconnects at `NEW_INCOMING_CONNECTION`. It does not implement Bedrock world login or gameplay.
 - Keep protocol changes dependency-free unless the task explicitly requires a protocol library. Preserve packet framing and response behavior with focused protocol tests.
 - Keep player access decisions in the existing access-checking flow. Java identity is an offline UUID; do not treat the supplied username as authenticated account identity.
 

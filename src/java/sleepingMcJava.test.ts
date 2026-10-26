@@ -1,14 +1,13 @@
 import { AddressInfo, connect } from "net";
-import { DefaultSettings } from "./sleepingSettings";
-import { Player } from "./sleepingTypes";
+import { DefaultSettings } from "../sleepingSettings";
+import { Player } from "../sleepingTypes";
 import { SleepingMcJava } from "./sleepingMcJava";
 import {
   encodePacket,
   encodeString,
   encodeVarInt,
-  readPacket,
-  readString,
 } from "./sleepingMcJavaProtocol";
+import { readPacket, readString } from "./sleepingMcJavaParser";
 
 const createHandshake = (port: number, nextState: number) => {
   const serverPort = Buffer.alloc(2);

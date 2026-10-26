@@ -1,9 +1,9 @@
 import { AddressInfo } from "net";
 import { createSocket, Socket } from "dgram";
 import { SleepingBedrock } from "./sleepingBedrock";
-import { DefaultSettings } from "./sleepingSettings";
-import { Player } from "./sleepingTypes";
-import { RakNetMagic } from "./sleepingBedrockProtocol";
+import { DefaultSettings } from "../sleepingSettings";
+import { Player } from "../sleepingTypes";
+import { RakNetMagic } from "./sleepingBedrockParser";
 
 const writeTriadLE = (value: number) => {
   const result = Buffer.alloc(3);

@@ -1,33 +1,22 @@
 import { randomBytes } from "crypto";
 import { createSocket, RemoteInfo, Socket } from "dgram";
-import { ISleepingServer } from "./sleepingServerInterface";
-import { Player, PlayerConnectionCallBackType } from "./sleepingTypes";
-import { Settings } from "./sleepingSettings";
-import { getLogger, LoggerType } from "./sleepingLogger";
+import { ISleepingServer } from "../sleepingServerInterface";
+import { Player, PlayerConnectionCallBackType } from "../sleepingTypes";
+import { Settings } from "../sleepingSettings";
+import { getLogger, LoggerType } from "../sleepingLogger";
 import {
   createConnectionAccepted,
   createDisconnectFrameSet,
   createOpenConnectionReply1,
   createOpenConnectionReply2,
   createPong,
-  getFramePayloads,
-  isRakNetMagic,
-  readOpenConnectionRequest2,
-  readSequenceNumber,
   writeAck,
 } from "./sleepingBedrockProtocol";
+import { BedrockPacket, parseBedrockDatagram } from "./sleepingBedrockParser";
 
 type RakNetSession = {
   outputSequenceNumber: number;
 };
-
-const RakNetProtocolVersion = 11;
-const ConnectedPingPacket = 0x01;
-const UnconnectedPingPacket = 0x02;
-const OpenConnectionRequest1Packet = 0x05;
-const OpenConnectionRequest2Packet = 0x07;
-const ConnectionRequestPacket = 0x09;
-const NewIncomingConnectionPacket = 0x13;
 
 export class SleepingBedrock implements ISleepingServer {
   private settings: Settings;
@@ -67,34 +56,40 @@ export class SleepingBedrock implements ISleepingServer {
 
   onMessage = (message: Buffer, remote: RemoteInfo) => {
     try {
-      switch (message[0]) {
-        case ConnectedPingPacket:
-        case UnconnectedPingPacket:
-          this.handlePing(message, remote);
+      const packet = parseBedrockDatagram(message);
+      if (!packet) {
+        return;
+      }
+
+      switch (packet.type) {
+        case "ping":
+          this.handlePing(packet, remote);
           break;
-        case OpenConnectionRequest1Packet:
-          this.handleOpenConnectionRequest1(message, remote);
+        case "open_connection_request_1":
+          this.send(
+            createOpenConnectionReply1(this.serverGuid, packet.mtuSize),
+            remote,
+          );
           break;
-        case OpenConnectionRequest2Packet:
-          this.handleOpenConnectionRequest2(message, remote);
+        case "open_connection_request_2":
+          this.handleOpenConnectionRequest2(packet.mtuSize, remote);
           break;
-        default:
-          if ((message[0] & 0xf0) === 0x80) {
-            this.handleFrameSet(message, remote);
-          }
+        case "frame_set":
+          this.handleFrameSet(packet, remote);
+          break;
       }
     } catch {
       // Ignore malformed and unsupported datagrams.
     }
   };
 
-  private handlePing(message: Buffer, remote: RemoteInfo) {
-    if (message.length < 25 || !isRakNetMagic(message, 9)) {
-      return;
-    }
+  private handlePing(
+    packet: Extract<BedrockPacket, { type: "ping" }>,
+    remote: RemoteInfo,
+  ) {
     this.send(
       createPong(
-        message.subarray(1, 9),
+        packet.timestamp,
         this.serverGuid,
         this.settings.serverName,
         this.settings.maxPlayers,
@@ -104,28 +99,7 @@ export class SleepingBedrock implements ISleepingServer {
     );
   }
 
-  private handleOpenConnectionRequest1(message: Buffer, remote: RemoteInfo) {
-    if (
-      message.length < 18 ||
-      !isRakNetMagic(message, 1) ||
-      message[17] !== RakNetProtocolVersion
-    ) {
-      return;
-    }
-    this.send(
-      createOpenConnectionReply1(
-        this.serverGuid,
-        Math.min(message.length + 28, 1492),
-      ),
-      remote,
-    );
-  }
-
-  private handleOpenConnectionRequest2(message: Buffer, remote: RemoteInfo) {
-    if (message.length < 34 || !isRakNetMagic(message, 1)) {
-      return;
-    }
-    const { mtuSize } = readOpenConnectionRequest2(message);
+  private handleOpenConnectionRequest2(mtuSize: number, remote: RemoteInfo) {
     this.sessions.set(this.getSessionKey(remote), { outputSequenceNumber: 0 });
     this.send(
       createOpenConnectionReply2(this.serverGuid, remote, mtuSize),
@@ -133,28 +107,31 @@ export class SleepingBedrock implements ISleepingServer {
     );
   }
 
-  private handleFrameSet(message: Buffer, remote: RemoteInfo) {
+  private handleFrameSet(
+    packet: Extract<BedrockPacket, { type: "frame_set" }>,
+    remote: RemoteInfo,
+  ) {
     const key = this.getSessionKey(remote);
     const session = this.sessions.get(key);
     if (!session) {
       return;
     }
 
-    this.send(writeAck(readSequenceNumber(message)), remote);
-    for (const payload of getFramePayloads(message)) {
-      switch (payload[0]) {
-        case ConnectionRequestPacket:
+    this.send(writeAck(packet.sequenceNumber), remote);
+    for (const controlPacket of packet.packets) {
+      switch (controlPacket.type) {
+        case "connection_request":
           this.send(
             createConnectionAccepted(
               remote,
-              payload.readBigInt64BE(9),
+              controlPacket.timestamp,
               BigInt(Date.now()),
               session.outputSequenceNumber++,
             ),
             remote,
           );
           break;
-        case NewIncomingConnectionPacket:
+        case "new_incoming_connection":
           this.disconnectClient(key, session, remote);
           return;
       }

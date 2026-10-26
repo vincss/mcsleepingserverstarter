@@ -2,10 +2,8 @@ import {
   encodePacket,
   encodeString,
   encodeVarInt,
-  readPacket,
-  readString,
-  readVarInt,
 } from "./sleepingMcJavaProtocol";
+import { readPacket, readString, readVarInt } from "./sleepingMcJavaParser";
 
 test("reads fragmented packets and protocol strings", () => {
   const frame = encodePacket(0, encodeString("Prince"));

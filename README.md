@@ -166,6 +166,7 @@ Give a ⭐️ if you like the project!
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog
+- 2.0.0 - Replace protocol dependencies with lightweight Java and Bedrock connection handlers; organize protocol files by edition.
 - 1.11.4 - MC 1.21.x / Bedrock 1.21.40 : 
   - update minecraft-protocol: 1.57.0 
   - update @jsprismarine/prismarine: 0.13.1 

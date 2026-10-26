@@ -1,9 +1,5 @@
 import { RemoteInfo } from "dgram";
-
-export const RakNetMagic = Buffer.from(
-  "00ffff00fefefefefdfdfdfd12345678",
-  "hex",
-);
+import { RakNetMagic } from "./sleepingBedrockParser";
 
 const writeLong = (value: bigint) => {
   const buffer = Buffer.alloc(8);
@@ -30,10 +26,6 @@ const writeAddress = (address: string, port: number) => {
   buffer.writeUInt16BE(port, 5);
   return buffer;
 };
-
-export const isRakNetMagic = (buffer: Buffer, offset: number) =>
-  buffer.length >= offset + RakNetMagic.length &&
-  buffer.subarray(offset, offset + RakNetMagic.length).equals(RakNetMagic);
 
 export const createPong = (
   timestamp: Buffer,
@@ -84,10 +76,6 @@ export const createOpenConnectionReply1 = (
   ]);
 };
 
-export const readOpenConnectionRequest2 = (message: Buffer) => ({
-  mtuSize: message.readUInt16BE(24),
-});
-
 export const createOpenConnectionReply2 = (
   serverGuid: bigint,
   remote: RemoteInfo,
@@ -105,40 +93,8 @@ export const createOpenConnectionReply2 = (
   ]);
 };
 
-export const readSequenceNumber = (message: Buffer) => message.readUIntLE(1, 3);
-
 export const writeAck = (sequenceNumber: number) =>
   Buffer.concat([Buffer.from([0xc0, 0, 1, 1]), writeTriadLE(sequenceNumber)]);
-
-export const getFramePayloads = (message: Buffer) => {
-  const payloads: Buffer[] = [];
-  let offset = 4;
-  while (offset + 3 <= message.length) {
-    const header = message[offset++];
-    const reliability = (header & 0xe0) >> 5;
-    const length = Math.ceil(message.readUInt16BE(offset) / 8);
-    offset += 2;
-    if ([2, 3, 4, 6, 7].includes(reliability)) {
-      offset += 3;
-    }
-    if ([1, 4].includes(reliability)) {
-      offset += 3;
-    }
-    if ([1, 3, 4, 7].includes(reliability)) {
-      offset += 4;
-    }
-    if ((header & 0x10) !== 0) {
-      offset += 10;
-      throw new Error("Fragmented RakNet packets are unsupported");
-    }
-    if (offset + length > message.length) {
-      throw new Error("Truncated RakNet frame");
-    }
-    payloads.push(message.subarray(offset, offset + length));
-    offset += length;
-  }
-  return payloads;
-};
 
 export const createConnectionAccepted = (
   remote: RemoteInfo,
