@@ -107,7 +107,7 @@ jobs:
           merge-multiple: true
       - run: |
           tag_name="${GITHUB_REF##*/}"
-          gh release create "$tag_name" ./bin/*
+          gh release create "$tag_name" ./bin/* --repo "$GITHUB_REPOSITORY"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
