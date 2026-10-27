@@ -1,6 +1,6 @@
 {
   "name": "mcsleepingserverstarter",
-  "version": "1.11.4",
+  "version": "2.0.0",
   "description": "Sleeps until someone connects",
   "main": "build/sleepingServerStarter.js",
   "bin": "build/sleepingServerStarter.js",
@@ -16,14 +16,10 @@
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
   },
   "dependencies": {
-    "@jsprismarine/bedrock-data": "0.13.1",
-    "@jsprismarine/brigadier": "0.13.1",
-    "@jsprismarine/prismarine": "0.13.1",
     "@sfirew/minecraft-motd-parser": "^1.1.6",
     "express": "^5.1.0",
     "express-handlebars": "^8.0.3",
     "js-yaml": "^4.1.0",
-    "minecraft-protocol": "1.54.0",
     "prismarine-chat": "^1.12.0",
     "properties-reader": "^2.3.0",
     "winston": "^3.17.0"

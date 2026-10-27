@@ -6,15 +6,15 @@
     </p>
     <p>
 
-[Tutorial Video](https://youtu.be/WqvQISpr6-s) | [Based on minecraft-protocol](https://github.com/PrismarineJS/node-minecraft-protocol) | [Based on JSPrismarine](https://github.com/JSPrismarine/JSPrismarine) | [Original idea](https://github.com/tustin2121/MCSignOnDoor)
+[Tutorial Video](https://youtu.be/WqvQISpr6-s) | [Original idea](https://github.com/tustin2121/MCSignOnDoor)
 
 </p>
 </div>
 
 ## ✅ Compatible versions
 
-- Minecraft Java: up to 1.20.2 (partial 1.21.3) by [node-minecraft-protocol](https://github.com/PrismarineJS/node-minecraft-protocol)
-- Bedrock: 1.21.40 by [JSPrismarine](https://github.com/JSPrismarine/JSPrismarine)
+- Minecraft Java: clients using the standard Java handshake and login-start packets (account verification is not performed)
+- Bedrock: basic RakNet discovery and connection handling; clients are disconnected before world login
 
 ## 🧰 Features
 
@@ -77,11 +77,7 @@ via [Unofficial pterodactyl-installer](https://github.com/vilhelmprytz/pterodact
 
 ## ⚙️ Settings
 
-SleepingServerStarter configfile: `sleepingSettings.yml`
-JSPrismarine configfile: `config.yaml`
-
-**Change `sleepingSettings.yml` for Java Edition, Change `config.yaml` for Bedrock Edition**
-`sleepingSettings.yml` except `bedrockPort` for Bedrock Edition
+Configure both Java and Bedrock listeners in `sleepingSettings.yml`.
 
 > Note: If running from binaries, the settings file will be created after the first execution in the same folder as the executable.
 
@@ -94,7 +90,6 @@ JSPrismarine configfile: `config.yaml`
 | `serverPort`                | The port of your Java Edition server (0 to disable)                                                                                                                                                                                      | 25565                                           |
 | `bedrockPort`               | The port of your Bedrock Edition server (0 to disable)                                                                                                                                                                                   | 19132                                           |
 | `loginMessage`              | Message shown when the server is off and someone is trying to connect                                                                                                                                                                    | "...Waking server up, come back in a minute..." |
-| `serverOnlineMode`          | Check if players has premium accounts                                                                                                                                                                                                    | false                                            |
 | `maxPlayers`                | Maximum amount of players                                                                                                                                                                                                                | 20                                              |
 | `useNativeFiles`            | Use Minecraft `server.properties` to overwrite `serverPort`, `maxPlayers`, `serverOnlineMode`, `useWhitelistFile`, and `useBlacklistFiles` properties                                                                                    | false                                           |
 | `webPort`                   | Port for the Web-Gui                                                                                                                                                                                                                     | 0                                               |
@@ -120,15 +115,9 @@ JSPrismarine configfile: `config.yaml`
 | `useBlacklistFiles`         | Use Minecraft `banned-ips.json` and `banned-players.json` to prevent players from waking up the server. Can be used together with `blackListedAddress` property                                                                          | false                                           |
 | `hideIpInLogs`              | Hide the ip from the remote player in the logs                                                                                                                                                                                           | false                                           |
 | `hideOnConnectionLogs`      | Hide 'A Prince has taken a quick peek' the logs                                                                                                                                                                                          | false                                           |
-| `useLegacyLogin`            | use legacy "login" method from [minecraft-protocol](https://github.com/PrismarineJS/node-minecraft-protocol/issues/1279#issuecomment-1878866611)                                                                                         | false                                           |
 
 > Note: if you need to shutdown the program, simply input a `ctrl + c`, the program will shut down
 > normally afterwards
-
----
-### JSPrismarine config
-
-[JSPrismarine Documents](https://jsprismarine.org/docs)
 
 #### Links :
 
@@ -176,6 +165,7 @@ Give a ⭐️ if you like the project!
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/vincss)
 
 ## 📜 ChangeLog
+- 2.0.0 - Replace protocol dependencies with lightweight Java and Bedrock connection handlers; organize protocol files by edition.
 - 1.11.4 - MC 1.21.x / Bedrock 1.21.40 : 
   - update minecraft-protocol: 1.57.0 
   - update @jsprismarine/prismarine: 0.13.1 
