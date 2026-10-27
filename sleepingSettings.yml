@@ -22,13 +22,6 @@ serverPort: 25565
 # Message shown when the server is off and someone is trying to connect
 loginMessage: "...Waking server up, come back in a minute..."
 
-# Like in the server.properties, to check the licence of player or not.
-serverOnlineMode: false
-
-# Use legacy "login" method
-# https://github.com/PrismarineJS/node-minecraft-protocol/issues/1279#issuecomment-1878866611
-#useLegacyLogin: false
-
 # Maximum amount of players
 maxPlayers: 20
 
