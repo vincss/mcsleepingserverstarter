@@ -6,11 +6,15 @@ describe("getMOTD", () => {
     expect(
       getMOTD({ ...DefaultSettings, serverName: "§aGreen §lBold" }, "json"),
     ).toEqual({
-      text: "",
-      extra: [
-        { text: "Green ", extra: [], color: "green" },
-        { text: "Bold", extra: [], bold: true, color: "green" },
-      ],
+      text: "Green ",
+      extra: [{ text: "Bold", bold: true, color: "green" }],
+      color: "green",
     });
+  });
+
+  it("omits empty component extras for an unformatted server name", () => {
+    expect(
+      getMOTD({ ...DefaultSettings, serverName: "Server name" }, "json"),
+    ).toEqual({ text: "Server name" });
   });
 });

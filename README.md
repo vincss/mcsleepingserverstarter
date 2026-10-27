@@ -99,7 +99,7 @@ Configure both Java and Bedrock listeners in `sleepingSettings.yml`.
 | `bedrockPort`               | The port of your Bedrock Edition server (0 to disable)                                                                                                                                                                                   | 19132                                           |
 | `loginMessage`              | Message shown when the server is off and someone is trying to connect                                                                                                                                                                    | "...Waking server up, come back in a minute..." |
 | `maxPlayers`                | Maximum amount of players                                                                                                                                                                                                                | 20                                              |
-| `useNativeFiles`            | Use Minecraft `server.properties` to overwrite `serverPort`, `maxPlayers`, `serverOnlineMode`, `useWhitelistFile`, and `useBlacklistFiles` properties                                                                                    | false                                           |
+| `useNativeFiles`            | Use Minecraft `server.properties` to overwrite `serverPort`, `maxPlayers`, `useWhitelistFile`, and `useBlacklistFiles` properties                                                                                                        | false                                           |
 | `webPort`                   | Port for the Web-Gui                                                                                                                                                                                                                     | 0                                               |
 | `webStopOnStart`            | Stop the web-server when minecraft starts                                                                                                                                                                                                | false                                           |
 | `webServeDynmap`            | true or an absolute path to enable it, by default it will serve './plugins/dynmap/web/'. You can specify an absolute path to serve instead or an url to redirect to. [How use with dynamp](./wiki/Use-internal-SSS-WebServer-for-dynmap) | false                                           |
@@ -142,10 +142,7 @@ Installing SleepingServerStarter only on your proxy server will <u>**NOT work**<
 
 For each server you're installing SleepingServerStarter on :
 
-- the `serverPort` should be the port of the server you're installing the program on, not the
-  proxy's port
-- make sure `serverOnlineMode` is set to `false` to avoid any problems with Bungee when switching
-  between servers
+- set `serverPort` to the port of the server you're installing the program on, not the proxy's port
 
 We know this can be a little bit time consuming, but this solution is working great
 

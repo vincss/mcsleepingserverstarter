@@ -8,8 +8,8 @@ serverName: "SleepingServer, waiting for his prince..."
 # The server name to display in Minecraft, defaults to serverName if not set
 # serverMOTD: "SleepingServer, waiting for his prince... [MOTD]"
 
-# Use Minecraft `server.properties` to overwrite 
-# `serverPort`, `maxPlayers`, `serverOnlineMode`, `useWhitelistFile`, 
+# Use Minecraft `server.properties` to overwrite
+# `serverPort`, `maxPlayers`, `useWhitelistFile`,
 # and `useBlacklistFiles` properties
 #useNativeFiles: false
 
@@ -103,4 +103,3 @@ useBlacklistFiles: false
 
 # Hide pinging logs
 #hideOnConnectionLogs: true
-

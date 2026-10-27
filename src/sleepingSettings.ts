@@ -21,7 +21,6 @@ export type Settings = {
   bedrockPort?: number;
   maxPlayers: number;
   loginMessage: string;
-  serverOnlineMode: boolean;
   webPort?: number;
   webStopOnStart?: boolean;
   webServeDynmap?: boolean | string;
@@ -57,7 +56,6 @@ export const DefaultSettings: Settings = {
   maxPlayers: 20,
 
   loginMessage: "...Waking server up, come back in a minute...",
-  serverOnlineMode: false,
 
   startMinecraft: true, // false to disable
   minecraftCommand: "java -jar paper.jar --nogui",
@@ -193,16 +191,12 @@ export function applyNativeProperties(settings: Settings) {
 
   const portProperty = properties.get("query.port");
   const maxPlayersProperty = properties.get("max-players");
-  const serverOnlineModeProperty = properties.get("online-mode");
   const useWhitelistFileProperty = properties.get("white-list");
   if (portProperty) {
     settings.serverPort = portProperty.valueOf() as number;
   }
   if (maxPlayersProperty) {
     settings.maxPlayers = maxPlayersProperty.valueOf() as number;
-  }
-  if (serverOnlineModeProperty) {
-    settings.serverOnlineMode = serverOnlineModeProperty.valueOf() as boolean;
   }
   if (useWhitelistFileProperty) {
     settings.useWhitelistFile = useWhitelistFileProperty.valueOf() as boolean;

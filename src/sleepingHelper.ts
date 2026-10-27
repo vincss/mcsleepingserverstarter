@@ -4,6 +4,7 @@ import { createConnection } from "net";
 import {
   autoToHTML,
   cleanCodes,
+  isMotdJSONType,
   textToJSON,
 } from "@sfirew/minecraft-motd-parser";
 import { getLogger } from "./sleepingLogger";
@@ -93,13 +94,29 @@ export const getMOTD = (
     return autoToHTML(motd);
   }
 
-  const motdJson = textToJSON(motd);
-  for (const component of motdJson.extra) {
-    if (typeof component.color === "string") {
+  const parsedMotd = textToJSON(motd);
+  const [rootComponent, ...extraComponents] = parsedMotd.extra;
+  const motdJson: (typeof parsedMotd.extra)[number] = rootComponent
+    ? {
+        ...rootComponent,
+        ...(extraComponents.length > 0 ? { extra: extraComponents } : {}),
+      }
+    : { text: motd };
+  const normalizeComponent = (component: (typeof parsedMotd.extra)[number]) => {
+    if ("color" in component && typeof component.color === "string") {
       component.color =
         legacyMinecraftColors[component.color.toUpperCase()] ?? component.color;
     }
-  }
+    for (const child of component.extra ?? []) {
+      if (isMotdJSONType(child)) {
+        normalizeComponent(child);
+      }
+    }
+    if (component.extra && component.extra.length === 0) {
+      delete component.extra;
+    }
+  };
+  normalizeComponent(motdJson);
   return motdJson;
 };
 
