@@ -59,8 +59,8 @@ test("handles login without account authentication and still applies access rule
   });
   const settings = {
     ...DefaultSettings,
+    serverName: "§aJava status server name",
     serverPort: 0,
-    serverOnlineMode: true,
     whiteListedNames: ["Tester"],
     hideOnConnectionLogs: true,
   };
@@ -120,7 +120,10 @@ test("handles login without account authentication and still applies access rule
     const { status, pong } = await statusResponse;
     expect(status.players.max).toBe(settings.maxPlayers);
     expect(status.players.online).toBe(0);
-    expect(JSON.stringify(status.description)).toContain(settings.serverName);
+    expect(status.description).toEqual({
+      text: "Java status server name",
+      color: "green",
+    });
     expect(pong).toEqual(pingPayload);
 
     expect(JSON.parse(await sendLogin(address.port, "Intruder"))).toEqual({

@@ -1,67 +1,129 @@
-# https://github.com/actions/create-release
-# https://github.com/actions/upload-release-asset
-
 name: Create release
 
 on:
   push:
-    # Sequence of patterns matched against refs/tags
     tags:
-      - "v*" # Push events to matching v*, i.e. v1.0, v20.15.10
+      - "v*"
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
+permissions:
+  contents: read
+
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [22.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 24.x
+          cache: npm
       - run: npm ci
-      - run: npm run build --if-present
-      - run: npm run test --if-present
-      - name: Save executables
-        uses: actions/upload-artifact@v4
+      - run: npm run build:typescript
+      - run: npm test
+
+  build:
+    needs: test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - target: win-x64
+            os: windows-latest
+          - target: linux-x64
+            os: ubuntu-latest
+          - target: linux-arm64
+            os: ubuntu-24.04-arm
+          - target: macos-x64
+            os: macos-15-intel
+          - target: macos-arm64
+            os: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          name: bin
-          path: ./bin
+          node-version: 24.x
+          cache: npm
+      - run: npm ci
+      - name: Install UPX (Windows)
+        if: matrix.target == 'win-x64'
+        shell: pwsh
+        run: |
+          $archive = Join-Path $env:RUNNER_TEMP "upx.zip"
+          $extractPath = Join-Path $env:RUNNER_TEMP "upx"
+          Invoke-WebRequest "https://github.com/upx/upx/releases/download/v5.2.1/upx-5.2.1-win64.zip" -OutFile $archive
+          if ((Get-FileHash $archive -Algorithm SHA256).Hash.ToLower() -ne "eabc6792a347d45e945be7748423e7868fd01b0d2bcaa2f4b1031fd71ff69bda") { throw "UPX archive checksum mismatch" }
+          Expand-Archive $archive -DestinationPath $extractPath
+          Add-Content $env:GITHUB_PATH (Join-Path $extractPath "upx-5.2.1-win64")
+      - run: npm run build
+        env:
+          SEA_TARGET: ${{ matrix.target }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: binaries-${{ matrix.target }}
+          path: bin/mcsleepingserverstarter-*
+          if-no-files-found: error
+          retention-days: 1
+
+  build-alpine:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
+      - name: Build Alpine ARM64 executable
+        run: |
+          docker run --rm --platform linux/arm64 \
+            -e SEA_TARGET=alpine-arm64 \
+            -v "$GITHUB_WORKSPACE:/workspace" \
+            -w /workspace \
+            node:24-alpine \
+            sh -euc '
+              npm ci
+              SEA_TARGET=alpine-arm64 npm run build
+            '
+      - uses: actions/upload-artifact@v4
+        with:
+          name: binaries-alpine-arm64
+          path: bin/mcsleepingserverstarter-*
+          if-no-files-found: error
           retention-days: 1
 
   release:
     runs-on: ubuntu-latest
-    needs: build
+    needs: [build, build-alpine]
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v4
-      - name: Retrieve saved executables
-        uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v4
         with:
-          name: bin
+          pattern: binaries-*
           path: ./bin
+          merge-multiple: true
       - run: |
           tag_name="${GITHUB_REF##*/}"
           gh release create "$tag_name" ./bin/*
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build_docker:
     runs-on: ubuntu-latest
-    needs: build
+    needs: [build, build-alpine]
+    permissions:
+      contents: read
+      packages: write
     steps:
       - uses: actions/checkout@v4
-      - name: Retrieve saved executables
-        uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v4
         with:
-          name: bin
+          pattern: binaries-*
           path: ./bin
+          merge-multiple: true
       - name: Log in to the Container registry
         uses: docker/login-action@v2
         with:

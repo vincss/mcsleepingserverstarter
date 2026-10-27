@@ -1,8 +1,10 @@
 import express, { Express } from "express";
-import { existsSync } from "fs";
+import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "fs";
 import { engine } from "express-handlebars";
 import * as http from "http";
 import path from "path";
+import { getAsset, getAssetKeys, isSea } from "node:sea";
+import { tmpdir } from "node:os";
 import { SleepingContainer } from "./sleepingContainer";
 import {
   getFavIcon,
@@ -16,6 +18,8 @@ import { Settings } from "./sleepingSettings";
 import { Player, PlayerConnectionCallBackType } from "./sleepingTypes";
 import { Socket } from "node:net";
 
+let seaViewsDirectory: string | undefined;
+
 export class SleepingWeb implements ISleepingServer {
   settings: Settings;
   sleepingContainer: SleepingContainer;
@@ -28,7 +32,7 @@ export class SleepingWeb implements ISleepingServer {
   constructor(
     settings: Settings,
     playerConnectionCallBack: PlayerConnectionCallBackType,
-    sleepingContainer: SleepingContainer
+    sleepingContainer: SleepingContainer,
   ) {
     this.settings = settings;
     if (this.settings.webSubPath) {
@@ -46,11 +50,13 @@ export class SleepingWeb implements ISleepingServer {
   };
 
   init = async () => {
+    const viewsDirectory = getViewsDirectory();
+
     this.app.engine(
       "hbs",
       engine({
         defaultLayout: "main",
-        layoutsDir: path.join(__dirname, "./views/layouts/"),
+        layoutsDir: path.join(viewsDirectory, "layouts"),
         extname: ".hbs",
         helpers: {
           title: () => {
@@ -66,24 +72,24 @@ export class SleepingWeb implements ISleepingServer {
             return `${this.webPath}/layouts/main.css`;
           },
         },
-      })
+      }),
     );
 
     this.app.set("view engine", "hbs");
     this.app.use(
       `${this.webPath}/layouts`,
-      express.static(path.join(__dirname, "./views/layouts"))
+      express.static(path.join(viewsDirectory, "layouts")),
     );
 
     this.app.use(
       `${this.webPath}/res`,
-      express.static(path.join(__dirname, "./views/res"))
+      express.static(path.join(viewsDirectory, "res")),
     );
 
     this.configureDynmap();
 
     this.app.get(`${this.webPath}/`, (req, res) => {
-      res.render(path.join(__dirname, "./views/home"), {
+      res.render(path.join(viewsDirectory, "home"), {
         message: this.settings.loginMessage,
       });
     });
@@ -97,8 +103,8 @@ export class SleepingWeb implements ISleepingServer {
           {
             this.logger.info(
               `[WebServer]${this.getIp(
-                req.socket
-              )} Wake up server was ${currentStatus}`
+                req.socket,
+              )} Wake up server was ${currentStatus}`,
             );
             this.playerConnectionCallBack(Player.web());
           }
@@ -107,8 +113,8 @@ export class SleepingWeb implements ISleepingServer {
           {
             this.logger.info(
               `[WebServer]${this.getIp(
-                req.socket
-              )} Stopping server was ${currentStatus}`
+                req.socket,
+              )} Stopping server was ${currentStatus}`,
             );
             this.sleepingContainer.killMinecraft();
           }
@@ -117,14 +123,14 @@ export class SleepingWeb implements ISleepingServer {
           {
             this.logger.info(
               `[WebServer]${this.getIp(
-                req.socket
-              )} Doing nothing server was ${currentStatus}`
+                req.socket,
+              )} Doing nothing server was ${currentStatus}`,
             );
           }
           break;
         default: {
           this.logger.warn(
-            `[WebServer]${this.getIp(req.socket)} Server is ?! ${currentStatus}`
+            `[WebServer]${this.getIp(req.socket)} Server is ?! ${currentStatus}`,
           );
         }
       }
@@ -152,7 +158,7 @@ export class SleepingWeb implements ISleepingServer {
 
     this.server = this.app.listen(this.settings.webPort, () => {
       this.logger.info(
-        `[WebServer] Starting web server on *: ${this.settings.webPort}`
+        `[WebServer] Starting web server on *: ${this.settings.webPort}`,
       );
     });
   };
@@ -168,7 +174,7 @@ export class SleepingWeb implements ISleepingServer {
       } else {
         dynmapPath = path.join(
           getMinecraftDirectory(this.settings),
-          "plugins/dynmap/web"
+          "plugins/dynmap/web",
         );
       }
       this.logger.info(`[WebServer] Serving dynmap: ${dynmapPath}`);
@@ -186,3 +192,35 @@ export class SleepingWeb implements ISleepingServer {
     }
   };
 }
+
+const getViewsDirectory = () => {
+  if (!isSea()) {
+    return path.join(__dirname, "views");
+  }
+  if (seaViewsDirectory) {
+    return seaViewsDirectory;
+  }
+
+  const viewsDirectory = mkdtempSync(
+    path.join(tmpdir(), "mcsleepingserverstarter-"),
+  );
+  for (const assetKey of getAssetKeys()) {
+    if (!assetKey.startsWith("views/")) {
+      continue;
+    }
+
+    const relativePath = assetKey.slice("views/".length);
+    const assetPath = path.resolve(viewsDirectory, relativePath);
+    if (!assetPath.startsWith(`${viewsDirectory}${path.sep}`)) {
+      throw new Error(`Invalid embedded view path: ${assetKey}`);
+    }
+    mkdirSync(path.dirname(assetPath), { recursive: true });
+    writeFileSync(assetPath, Buffer.from(getAsset(assetKey)));
+  }
+
+  process.once("exit", () => {
+    rmSync(viewsDirectory, { recursive: true, force: true });
+  });
+  seaViewsDirectory = viewsDirectory;
+  return viewsDirectory;
+};

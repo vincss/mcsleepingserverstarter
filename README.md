@@ -41,11 +41,20 @@ There are multiple ways to run SleepingServerStarter:
 
 ### 📜 Manually install and compile
 
-0. Requires [NodeJS](https://nodejs.org) v16+
+0. Requires [NodeJS](https://nodejs.org) v24 LTS or later
 1. Clone the repo or download the project as Zip
 2. Unzip or clone it **in the same folder as your minecraft server**
 3. Launch `npm ci`
 4. Start the project with `npm start`
+
+To build a standalone executable for the current platform, run `npm run build`.
+The build uses Node.js Single Executable Applications and embeds the web interface
+assets in the executable. Windows builds are compressed with UPX 5.2.1; install
+UPX to build that target locally. Linux SEA binaries are not UPX-compressed
+because UPX cannot currently pack their ELF layout. UPX is not used for macOS
+because its current releases do not support macOS executables. Compressed
+executables may trigger antivirus false positives. CI builds Windows x64, Linux
+x64 and arm64, macOS x64 and arm64, and Alpine Linux arm64 releases.
 
 ### 🐋 Docker
 
@@ -91,7 +100,7 @@ Configure both Java and Bedrock listeners in `sleepingSettings.yml`.
 | `bedrockPort`               | The port of your Bedrock Edition server (0 to disable)                                                                                                                                                                                   | 19132                                           |
 | `loginMessage`              | Message shown when the server is off and someone is trying to connect                                                                                                                                                                    | "...Waking server up, come back in a minute..." |
 | `maxPlayers`                | Maximum amount of players                                                                                                                                                                                                                | 20                                              |
-| `useNativeFiles`            | Use Minecraft `server.properties` to overwrite `serverPort`, `maxPlayers`, `serverOnlineMode`, `useWhitelistFile`, and `useBlacklistFiles` properties                                                                                    | false                                           |
+| `useNativeFiles`            | Use Minecraft `server.properties` to overwrite `serverPort`, `maxPlayers`, `useWhitelistFile`, and `useBlacklistFiles` properties                                                                                                        | false                                           |
 | `webPort`                   | Port for the Web-Gui                                                                                                                                                                                                                     | 0                                               |
 | `webStopOnStart`            | Stop the web-server when minecraft starts                                                                                                                                                                                                | false                                           |
 | `webServeDynmap`            | true or an absolute path to enable it, by default it will serve './plugins/dynmap/web/'. You can specify an absolute path to serve instead or an url to redirect to. [How use with dynamp](./wiki/Use-internal-SSS-WebServer-for-dynmap) | false                                           |
@@ -134,10 +143,7 @@ Installing SleepingServerStarter only on your proxy server will <u>**NOT work**<
 
 For each server you're installing SleepingServerStarter on :
 
-- the `serverPort` should be the port of the server you're installing the program on, not the
-  proxy's port
-- make sure `serverOnlineMode` is set to `false` to avoid any problems with Bungee when switching
-  between servers
+- set `serverPort` to the port of the server you're installing the program on, not the proxy's port
 
 We know this can be a little bit time consuming, but this solution is working great
 
