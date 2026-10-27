@@ -53,17 +53,20 @@ jobs:
 
   build-alpine:
     needs: test
-    runs-on: ubuntu-24.04-arm
-    container:
-      image: node:24-alpine
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: npm ci
-        shell: sh
-      - run: npm run build
-        shell: sh
-        env:
-          SEA_TARGET: alpine-arm64
+      - uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
+      - name: Build Alpine ARM64 executable
+        run: |
+          docker run --rm --platform linux/arm64 \
+            -e SEA_TARGET=alpine-arm64 \
+            -v "$GITHUB_WORKSPACE:/workspace" \
+            -w /workspace \
+            node:24-alpine \
+            sh -c "npm ci && npm run build"
       - uses: actions/upload-artifact@v4
         with:
           name: binaries-alpine-arm64
