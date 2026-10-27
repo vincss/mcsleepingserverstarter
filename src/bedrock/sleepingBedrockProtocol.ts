@@ -47,7 +47,8 @@ export const createPong = (
     "1",
     String(port),
     String(port),
-  ].join(";");
+    "0",
+  ].join(";") + ";";
   const name = Buffer.from(motd, "utf8");
   const length = Buffer.alloc(2);
   length.writeUInt16BE(name.length);
@@ -101,6 +102,8 @@ export const createConnectionAccepted = (
   requestTimestamp: bigint,
   acceptedTimestamp: bigint,
   sequenceNumber: number,
+  reliableIndex: number,
+  orderingIndex: number,
 ) => {
   const unknown = writeAddress("0.0.0.0", 0);
   const local = writeAddress("127.0.0.1", 0);
@@ -113,20 +116,42 @@ export const createConnectionAccepted = (
     writeLong(requestTimestamp),
     writeLong(acceptedTimestamp),
   ]);
-  return createFrameSet(sequenceNumber, accepted);
+  return createReliableOrderedFrameSet(
+    sequenceNumber,
+    reliableIndex,
+    orderingIndex,
+    accepted,
+  );
 };
 
-export const createDisconnectFrameSet = (sequenceNumber: number) =>
-  createFrameSet(sequenceNumber, Buffer.from([0x15]));
+export const createDisconnectFrameSet = (
+  sequenceNumber: number,
+  reliableIndex: number,
+  orderingIndex: number,
+) =>
+  createReliableOrderedFrameSet(
+    sequenceNumber,
+    reliableIndex,
+    orderingIndex,
+    Buffer.from([0x15]),
+  );
 
-const createFrameSet = (sequenceNumber: number, payload: Buffer) => {
+const createReliableOrderedFrameSet = (
+  sequenceNumber: number,
+  reliableIndex: number,
+  orderingIndex: number,
+  payload: Buffer,
+) => {
   const bitLength = Buffer.alloc(2);
   bitLength.writeUInt16BE(payload.length * 8);
   return Buffer.concat([
     Buffer.from([0x80]),
     writeTriadLE(sequenceNumber),
-    Buffer.from([0]),
+    Buffer.from([0x60]),
     bitLength,
+    writeTriadLE(reliableIndex),
+    writeTriadLE(orderingIndex),
+    Buffer.from([0]),
     payload,
   ]);
 };

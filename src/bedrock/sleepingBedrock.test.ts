@@ -11,6 +11,23 @@ const writeTriadLE = (value: number) => {
   return result;
 };
 
+const writeAddress = (address: string, port: number) => {
+  const buffer = Buffer.alloc(7);
+  const octets = address.split(".").map(Number);
+  buffer[0] = 4;
+  for (let index = 0; index < 4; index++) {
+    buffer[index + 1] = ~octets[index] & 0xff;
+  }
+  buffer.writeUInt16BE(port, 5);
+  return buffer;
+};
+
+const writeLong = (value: bigint) => {
+  const buffer = Buffer.alloc(8);
+  buffer.writeBigUInt64BE(value);
+  return buffer;
+};
+
 const waitForPacket = (socket: Socket, packetId: number) =>
   new Promise<Buffer>((resolve, reject) => {
     const timeout = setTimeout(() => {
@@ -44,7 +61,12 @@ const send = (socket: Socket, port: number, packet: Buffer) =>
     ),
   );
 
-const createFrameSet = (sequenceNumber: number, payload: Buffer) => {
+const createFrameSet = (
+  sequenceNumber: number,
+  reliableIndex: number,
+  orderingIndex: number,
+  payload: Buffer,
+) => {
   const bitLength = Buffer.alloc(2);
   bitLength.writeUInt16BE(payload.length * 8);
   return Buffer.concat([
@@ -52,7 +74,9 @@ const createFrameSet = (sequenceNumber: number, payload: Buffer) => {
     writeTriadLE(sequenceNumber),
     Buffer.from([0x60]),
     bitLength,
-    Buffer.alloc(7),
+    writeTriadLE(reliableIndex),
+    writeTriadLE(orderingIndex),
+    Buffer.from([0]),
     payload,
   ]);
 };
@@ -82,8 +106,23 @@ test("completes RakNet handshake, disconnects, and wakes the server", async () =
     const pongPacket = await pong;
     const motdLength = pongPacket.readUInt16BE(33);
     const motd = pongPacket.toString("utf8", 35, 35 + motdLength);
-    expect(motd.split(";")[1]).toBe(settings.serverName);
-    expect(motd.split(";")[5]).toBe(String(settings.maxPlayers));
+    expect(motd.split(";")).toEqual([
+      "MCPE",
+      settings.serverName,
+      "748",
+      "1.21.40",
+      "0",
+      String(settings.maxPlayers),
+      expect.any(String),
+      settings.serverName,
+      "Survival",
+      "1",
+      String(settings.bedrockPort),
+      String(settings.bedrockPort),
+      "0",
+      "",
+    ]);
+    expect(motdLength).toBe(Buffer.byteLength(motd));
 
     const reply1 = waitForPacket(client, 0x06);
     await send(
@@ -109,16 +148,36 @@ test("completes RakNet handshake, disconnects, and wakes the server", async () =
     await reply2;
 
     const accepted = waitForPacket(client, 0x80);
-    const connectionRequest = Buffer.alloc(17);
+    const requestTimestamp = BigInt(Date.now());
+    const connectionRequest = Buffer.alloc(18);
     connectionRequest[0] = 0x09;
-    connectionRequest.writeBigInt64BE(BigInt(Date.now()), 9);
-    await send(client, address.port, createFrameSet(0, connectionRequest));
-    await accepted;
+    connectionRequest.writeBigUInt64BE(requestTimestamp, 9);
+    await send(client, address.port, createFrameSet(0, 0, 0, connectionRequest));
+    const acceptedFrameSet = await accepted;
+    expect(acceptedFrameSet[4]).toBe(0x60);
+    expect(acceptedFrameSet.readUIntLE(7, 3)).toBe(0);
+    expect(acceptedFrameSet.readUIntLE(10, 3)).toBe(0);
+    expect(acceptedFrameSet[14]).toBe(0x10);
 
     const disconnect = waitForPacket(client, 0x80);
-    await send(client, address.port, createFrameSet(1, Buffer.from([0x13])));
+    const acceptedPayload = acceptedFrameSet.subarray(14);
+    const newIncomingConnection = Buffer.concat([
+      Buffer.from([0x13]),
+      writeAddress("127.0.0.1", address.port),
+      ...Array.from({ length: 20 }, () => writeAddress("0.0.0.0", 0)),
+      writeLong(acceptedPayload.readBigUInt64BE(150)),
+      writeLong(acceptedPayload.readBigUInt64BE(158)),
+    ]);
+    await send(
+      client,
+      address.port,
+      createFrameSet(1, 1, 1, newIncomingConnection),
+    );
     const disconnectFrameSet = await disconnect;
-    expect(disconnectFrameSet.includes(0x15)).toBe(true);
+    expect(disconnectFrameSet[4]).toBe(0x60);
+    expect(disconnectFrameSet.readUIntLE(7, 3)).toBe(1);
+    expect(disconnectFrameSet.readUIntLE(10, 3)).toBe(1);
+    expect(disconnectFrameSet[14]).toBe(0x15);
     expect(await playerConnected).toMatchObject({
       playerName: "A BedRock Player",
       realUser: false,

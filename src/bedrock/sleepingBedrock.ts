@@ -16,6 +16,8 @@ import { BedrockPacket, parseBedrockDatagram } from "./sleepingBedrockParser";
 
 type RakNetSession = {
   outputSequenceNumber: number;
+  outputReliableIndex: number;
+  outputOrderingIndex: number;
 };
 
 export class SleepingBedrock implements ISleepingServer {
@@ -100,7 +102,11 @@ export class SleepingBedrock implements ISleepingServer {
   }
 
   private handleOpenConnectionRequest2(mtuSize: number, remote: RemoteInfo) {
-    this.sessions.set(this.getSessionKey(remote), { outputSequenceNumber: 0 });
+    this.sessions.set(this.getSessionKey(remote), {
+      outputSequenceNumber: 0,
+      outputReliableIndex: 0,
+      outputOrderingIndex: 0,
+    });
     this.send(
       createOpenConnectionReply2(this.serverGuid, remote, mtuSize),
       remote,
@@ -127,6 +133,8 @@ export class SleepingBedrock implements ISleepingServer {
               controlPacket.timestamp,
               BigInt(Date.now()),
               session.outputSequenceNumber++,
+              session.outputReliableIndex++,
+              session.outputOrderingIndex++,
             ),
             remote,
           );
@@ -143,7 +151,14 @@ export class SleepingBedrock implements ISleepingServer {
     session: RakNetSession,
     remote: RemoteInfo,
   ) {
-    this.send(createDisconnectFrameSet(session.outputSequenceNumber), remote);
+    this.send(
+      createDisconnectFrameSet(
+        session.outputSequenceNumber++,
+        session.outputReliableIndex++,
+        session.outputOrderingIndex++,
+      ),
+      remote,
+    );
     this.sessions.delete(key);
     this.logger.info(
       `[BedRock] A player connected ${this.settings.hideIpInLogs ? "" : remote.address}`,

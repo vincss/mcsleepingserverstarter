@@ -75,12 +75,12 @@ const parseFrameSet = (message: Buffer): BedrockPacket | undefined => {
     if (offset + payloadLength > message.length) return undefined;
 
     const payload = message.subarray(offset, offset + payloadLength);
-    if (payload[0] === 0x09 && payload.length >= 17) {
+    if (payload[0] === 0x09 && payload.length >= 18) {
       packets.push({
         type: "connection_request",
         timestamp: payload.readBigInt64BE(9),
       });
-    } else if (payload[0] === 0x13) {
+    } else if (payload[0] === 0x13 && payload.length >= 164) {
       packets.push({ type: "new_incoming_connection" });
     }
     offset += payloadLength;
