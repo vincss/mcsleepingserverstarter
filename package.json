@@ -5,13 +5,14 @@
   "main": "build/sleepingServerStarter.js",
   "bin": "build/sleepingServerStarter.js",
   "scripts": {
-    "start": "run-s prebuild build:typescript run",
+    "start": "npm run prebuild && npm run build:typescript && npm run run",
     "run": "node .",
     "dev": "cross-env disableFileLogs=true node --inspect=7000 -r ts-node/register ./src/sleepingServerStarter.ts ",
-    "prebuild": "rimraf ./build/ ./bin/ && cpx-fixed \"views/**/*.*\" build/views",
-    "build": "run-s build:typescript build:bin",
+    "prebuild": "node -e \"const fs=require('node:fs'); for (const dir of ['build','bin']) fs.rmSync(dir,{recursive:true,force:true}); fs.cpSync('views','build/views',{recursive:true})\"",
+    "build": "npm run build:typescript && npm run build:bin",
     "build:typescript": "tsc",
-    "build:bin": "pkg build/sleepingServerStarter.js --config package.json --compress GZip --target node22-win-x64,node22-linux-x64,node22-linux-arm64,node22-macos-x64,node22-macos-arm64,node22-alpine-arm64 --out-path ./bin/",
+    "build:bin": "node scripts/build-sea.mjs",
+    "test": "jest --runInBand",
     "lint": "eslint . --ext .ts --fix",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
   },
@@ -20,28 +21,24 @@
     "express": "^5.1.0",
     "express-handlebars": "^8.0.3",
     "js-yaml": "^4.1.0",
-    "prismarine-chat": "^1.12.0",
     "properties-reader": "^2.3.0",
     "winston": "^3.17.0"
   },
   "devDependencies": {
-    "@types/connect": "^3.4.38",
     "@types/express": "^5.0.2",
     "@types/jest": "^29.5.14",
     "@types/js-yaml": "^4.0.9",
-    "@types/node": "^22.15.29",
+    "@types/node": "^24.19.2",
     "@types/properties-reader": "^2.1.3",
-    "@types/serve-static": "^1.15.7",
     "@typescript-eslint/eslint-plugin": "^8.33.1",
     "@typescript-eslint/parser": "^8.33.1",
-    "cpx-fixed": "^1.6.0",
     "cross-env": "7.0.3",
+    "esbuild": "^0.25.12",
     "eslint": "^9.28.0",
     "eslint-config-prettier": "^10.1.5",
-    "npm-run-all": "^4.1.5",
-    "@yao-pkg/pkg": "^6.5.1",
+    "jest": "^29.7.0",
+    "postject": "^1.0.0-alpha.6",
     "prettier": "^3.5.3",
-    "rimraf": "^6.0.1",
     "ts-jest": "^29.3.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
@@ -64,13 +61,7 @@
   },
   "homepage": "https://github.com/vincss/mcsleepingserverstarter#readme",
   "engines": {
-    "node": ">=22",
+    "node": ">=24",
     "npm": ">=10"
-  },
-  "pkg": {
-    "scripts": "build/*.js",
-    "assets": [
-      "build/views/**/*"
-    ]
   }
 }

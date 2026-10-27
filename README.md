@@ -41,11 +41,16 @@ There are multiple ways to run SleepingServerStarter:
 
 ### 📜 Manually install and compile
 
-0. Requires [NodeJS](https://nodejs.org) v16+
+0. Requires [NodeJS](https://nodejs.org) v24 LTS or later
 1. Clone the repo or download the project as Zip
 2. Unzip or clone it **in the same folder as your minecraft server**
 3. Launch `npm ci`
 4. Start the project with `npm start`
+
+To build a standalone executable for the current platform, run `npm run build`.
+The build uses Node.js Single Executable Applications and embeds the web interface
+assets in the executable. CI builds Windows x64, Linux x64 and arm64, macOS x64
+and arm64, and Alpine Linux arm64 releases.
 
 ### 🐋 Docker
 
