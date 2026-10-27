@@ -147,6 +147,12 @@ try {
   if (process.platform === "darwin") {
     run("codesign", ["--sign", "-", outputPath]);
   }
+
+  if (targetPlatform[0] !== "darwin") {
+    const upx = process.env.UPX_PATH ?? "upx";
+    run(upx, ["-9", outputPath]);
+    run(upx, ["-t", outputPath]);
+  }
 } finally {
   rmSync(tempDirectory, { recursive: true, force: true });
 }
