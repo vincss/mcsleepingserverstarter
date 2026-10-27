@@ -52,28 +52,6 @@ jobs:
           if ((Get-FileHash $archive -Algorithm SHA256).Hash.ToLower() -ne "eabc6792a347d45e945be7748423e7868fd01b0d2bcaa2f4b1031fd71ff69bda") { throw "UPX archive checksum mismatch" }
           Expand-Archive $archive -DestinationPath $extractPath
           Add-Content $env:GITHUB_PATH (Join-Path $extractPath "upx-5.2.1-win64")
-      - name: Install UPX (Linux)
-        if: startsWith(matrix.target, 'linux-')
-        run: |
-          case "$(uname -m)" in
-            x86_64)
-              archive="upx-5.2.1-amd64_linux.tar.xz"
-              checksum="402162aad30af47e60dbd767fb2e64ca394ace9727ba1f40283641f1d1b91657"
-              ;;
-            aarch64)
-              archive="upx-5.2.1-arm64_linux.tar.xz"
-              checksum="a72d112c5970a904a31da0b9c84f919bc16b9a311787c12245508544a78c7d36"
-              ;;
-            *)
-              echo "Unsupported UPX host architecture: $(uname -m)" >&2
-              exit 1
-              ;;
-          esac
-          curl --fail --location --retry 3 "https://github.com/upx/upx/releases/download/v5.2.1/$archive" --output "$RUNNER_TEMP/$archive"
-          echo "$checksum  $RUNNER_TEMP/$archive" | sha256sum --check
-          mkdir "$RUNNER_TEMP/upx"
-          tar -xJf "$RUNNER_TEMP/$archive" --strip-components=1 -C "$RUNNER_TEMP/upx"
-          echo "$RUNNER_TEMP/upx" >> "$GITHUB_PATH"
       - run: npm run build
         env:
           SEA_TARGET: ${{ matrix.target }}
@@ -99,13 +77,8 @@ jobs:
             -w /workspace \
             node:24-alpine \
             sh -euc '
-              apk add --no-cache curl tar xz
               npm ci
-              curl --fail --location --retry 3 https://github.com/upx/upx/releases/download/v5.2.1/upx-5.2.1-arm64_linux.tar.xz --output /tmp/upx.tar.xz
-              echo "a72d112c5970a904a31da0b9c84f919bc16b9a311787c12245508544a78c7d36  /tmp/upx.tar.xz" | sha256sum --check
-              mkdir /tmp/upx
-              tar -xJf /tmp/upx.tar.xz --strip-components=1 -C /tmp/upx
-              UPX_PATH=/tmp/upx/upx SEA_TARGET=alpine-arm64 npm run build
+              SEA_TARGET=alpine-arm64 npm run build
             '
       - uses: actions/upload-artifact@v4
         with:

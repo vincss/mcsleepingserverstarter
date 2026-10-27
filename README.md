@@ -49,11 +49,12 @@ There are multiple ways to run SleepingServerStarter:
 
 To build a standalone executable for the current platform, run `npm run build`.
 The build uses Node.js Single Executable Applications and embeds the web interface
-assets in the executable. Windows and Linux builds are compressed with UPX 5.2.1;
-install UPX to build those targets locally. UPX is not used for macOS because its
-current releases do not support macOS executables. Compressed executables may
-trigger antivirus false positives. CI builds Windows x64, Linux x64 and arm64,
-macOS x64 and arm64, and Alpine Linux arm64 releases.
+assets in the executable. Windows builds are compressed with UPX 5.2.1; install
+UPX to build that target locally. Linux SEA binaries are not UPX-compressed
+because UPX cannot currently pack their ELF layout. UPX is not used for macOS
+because its current releases do not support macOS executables. Compressed
+executables may trigger antivirus false positives. CI builds Windows x64, Linux
+x64 and arm64, macOS x64 and arm64, and Alpine Linux arm64 releases.
 
 ### 🐋 Docker
 

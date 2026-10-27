@@ -148,7 +148,7 @@ try {
     run("codesign", ["--sign", "-", outputPath]);
   }
 
-  if (targetPlatform[0] !== "darwin") {
+  if (process.platform === "win32") {
     const upx = process.env.UPX_PATH ?? "upx";
     run(upx, ["-9", outputPath]);
     run(upx, ["-t", outputPath]);
