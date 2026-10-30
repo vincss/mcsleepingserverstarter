@@ -19,16 +19,16 @@ process.on("SIGTERM", async () => {
   process.exit(0);
 });
 
-process.on("uncaughtException", (err: Error) => {
+process.on("uncaughtException", (err: NodeJS.ErrnoException) => {
   logger.warn(
     `[Main] Caught uncaughtException: ${JSON.stringify(err.message ?? err)}`
   );
 
-  if ((err as any).code === "ECONNRESET") {
+  if (err.code === "ECONNRESET") {
     logger.info("[Main] Connection reset client side... Keep on going.");
     return;
   }
-  if ((err as any).code === "EADDRINUSE") {
+  if (err.code === "EADDRINUSE") {
     logger.info(
       `[Main] A server is already using the port. Kill it and restart the app.`,
       err.message ?? err

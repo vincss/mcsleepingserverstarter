@@ -52,6 +52,17 @@ const sendLogin = (port: number, username: string) =>
     client.once("error", reject);
   });
 
+type StatusResponse = {
+  players: {
+    max: number;
+    online: number;
+  };
+  description: {
+    text: string;
+    color: string;
+  };
+};
+
 test("handles login without account authentication and still applies access rules", async () => {
   let resolvePlayer: (player: Player) => void = () => undefined;
   const playerConnected = new Promise<Player>((resolve) => {
@@ -72,11 +83,11 @@ test("handles login without account authentication and still applies access rule
 
   const address = listener.server?.address() as AddressInfo;
   const pingPayload = Buffer.from("12345678");
-  const statusResponse = new Promise<{ status: any; pong: Buffer }>(
+  const statusResponse = new Promise<{ status: StatusResponse; pong: Buffer }>(
     (resolve, reject) => {
       const client = connect(address.port);
       let buffer = Buffer.alloc(0);
-      let status: any;
+      let status: StatusResponse | undefined;
       client.on("connect", () =>
         client.write(
           Buffer.concat([
@@ -99,11 +110,15 @@ test("handles login without account authentication and still applies access rule
               reject(new Error("Invalid status response packet"));
               return;
             }
-            status = JSON.parse(message.value);
+            status = JSON.parse(message.value) as StatusResponse;
             client.write(encodePacket(1, pingPayload));
             continue;
           }
-          if (packet.id !== 1 || !packet.payload.equals(pingPayload)) {
+          if (
+            packet.id !== 1 ||
+            !packet.payload.equals(pingPayload) ||
+            status === undefined
+          ) {
             reject(new Error("Invalid status pong packet"));
             return;
           }

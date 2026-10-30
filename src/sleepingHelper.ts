@@ -183,23 +183,22 @@ export const isAccessAllowed = (
   return new AccessStatus(true);
 };
 
-export const loadFile = (
+export const loadFile = <T>(
   filePath: string,
   description: string,
   settings?: Settings,
-  onFail?: any,
-): any => {
-  let result;
+  onFail?: (error: unknown) => void,
+): T | undefined => {
   try {
     const fullPath = settings
       ? path.join(getMinecraftDirectory(settings), filePath)
       : filePath;
     getLogger().info(`Retrieving ${description} from ${fullPath}`);
     const read = readFileSync(fullPath).toString();
-    result = load(read);
+    const result = load(read) as T;
     getLogger().info(`Retrieved ${description}:${JSON.stringify(result)}`);
     return result;
-  } catch (error: any) {
+  } catch (error: unknown) {
     getLogger().error(`Failed to load ${description}.`, error);
     if (onFail) {
       onFail(error);
