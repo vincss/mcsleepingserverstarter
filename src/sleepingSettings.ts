@@ -4,7 +4,7 @@ import { getLogger } from "./sleepingLogger";
 import { getMinecraftDirectory, loadFile } from "./sleepingHelper";
 import path from "path";
 
-import PropertiesReader = require("properties-reader");
+import { propertiesReader } from "properties-reader";
 
 const logger = getLogger();
 
@@ -183,9 +183,12 @@ export function getBannerPlayerEntries(
 }
 
 export function applyNativeProperties(settings: Settings) {
-  const properties = PropertiesReader(
-    path.join(getMinecraftDirectory(settings), NativePropertiesFilePath)
-  );
+  const properties = propertiesReader({
+    sourceFile: path.join(
+      getMinecraftDirectory(settings),
+      NativePropertiesFilePath
+    ),
+  });
 
   logger.info(`Loaded server.properties: ${JSON.stringify(properties)}`);
 
@@ -193,13 +196,13 @@ export function applyNativeProperties(settings: Settings) {
   const maxPlayersProperty = properties.get("max-players");
   const useWhitelistFileProperty = properties.get("white-list");
   if (portProperty) {
-    settings.serverPort = portProperty.valueOf() as number;
+    settings.serverPort = portProperty as number;
   }
   if (maxPlayersProperty) {
-    settings.maxPlayers = maxPlayersProperty.valueOf() as number;
+    settings.maxPlayers = maxPlayersProperty as number;
   }
   if (useWhitelistFileProperty) {
-    settings.useWhitelistFile = useWhitelistFileProperty.valueOf() as boolean;
+    settings.useWhitelistFile = useWhitelistFileProperty as boolean;
   }
   settings.useBlacklistFiles = true;
 }

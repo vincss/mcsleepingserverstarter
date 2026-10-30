@@ -9,6 +9,7 @@
     "outDir": "build",
     "strict": true,
     "esModuleInterop": true,
+    "types": ["jest", "node"],
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true
