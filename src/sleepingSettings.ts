@@ -99,8 +99,11 @@ function saveDefault() {
     logger.info(`Saving default settings to ${SettingFilePath}`);
     const yamlToWrite = dump(DefaultSettings);
     writeFileSync(SettingFilePath, yamlToWrite);
-  } catch (error: any) {
-    logger.error("Failed to write setting.", error?.message);
+  } catch (error: unknown) {
+    logger.error(
+      "Failed to write setting.",
+      error instanceof Error ? error.message : error,
+    );
   }
 }
 
@@ -113,14 +116,14 @@ export function getSettings(): Settings {
     if (settings.useNativeFiles) {
       try {
         applyNativeProperties(settings);
-      } catch (error: any) {
+      } catch (error: unknown) {
         logger.error(
           `useNativeFiles is specified, but wasn't able to read ${NativePropertiesFilePath}.`,
           error
         );
       }
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
     logger.error("Failed to load setting, using default.", error);
 
     try {
@@ -161,7 +164,11 @@ export function getWhitelistEntries(
   if (!settings.useWhitelistFile) {
     return undefined; // Don't attempt to load if not enabled
   }
-  return loadFile(WhitelistFilePath, "whitelist entries", settings);
+  return loadFile<WhitelistEntry[]>(
+    WhitelistFilePath,
+    "whitelist entries",
+    settings,
+  );
 }
 
 export function getBannerIpEntries(
@@ -170,7 +177,7 @@ export function getBannerIpEntries(
     if (!settings.useBlacklistFiles) {
         return undefined; // Don't attempt to load if not enabled
       }
-  return loadFile(BannedIpsFilePath, "banned ips", settings);
+  return loadFile<BannedIpEntry[]>(BannedIpsFilePath, "banned ips", settings);
 }
 
 export function getBannerPlayerEntries(
@@ -179,7 +186,11 @@ export function getBannerPlayerEntries(
     if (!settings.useBlacklistFiles) {
         return undefined; // Don't attempt to load if not enabled
       }
-  return loadFile(BannedPlayersFilePath, "banned players", settings);
+  return loadFile<BannedPlayerEntry[]>(
+    BannedPlayersFilePath,
+    "banned players",
+    settings,
+  );
 }
 
 export function applyNativeProperties(settings: Settings) {
